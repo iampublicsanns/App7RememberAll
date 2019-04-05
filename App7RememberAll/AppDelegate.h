@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "../MO/PlaceMO+CoreDataClass.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -17,6 +18,9 @@
 
 - (void)saveContext;
 
+- (PlaceMO *) createPlaceMO;
+- (NSArray*) getPlaces;
+- (void) deletePlaces;
 
 @end
 

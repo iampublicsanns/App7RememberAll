@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+// у курсеры этот файл создается без +CoreDataClass
+#import "../MO/PlaceMO+CoreDataClass.h"
+
+#define PLACE @"Place"
 
 @interface AppDelegate ()
 
@@ -65,6 +69,14 @@
 }
 
 
+
+
+
+
+
+
+
+
 #pragma mark - Core Data stack
 
 @synthesize persistentContainer = _persistentContainer;
@@ -74,6 +86,7 @@
     @synchronized (self) {
         if (_persistentContainer == nil) {
             _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"App7RememberAll"];
+          
             [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
                 if (error != nil) {
                     // Replace this implementation with code to handle the error appropriately.
@@ -108,6 +121,61 @@
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
+}
+
+
+
+
+
+
+
+#pragma mark - Core Data using. Don't forget to saveContext.
+
+//- (NSManagedObjectContext*) managedObjectContext {
+//
+//}
+
+- (PlaceMO *) createPlaceMO {
+//  NSManagedObjectContext *moc = [self managedObjectContext];
+  //from auto-generated saveContext :
+  NSManagedObjectContext *moc = self.persistentContainer.viewContext;
+  
+  PlaceMO *placeMO = [NSEntityDescription insertNewObjectForEntityForName:PLACE
+                                                   inManagedObjectContext:moc];
+  
+  return placeMO;
+}
+
+- (NSArray*) getPlaces {
+//  NSManagedObjectContext *moc = [self managedObjectContext];
+  //from auto-generated saveContext :
+  NSManagedObjectContext *moc = self.persistentContainer.viewContext;
+  
+  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:PLACE];
+  
+  NSError *error = nil;
+  NSArray *results = [moc executeFetchRequest:request error:&error];
+  if(!results) {
+    NSLog(@"Error sanz");
+  }
+  
+  return results;
+}
+
+-(void) deletePlaces {
+  NSArray* results = [self getPlaces];
+  
+  if(results.count <= 0) {
+    NSLog(@"nothing to delete");
+    return;
+  }
+  
+  //from auto-generated saveContext :
+  NSManagedObjectContext *moc = self.persistentContainer.viewContext;
+  
+  for(PlaceMO *p in results) {
+    [moc deleteObject:p];
+  }
 }
 
 @end
