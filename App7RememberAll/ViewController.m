@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "UIView+MyDescription.h"
 #import "AppDelegate.h"
+#import "GalleryVC.h"
 
 
 @interface ViewController ()
@@ -56,12 +57,12 @@
   UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
   
     //  UICollectionViewController *collectionVC = [UICollectionViewController new]; //error no layout
-  UICollectionViewController *collectionVC = [[UICollectionViewController alloc]
-                                              initWithCollectionViewLayout:flowLayout
-                                              ];
+  GalleryVC *collectionVC = [[GalleryVC alloc]
+                             initWithCollectionViewLayout:flowLayout
+                             ];
 //  collectionVC.view.backgroundColor = UIColor.blueColor; //cant see effect
 //  collectionVC.view.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor); //animation disappears
-  collectionVC.view.layer.opacity = 0.3;
+  collectionVC.view.layer.opacity = 0.8;
   
   //TODO why default is all black?
   // modally but 1st view disappears ?
@@ -69,7 +70,7 @@
 //  collectionVC.collectionView.backgroundColor = UIColor.blueColor;
 //aufo fixed:
 //  collectionVC.collectionView.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor);
-  collectionVC.collectionView.layer.opacity = 0.3;
+  collectionVC.collectionView.layer.opacity = 0.8;
   collectionVC.clearsSelectionOnViewWillAppear = NO;
   
   
