@@ -7,14 +7,39 @@
 //
 
 #import "GalleryVC.h"
+#import "ItemViewCell.h"
 
 @interface GalleryVC ()
 
+@property (nonatomic) NSMutableArray *gallery;
 @end
 
 @implementation GalleryVC
 
-static NSString * const reuseIdentifier = @"Cell";
+static NSString * const reuseIdentifier = @"SimpleCell";
+
+//like in coursera core data course
+- (id) init {
+  if([super init] == nil) return nil;
+  
+  self.gallery = [NSMutableArray arrayWithArray: @[@1,@2,@3] ];
+  [self.gallery addObject:@4];
+  
+  return self;
+}
+
+- (void) setGallery {
+  self.gallery = [NSMutableArray arrayWithArray: @[@1,@2,@3] ];
+  [self.gallery addObject:@4];
+}
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+  if([super initWithCollectionViewLayout: layout] == nil) return nil;
+  
+  [self setGallery];
+  
+  return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,22 +66,22 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+  return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+  return self.gallery.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell
-    
-    return cell;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  ItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
+                                                                   forIndexPath:indexPath];
+  // Configure the cell
+  cell.contentView.backgroundColor = UIColor.redColor;
+  
+  return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
