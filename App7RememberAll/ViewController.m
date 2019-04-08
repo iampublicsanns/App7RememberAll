@@ -50,6 +50,35 @@
 //  ]
   
   NSLog(@"view did appear");
+  
+  
+  
+  UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+  
+    //  UICollectionViewController *collectionVC = [UICollectionViewController new]; //error no layout
+  UICollectionViewController *collectionVC = [[UICollectionViewController alloc]
+                                              initWithCollectionViewLayout:flowLayout
+                                              ];
+//  collectionVC.view.backgroundColor = UIColor.blueColor; //cant see effect
+//  collectionVC.view.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor); //animation disappears
+  collectionVC.view.layer.opacity = 0.3;
+  
+  //TODO why default is all black?
+  // modally but 1st view disappears ?
+  //
+//  collectionVC.collectionView.backgroundColor = UIColor.blueColor;
+//aufo fixed:
+//  collectionVC.collectionView.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor);
+  collectionVC.collectionView.layer.opacity = 0.3;
+  collectionVC.clearsSelectionOnViewWillAppear = NO;
+  
+  
+  NSLog(@"123", collectionVC.collectionView);
+
+  //The layout object is stored in the collectionViewLayout property. Setting this property directly updates the layout immediately, without animating the changes.
+  NSLog(@"%@", collectionVC.collectionView.collectionViewLayout.description);
+  
+  [self presentViewController:collectionVC animated:YES completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
