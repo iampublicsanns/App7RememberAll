@@ -10,4 +10,8 @@
 
 @implementation ItemViewCell
 
+-(NSString *) description {
+  return [NSString stringWithFormat:@"Sanz -- %@", super.description];
+}
+
 @end
