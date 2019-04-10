@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ItemViewCell : UICollectionViewCell
-
+//@property (weak, nonatomic)
+@property (nonatomic) UIImage* image;
 @end
 
 NS_ASSUME_NONNULL_END
