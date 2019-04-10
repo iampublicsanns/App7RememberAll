@@ -100,16 +100,22 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                            error: error];
             
             
-            id image = [self handleGetPublicPhotos: pkg];
-            [self startLoadingPicture:image];
+            id images = [self handleGetPublicPhotos: pkg];
+            [self startLoadingImages:images];
           }
     ]
    resume];
 }
 
-//todo return 4 elements in json
+//todo check docs on json
 - (id) handleGetPublicPhotos: (id) pkg {
-  return pkg[@"photos"][@"photo"][0];
+  NSArray* images = pkg[@"photos"][@"photo"];
+  
+  NSRange range;
+  range.location = 0;
+  range.length = 4;
+  
+  return [images subarrayWithRange:range];
 }
 
 - (void) startLoadingPicture: (id) json {
@@ -124,6 +130,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                               ];
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
+  
+  NSLog(@"  start loading %@", imageUrlString);
   
   [[session dataTaskWithURL:url
           completionHandler:^(NSData * _Nullable data,
@@ -157,6 +165,13 @@ static NSString * const reuseIdentifier = @"SimpleCell";
           }
     ]
    resume];
+}
+
+
+- (void) startLoadingImages: (NSArray*) images {
+  for (int i = 0; i < images.count; i++) {
+    [self startLoadingPicture: images[i]];
+  }
 }
 
 /*
@@ -218,7 +233,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                                                    forIndexPath:indexPath];
   // Configure the cell
   cell.contentView.backgroundColor = UIColor.redColor;
-  [cell setImage: self.gallery[0]];
+  [cell setImage: self.gallery[indexPath.item]];
   
   //coursera The Full Core Data Example 2
   NSMutableString *buffer = [NSMutableString stringWithString:@""];
