@@ -8,6 +8,7 @@
 
 #import "GalleryVC.h"
 #import "ItemViewCell.h"
+#import "Config.h"
 
 @interface GalleryVC ()
 
@@ -16,7 +17,39 @@
 
 @implementation GalleryVC
 
+//https://www.youtube.com/watch?v=qV4gHfqwFPU
+//ObjectiveC, Autoresizing mask, Autolayout
 static NSString * const reuseIdentifier = @"SimpleCell";
+
++ (id) sessionCheckData: (NSData * _Nullable) data
+               response:(NSURLResponse * _Nullable) response
+                  error: ( NSError * _Nullable) error {
+  
+  NSLog(@"%@", data.description);
+  NSLog(@"%@", response.description);
+  NSLog(@"%@", error);
+  
+  if(error) {
+    NSLog(@"%@", error);
+    return nil;
+  }
+  
+  NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+  if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
+    return nil;
+  }
+  
+  NSError *parseErr;
+  id pkg = [NSJSONSerialization JSONObjectWithData:data
+                                           options:0
+                                             error:&parseErr];
+  if(!pkg){
+    return nil;
+  }
+  
+  return pkg;
+}
+
 
 //like in coursera core data course
 - (id) init {
@@ -25,21 +58,125 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   self.gallery = [NSMutableArray arrayWithArray: @[@1,@2,@3] ];
   [self.gallery addObject:@4];
   
+  [self startLoading];
+  
   return self;
 }
 
 - (void) setGallery {
-  self.gallery = [NSMutableArray arrayWithArray: @[@1,@2,@3] ];
-  [self.gallery addObject:@4];
+  self.gallery = [NSMutableArray arrayWithArray: @[] ];
+//  [self.gallery addObject:@4];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   if([super initWithCollectionViewLayout: layout] == nil) return nil;
   
   [self setGallery];
+  //[self startLoading];
   
   return self;
 }
+
+- (void) startLoading {
+  NSString * urlString = [NSString stringWithFormat: kPhotosUrl,
+                          APIKEY,
+                          USERID
+                          ];
+  
+  NSURL *url = [NSURL URLWithString:urlString];
+  NSURLSession *session = [NSURLSession sharedSession];
+  
+  [[session dataTaskWithURL:url
+          completionHandler:^(NSData * _Nullable data,
+                              NSURLResponse * _Nullable response,
+                              NSError * _Nullable error) {
+            NSLog(@"%@", data.description);
+            NSLog(@"%@", response.description);
+            NSLog(@"%@", error);
+            
+            
+            id pkg = [GalleryVC sessionCheckData: data
+                                        response: response
+                                           error: error];
+            
+            
+            id image = [self handleGetPublicPhotos: pkg];
+            [self startLoadingPicture:image];
+          }
+    ]
+   resume];
+}
+
+//todo return 4 elements in json
+- (id) handleGetPublicPhotos: (id) pkg {
+  return pkg[@"photos"][@"photo"][0];
+}
+
+- (void) startLoadingPicture: (id) json {
+  NSString* imageId = json[@"id"];
+  NSString* server = json[@"server"];
+  NSString* secret = json[@"secret"];
+  NSNumber* farm = json[@"farm"];
+  
+  NSString *imageUrlString = [NSString stringWithFormat:
+                              @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
+                              farm, server, imageId, secret
+                              ];
+  NSURL *url = [NSURL URLWithString:imageUrlString];
+  NSURLSession *session = [NSURLSession sharedSession];
+  
+  [[session dataTaskWithURL:url
+          completionHandler:^(NSData * _Nullable data,
+                              NSURLResponse * _Nullable response,
+                              NSError * _Nullable error) {
+//do not check json here
+//            id pkg = [GalleryVC sessionCheckData: data
+//                                        response: response
+//                                           error: error];
+            
+            if(error) {
+              NSLog(@"%@", error);
+              return ;
+            }
+            
+            NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+            if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
+              return;
+            }
+            
+            //todo leak ??
+            [self appendImage: data];
+//            [self displayImageId: imageId
+//                          server: server
+//                          secret: secret
+//                            farm: farm];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+              [self.collectionView reloadData];
+            });
+          }
+    ]
+   resume];
+}
+
+/*
+- (void) displayImageId: (NSString*) imageId
+                 server: (NSString*) server
+                 secret: (NSString*) secret
+                   farm: (NSNumber*) farm {
+  
+  self.gallery = [NSMutableArray arrayWithArray: @[
+                                                   
+                                                   ] ];
+}
+*/
+
+- (void) appendImage: (id) imageData {
+  UIImage* image = [UIImage imageWithData:imageData];
+  [self.gallery addObject: image ];
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,9 +185,10 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[ItemViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
+    [self startLoading];
 }
 
 /*
@@ -80,6 +218,13 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                                                    forIndexPath:indexPath];
   // Configure the cell
   cell.contentView.backgroundColor = UIColor.redColor;
+  [cell setImage: self.gallery[0]];
+  
+  //coursera The Full Core Data Example 2
+  NSMutableString *buffer = [NSMutableString stringWithString:@""];
+  [buffer appendFormat:@"\n%@ eeend", cell, nil];
+  NSLog(@"345 %@", buffer);
+  
   
   return cell;
 }
@@ -100,7 +245,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 }
 */
 
-/*
+
 // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 	return NO;
@@ -113,6 +258,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
 	
 }
-*/
+
 
 @end
