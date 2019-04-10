@@ -29,7 +29,7 @@
   [self.contentView addSubview: self.imageView];
   
   //positioning
-  
+  self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 }
   
 -(void) setImage:(UIImage*) image {
@@ -37,7 +37,23 @@
   
   //self.image = image;
   self.imageView.image = image;
+  //From docs UIImageView.image :
+  //Sets the frame of imageView :
   [self.imageView sizeToFit];
+  
+  //[self sizeThatFits:self.bounds.size];
+  
+  CGRect newFrame = self.imageView.frame;
+  CGSize parentSize = self.frame.size;
+  newFrame.size = parentSize;
+  self.imageView.frame = newFrame;
+
+  //  self.imageView.bounds = CGRect{
+//    origin = CGPoint {
+//      x = 5;
+//      y=6;
+//    }
+//  }
 }
 
 -(NSString *) description {
