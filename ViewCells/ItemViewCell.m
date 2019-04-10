@@ -43,11 +43,12 @@
   
   //[self sizeThatFits:self.bounds.size];
   
-  CGRect newFrame = self.imageView.frame;
   CGSize parentSize = self.frame.size;
-  newFrame.size = parentSize;
-  self.imageView.frame = newFrame;
+  
+  //https://www.youtube.com/watch?v=qV4gHfqwFPU
+  self.imageView.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
 
+  
   //  self.imageView.bounds = CGRect{
 //    origin = CGPoint {
 //      x = 5;
