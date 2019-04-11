@@ -10,6 +10,9 @@
 
 @interface ItemViewCell ()
 @property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UIButton *button;
+
+@property (nonatomic) void(^block)(void);
 @end
 
 @implementation ItemViewCell
@@ -24,9 +27,27 @@
   return self;
 }
 
+-(void) initViews {
+  if (self.button == nil){
+    self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    [self.button setTitle:@"A button" forState:UIControlStateNormal];
+    [self.button sizeToFit];
+    
+    [self.contentView addSubview: self.button];
+    
+    [self.button addTarget:self
+                    action:@selector(handleClick)
+          forControlEvents:UIControlEventTouchUpInside];
+  }
+}
+
 -(void) createImageView {
   self.imageView = [[UIImageView alloc] init];
   [self.contentView addSubview: self.imageView];
+  
+  self.imageView.layer.cornerRadius = 5;
+  self.imageView.clipsToBounds = YES;
   
   //positioning
   self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -34,12 +55,13 @@
   
 -(void) setImage:(UIImage*) image {
   if (self.imageView == nil) [self createImageView];
+  [self initViews];
   
   //self.image = image;
   self.imageView.image = image;
   //From docs UIImageView.image :
   //Sets the frame of imageView :
-  [self.imageView sizeToFit];
+  //[self.imageView sizeToFit];
   
   //[self sizeThatFits:self.bounds.size];
   
@@ -55,6 +77,14 @@
 //      y=6;
 //    }
 //  }
+}
+
+- (void) setOnClickBlock: (void (^)(void)) block {
+  self.block = block;
+}
+
+-(void) handleClick {
+  self.block();
 }
 
 -(NSString *) description {
