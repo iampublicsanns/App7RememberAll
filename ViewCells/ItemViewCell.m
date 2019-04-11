@@ -29,10 +29,15 @@
 
 -(void) initViews {
   if (self.button == nil){
-    self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    
-    [self.button setTitle:@"A button" forState:UIControlStateNormal];
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    [self.button setTitle:@"A button"
+                 forState:UIControlStateNormal];
     [self.button sizeToFit];
+    
+    CGSize parentSize = self.frame.size;
+    self.button.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+    
     
     [self.contentView addSubview: self.button];
     
@@ -47,15 +52,19 @@
   [self.contentView addSubview: self.imageView];
   
   self.imageView.layer.cornerRadius = 5;
-  self.imageView.clipsToBounds = YES;
+  //self.imageView.clipsToBounds = YES;
   
   //positioning
   self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 }
   
 -(void) setImage:(UIImage*) image {
-  if (self.imageView == nil) [self createImageView];
+  //if (self.imageView == nil) [self createImageView];
   [self initViews];
+  [self.button setImage:image
+               forState:UIControlStateNormal];
+//  [self.button setBackgroundImage: image
+//               forState:UIControlStateNormal];
   
   //self.image = image;
   self.imageView.image = image;
