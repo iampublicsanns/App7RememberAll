@@ -8,11 +8,12 @@
 
 #import "GalleryVC.h"
 #import "ItemViewCell.h"
+#import "PreviewViewController.h"
 #import "Config.h"
 
 @interface GalleryVC ()
 
-@property (nonatomic) NSMutableArray *gallery;
+@property (nonatomic) NSMutableArray<UIImage*> *gallery;
 @end
 
 @implementation GalleryVC
@@ -193,6 +194,18 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 
 
+- (void) presentImage:(UIImage*) image {
+  PreviewViewController *previewVC = [[PreviewViewController alloc] initWithImage: image];
+  
+  [self presentViewController:previewVC animated:YES completion:nil];
+}
+
+
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -218,6 +231,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 #pragma mark <UICollectionViewDataSource>
 
+//optional
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return 1;
 }
@@ -231,14 +245,30 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   ItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
                                                                    forIndexPath:indexPath];
+  
+  UIImage *image = self.gallery[indexPath.item];
+  
   // Configure the cell
   cell.contentView.backgroundColor = UIColor.redColor;
-  [cell setImage: self.gallery[indexPath.item]];
+  [cell setImage: image];
+  
+  
+// todo what is it for ?
+//  [cell targetForAction:@selector(
+//                                  presentImage:
+//                                  )
+//  withSender:image];
+  
+  __weak id weakSelf = self;
+  
+  [cell setOnClickBlock: ^{
+    [weakSelf presentImage:image];
+  }];
   
   //coursera The Full Core Data Example 2
   NSMutableString *buffer = [NSMutableString stringWithString:@""];
   [buffer appendFormat:@"\n%@ eeend", cell, nil];
-  NSLog(@"345 %@", buffer);
+  //NSLog(@"345 %@", buffer);
   
   
   return cell;
