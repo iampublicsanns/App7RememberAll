@@ -9,10 +9,18 @@
 #import "PreviewViewController.h"
 
 @interface PreviewViewController ()
-
+{
+  UIImage * _image;
+}
 @end
 
 @implementation PreviewViewController
+
+- (instancetype) initWithImage: (UIImage *)image {
+  _image = image;
+
+  return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +30,9 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+  UIImageView* imageView = [[UIImageView alloc] initWithImage: _image];
+  [self.view addSubview:imageView];
 }
 
 #pragma mark - Table view data source
