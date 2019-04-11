@@ -27,7 +27,7 @@
   return self;
 }
 
--(void) initViews {
+-(void) makeButton {
   if (self.button == nil){
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
 
@@ -37,6 +37,10 @@
     
     CGSize parentSize = self.frame.size;
     self.button.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+    
+    //coursera Intro to UIImageView
+    self.button.layer.borderWidth = 2;
+    self.button.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
     
     
     [self.contentView addSubview: self.button];
@@ -56,11 +60,19 @@
   
   //positioning
   self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  
+  self.imageView.userInteractionEnabled = YES;
+  
+  UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self
+                                        action:@selector(handleClick)];
+  [singleTap setNumberOfTapsRequired:1];
+  [self.imageView addGestureRecognizer:singleTap];
 }
   
 -(void) setImage:(UIImage*) image {
-  //if (self.imageView == nil) [self createImageView];
-  [self initViews];
+  if (self.imageView == nil) [self createImageView];
+  //[self makeButton];
   [self.button setImage:image
                forState:UIControlStateNormal];
 //  [self.button setBackgroundImage: image
