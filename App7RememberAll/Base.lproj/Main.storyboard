@@ -164,7 +164,7 @@
                                 <color key="backgroundColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTk-5r-Jar" userLabel="Yellow">
-                                <rect key="frame" x="0.0" y="30" width="0.0" height="392"/>
+                                <rect key="frame" x="330" y="30" width="0.0" height="392"/>
                                 <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="GNC-tv-2UB"/>
@@ -224,6 +224,11 @@
                             <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="ykL-mw-ryh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AK0-78-fxa"/>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="1tl-P8-tUa"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7d5-k4-fur" userLabel="First Responder" sceneMemberID="firstResponder"/>
