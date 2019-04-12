@@ -178,24 +178,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="leading" secondItem="gZh-Bu-cSv" secondAttribute="trailing" constant="10" id="1tl-P8-tUa"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="leading" secondItem="5nW-CQ-vat" secondAttribute="leading" constant="-10" id="2OA-wO-rc7"/>
-                            <constraint firstItem="AK0-78-fxa" firstAttribute="trailing" secondItem="QTk-5r-Jar" secondAttribute="trailing" constant="-10" id="43f-TK-SXJ"/>
-                            <constraint firstItem="q7k-BA-lJR" firstAttribute="top" secondItem="QTk-5r-Jar" secondAttribute="bottom" constant="10" id="5e5-Uf-3GS"/>
+                            <constraint firstItem="q7k-BA-lJR" firstAttribute="top" secondItem="QTk-5r-Jar" secondAttribute="bottom" constant="10" id="67A-1W-e6I"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="leading" secondItem="zhg-Gf-cYz" secondAttribute="trailing" constant="10" id="73R-B8-C9G"/>
                             <constraint firstItem="gZh-Bu-cSv" firstAttribute="leading" secondItem="AK0-78-fxa" secondAttribute="leading" constant="-10" id="7n6-Sb-BG1"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="7nH-1O-rul"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="ISN-Ey-7fb"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="top" secondItem="gZh-Bu-cSv" secondAttribute="bottom" constant="10" id="Mla-1z-7rx"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="TaA-uc-IP6"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="WbS-x4-IZT"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="top" secondItem="AK0-78-fxa" secondAttribute="top" constant="10" id="XxK-Hx-yUi"/>
+                            <constraint firstAttribute="trailing" secondItem="QTk-5r-Jar" secondAttribute="trailing" constant="-10" id="XSV-q2-fmI"/>
                             <constraint firstItem="AK0-78-fxa" firstAttribute="bottom" secondItem="zhg-Gf-cYz" secondAttribute="bottom" constant="10" id="cSR-dP-Kz9"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="leading" secondItem="gZh-Bu-cSv" secondAttribute="trailing" constant="10" id="fcF-66-mnG"/>
                             <constraint firstItem="AK0-78-fxa" firstAttribute="bottom" secondItem="q7k-BA-lJR" secondAttribute="bottom" constant="10" id="k6U-lF-7hH"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="mnW-WY-6KD"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="top" secondItem="AK0-78-fxa" secondAttribute="top" constant="10" id="omj-rh-6D5"/>
                             <constraint firstItem="gZh-Bu-cSv" firstAttribute="top" secondItem="AK0-78-fxa" secondAttribute="top" constant="10" id="rPt-0P-jJx"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="uTd-cm-rvC"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="xlv-Cl-arh"/>
                             <constraint firstItem="AK0-78-fxa" firstAttribute="trailing" secondItem="q7k-BA-lJR" secondAttribute="trailing" constant="-10" id="xtH-TV-uR9"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="ykL-mw-ryh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AK0-78-fxa"/>
                     </view>
