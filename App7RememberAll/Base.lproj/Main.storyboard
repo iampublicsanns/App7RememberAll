@@ -160,19 +160,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZh-Bu-cSv" userLabel="Red">
-                                <rect key="frame" x="-10" y="30" width="165" height="392"/>
+                                <rect key="frame" x="-10" y="30" width="0.0" height="392"/>
                                 <color key="backgroundColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTk-5r-Jar" userLabel="Yellow">
-                                <rect key="frame" x="165" y="30" width="165" height="392"/>
+                                <rect key="frame" x="0.0" y="30" width="0.0" height="392"/>
                                 <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="GNC-tv-2UB"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="GNC-tv-2UB"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="GNC-tv-2UB"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" restorationIdentifier="blue" translatesAutoresizingMaskIntoConstraints="NO" id="q7k-BA-lJR" userLabel="Blue">
-                                <rect key="frame" x="165" y="432" width="165" height="392"/>
+                                <rect key="frame" x="330" y="432" width="0.0" height="392"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="9Zd-Fc-ZGd"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9Zd-Fc-ZGd"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="9Zd-Fc-ZGd"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhg-Gf-cYz" userLabel="Green" colorLabel="IBBuiltInLabel-Green">
-                                <rect key="frame" x="-10" y="432" width="165" height="392"/>
+                                <rect key="frame" x="-10" y="432" width="330" height="392"/>
                                 <color key="backgroundColor" red="0.01176470611" green="0.98039215800000001" blue="0.070588238540000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
