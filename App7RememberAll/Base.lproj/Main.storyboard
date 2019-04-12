@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,7 +15,7 @@
             <objects>
                 <collectionViewController hidesBottomBarWhenPushed="YES" clearsSelectionOnViewWillAppear="NO" id="aec-KX-Gto" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="2" dataMode="prototypes" id="QMd-Jl-Rf3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NV0-5p-8nB">
@@ -26,16 +26,23 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Xrk-Qh-7rZ">
-                                <rect key="frame" x="0.0" y="50" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="50" width="102" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="102" height="61"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="8_resize_minimum_arrow_small-512" translatesAutoresizingMaskIntoConstraints="NO" id="jkF-v3-a8F">
+                                            <rect key="frame" x="0.0" y="0.0" width="42" height="49"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.72156864399999998" green="0.01176470611" blue="0.99215686319999996" alpha="0.3806988442" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="customSize" width="102" height="61"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kTT-e7-EzE">
-                                <rect key="frame" x="65" y="50" width="50" height="50"/>
+                                <rect key="frame" x="112" y="55.5" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -45,7 +52,7 @@
                                 <color key="tintColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MeA-nx-hrg">
-                                <rect key="frame" x="130" y="50" width="50" height="50"/>
+                                <rect key="frame" x="172" y="55.5" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -54,12 +61,12 @@
                                 <color key="backgroundColor" red="0.72156864399999998" green="0.01176470611" blue="0.99215686319999996" alpha="0.3806988442" colorSpace="custom" customColorSpace="sRGB"/>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="DjS-er-Y3O">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" id="DjS-er-Y3O">
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
-                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VVt-hy-01K">
-                            <rect key="frame" x="0.0" y="100" width="375" height="50"/>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" id="VVt-hy-01K">
+                            <rect key="frame" x="0.0" y="111" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
                         <connections>
@@ -70,14 +77,14 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ba5-I3-fTM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1202" y="439"/>
+            <point key="canvasLocation" x="1200.8" y="438.53073463268368"/>
         </scene>
         <!--vc title-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController title="vc title" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-VQ-SHy">
@@ -107,25 +114,27 @@
             <objects>
                 <viewController title="2nd vc" id="BGi-sg-dlJ" userLabel="2nd viewc" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P05-D2-2qd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTG-e4-2DF">
-                                <rect key="frame" x="164" y="297" width="125" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="DZN-i2-G5N" kind="unwind" unwindAction="unwindToRed:" id="s3n-T5-lJO"/>
-                                </connections>
-                            </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HZT-X0-ApZ">
-                                <rect key="frame" x="0.0" y="172" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="172" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="NavItem1" id="sfz-Ro-YX1"/>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTG-e4-2DF">
+                                <rect key="frame" x="145" y="322" width="141" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Some title">
+                                    <color key="titleColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <segue destination="DZN-i2-G5N" kind="unwind" unwindAction="unwindToRed:" id="s3n-T5-lJO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="w6q-hc-chz"/>
@@ -140,7 +149,51 @@
                 <exit id="DZN-i2-G5N" userLabel="Exit" sceneMemberID="exit"/>
                 <barButtonItem title="Item" id="k4g-8e-ASe"/>
             </objects>
-            <point key="canvasLocation" x="1158" y="-238"/>
+            <point key="canvasLocation" x="1157.5999999999999" y="-238.83058470764618"/>
+        </scene>
+        <!--Coursera adaptivity-->
+        <scene sceneID="D7V-ly-44X">
+            <objects>
+                <viewController title="Coursera adaptivity" id="kYq-F7-Pg5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5nW-CQ-vat">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gZh-Bu-cSv" userLabel="Red">
+                                <rect key="frame" x="112" y="228" width="240" height="128"/>
+                                <color key="backgroundColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTk-5r-Jar" userLabel="Yellow">
+                                <rect key="frame" x="398" y="228" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="blue" translatesAutoresizingMaskIntoConstraints="NO" id="q7k-BA-lJR" userLabel="Blue">
+                                <rect key="frame" x="398" y="396" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhg-Gf-cYz" userLabel="Green" colorLabel="IBBuiltInLabel-Green">
+                                <rect key="frame" x="112" y="396" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.01176470611" green="0.98039215800000001" blue="0.070588238540000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="7nH-1O-rul"/>
+                            <constraint firstItem="q7k-BA-lJR" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="TaA-uc-IP6"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="WbS-x4-IZT"/>
+                            <constraint firstItem="q7k-BA-lJR" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="mnW-WY-6KD"/>
+                            <constraint firstItem="zhg-Gf-cYz" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="uTd-cm-rvC"/>
+                            <constraint firstItem="zhg-Gf-cYz" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="xlv-Cl-arh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="AK0-78-fxa"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7d5-k4-fur" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2278" y="-156"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="8_resize_minimum_arrow_small-512" width="512" height="512"/>
+    </resources>
 </document>
