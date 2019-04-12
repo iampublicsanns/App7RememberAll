@@ -178,7 +178,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="leading" secondItem="gZh-Bu-cSv" secondAttribute="trailing" priority="999" constant="10" id="1tl-P8-tUa"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="leading" secondItem="gZh-Bu-cSv" secondAttribute="trailing" constant="10" id="1tl-P8-tUa"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="leading" secondItem="5nW-CQ-vat" secondAttribute="leading" constant="-10" id="2OA-wO-rc7"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="top" secondItem="QTk-5r-Jar" secondAttribute="bottom" constant="10" id="67A-1W-e6I"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="leading" secondItem="zhg-Gf-cYz" secondAttribute="trailing" constant="10" id="73R-B8-C9G"/>
@@ -195,7 +195,7 @@
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" priority="999" id="uTd-cm-rvC"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" priority="999" id="xlv-Cl-arh"/>
                             <constraint firstItem="AK0-78-fxa" firstAttribute="trailing" secondItem="q7k-BA-lJR" secondAttribute="trailing" constant="-10" id="xtH-TV-uR9"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="ykL-mw-ryh"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" priority="999" id="ykL-mw-ryh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AK0-78-fxa"/>
                     </view>
