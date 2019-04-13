@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad10_5" orientation="landscape">
-        <adaptation id="splitview1_3"/>
+    <device id="retina5_9" orientation="landscape">
+        <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -15,7 +15,7 @@
             <objects>
                 <collectionViewController hidesBottomBarWhenPushed="YES" clearsSelectionOnViewWillAppear="NO" id="aec-KX-Gto" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="2" dataMode="prototypes" id="QMd-Jl-Rf3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NV0-5p-8nB">
@@ -42,7 +42,7 @@
                                 <size key="customSize" width="102" height="61"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kTT-e7-EzE">
-                                <rect key="frame" x="112" y="55.5" width="50" height="50"/>
+                                <rect key="frame" x="112" y="55.666666666666664" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -52,7 +52,7 @@
                                 <color key="tintColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MeA-nx-hrg">
-                                <rect key="frame" x="172" y="55.5" width="50" height="50"/>
+                                <rect key="frame" x="172" y="55.666666666666664" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -62,11 +62,11 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" id="DjS-er-Y3O">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="812" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" id="VVt-hy-01K">
-                            <rect key="frame" x="0.0" y="111" width="320" height="50"/>
+                            <rect key="frame" x="0.0" y="111" width="812" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
                         <connections>
@@ -84,7 +84,7 @@
             <objects>
                 <viewController title="vc title" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-VQ-SHy">
@@ -101,7 +101,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.89560883620689657" green="0.89560883620689657" blue="0.89560883620689657" alpha="0.8985445205479452" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -114,11 +114,11 @@
             <objects>
                 <viewController title="2nd vc" id="BGi-sg-dlJ" userLabel="2nd viewc" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P05-D2-2qd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HZT-X0-ApZ">
-                                <rect key="frame" x="0.0" y="172" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="172" width="812" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="NavItem1" id="sfz-Ro-YX1"/>
@@ -156,15 +156,15 @@
             <objects>
                 <viewController title="Coursera adaptivity" id="kYq-F7-Pg5" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5nW-CQ-vat">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZh-Bu-cSv" userLabel="Red">
-                                <rect key="frame" x="-10" y="30" width="0.0" height="392"/>
+                                <rect key="frame" x="34" y="10" width="389" height="162"/>
                                 <color key="backgroundColor" red="1" green="0.1519643792" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTk-5r-Jar" userLabel="Yellow">
-                                <rect key="frame" x="330" y="30" width="0.0" height="392"/>
+                                <rect key="frame" x="433" y="10" width="389" height="162"/>
                                 <color key="backgroundColor" red="0.77647060160000003" green="0.99215686319999996" blue="0.0078431377190000002" alpha="0.50577910960000005" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="GNC-tv-2UB"/>
@@ -181,7 +181,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" restorationIdentifier="blue" translatesAutoresizingMaskIntoConstraints="NO" id="q7k-BA-lJR" userLabel="Blue">
-                                <rect key="frame" x="330" y="432" width="0.0" height="392"/>
+                                <rect key="frame" x="389" y="182" width="389" height="162"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="9Zd-Fc-ZGd"/>
@@ -198,7 +198,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhg-Gf-cYz" userLabel="Green" colorLabel="IBBuiltInLabel-Green">
-                                <rect key="frame" x="-10" y="432" width="330" height="392"/>
+                                <rect key="frame" x="-10" y="182" width="389" height="162"/>
                                 <color key="backgroundColor" red="0.01176470611" green="0.98039215800000001" blue="0.070588238540000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
@@ -209,7 +209,7 @@
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="top" secondItem="QTk-5r-Jar" secondAttribute="bottom" constant="10" id="67A-1W-e6I"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="leading" secondItem="zhg-Gf-cYz" secondAttribute="trailing" constant="10" id="73R-B8-C9G"/>
                             <constraint firstItem="gZh-Bu-cSv" firstAttribute="leading" secondItem="AK0-78-fxa" secondAttribute="leading" constant="-10" id="7n6-Sb-BG1"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" id="ISN-Ey-7fb"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" priority="999" id="ISN-Ey-7fb"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="top" secondItem="gZh-Bu-cSv" secondAttribute="bottom" constant="10" id="Mla-1z-7rx"/>
                             <constraint firstItem="q7k-BA-lJR" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" priority="999" id="TaA-uc-IP6"/>
                             <constraint firstAttribute="trailing" secondItem="QTk-5r-Jar" secondAttribute="trailing" constant="-10" id="XSV-q2-fmI"/>
@@ -221,14 +221,9 @@
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="width" secondItem="gZh-Bu-cSv" secondAttribute="width" priority="999" id="uTd-cm-rvC"/>
                             <constraint firstItem="zhg-Gf-cYz" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" priority="999" id="xlv-Cl-arh"/>
                             <constraint firstItem="AK0-78-fxa" firstAttribute="trailing" secondItem="q7k-BA-lJR" secondAttribute="trailing" constant="-10" id="xtH-TV-uR9"/>
-                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" id="ykL-mw-ryh"/>
+                            <constraint firstItem="QTk-5r-Jar" firstAttribute="height" secondItem="gZh-Bu-cSv" secondAttribute="height" priority="999" id="ykL-mw-ryh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AK0-78-fxa"/>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <exclude reference="1tl-P8-tUa"/>
-                            </mask>
-                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7d5-k4-fur" userLabel="First Responder" sceneMemberID="firstResponder"/>
