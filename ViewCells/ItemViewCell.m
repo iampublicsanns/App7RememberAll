@@ -17,7 +17,7 @@
 
 @implementation ItemViewCell
 
-// not called
+// never called
 - (instancetype) init {
   if ([super init] == nil) return nil;
   
@@ -99,6 +99,9 @@
 //    }
 //  }
 }
+
+
+#pragma mark touch events
 
 - (void) setOnClickBlock: (void (^)(void)) block {
   self.block = block;

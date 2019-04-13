@@ -28,7 +28,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   
   NSLog(@"%@", data.description);
   NSLog(@"%@", response.description);
-  NSLog(@"%@", error);
   
   if(error) {
     NSLog(@"%@", error);
@@ -91,10 +90,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
           completionHandler:^(NSData * _Nullable data,
                               NSURLResponse * _Nullable response,
                               NSError * _Nullable error) {
-            NSLog(@"%@", data.description);
-            NSLog(@"%@", response.description);
-            NSLog(@"%@", error);
-            
             
             id pkg = [GalleryVC sessionCheckData: data
                                         response: response
