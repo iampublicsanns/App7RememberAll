@@ -21,11 +21,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
-  
   NSLog(@"view did load");
 //  NSLog(@"%@", [[UIImage new] performSelector:@selector(myDescription)]); //no compile error
 //  NSLog(@"%@", [[UIImage new] myDescription]); //has compiler error
+  
+  
+  //coursera Bars
+  [self setNeedsStatusBarAppearanceUpdate];
   
   self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
   
@@ -54,7 +56,7 @@
   
   
   
-  [self presentGallery];
+//  [self presentGallery];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -67,6 +69,19 @@
   [super viewDidDisappear:animated];
   
   NSLog(@"view did disappear");
+}
+
+//coursera Bars
+// нет фона, поэтому белые буквы не видно на моем белом приложении.
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  bool light = false;
+  if(light) {
+    //dark text
+    return UIStatusBarStyleDefault;
+  }
+  
+  //light text, not background
+  return UIStatusBarStyleLightContent;
 }
 
 //- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
