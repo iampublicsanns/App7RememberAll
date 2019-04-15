@@ -124,6 +124,16 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                               @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
                               farm, server, imageId, secret
                               ];
+
+  //можно загружать синхронно, а еще
+  //можно при начале загрузки зарезервировать место, в которое записать результат после загрузки
+  //[self startLoadingAsync:imageUrlString];
+  [self startLoadingSync:imageUrlString];
+
+}
+
+
+- (void) startLoadingAsync: (NSString*)imageUrlString {
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
   
@@ -138,8 +148,9 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 //                                        response: response
 //                                           error: error];
             
+            NSLog(@"\n  finished loading %@", imageUrlString);
             if(error) {
-              NSLog(@"%@", error);
+              NSLog(@"\n  %@", error);
               return ;
             }
             
@@ -155,6 +166,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 //                          secret: secret
 //                            farm: farm];
             
+            [NSThread sleepForTimeInterval: 1.0 ];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
               [self.collectionView reloadData];
             });
@@ -163,8 +176,67 @@ static NSString * const reuseIdentifier = @"SimpleCell";
    resume];
 }
 
+- (NSData * _Nullable) startLoadingSync: (NSString*)imageUrlString {
+  
+  NSURL *url = [NSURL URLWithString:imageUrlString];
+  NSURLSession *session = [NSURLSession sharedSession];
+  
+  NSLog(@"\n  start loading %@", imageUrlString);
+  
+  dispatch_semaphore_t sem;
+  sem = dispatch_semaphore_create(0);
+  __block NSData * result = nil;
+  
+  [[session dataTaskWithURL:url
+          completionHandler:^(NSData * _Nullable data,
+                              NSURLResponse * _Nullable response,
+                              NSError * _Nullable error) {
+            
+            NSLog(@"\n  finished loading %@", imageUrlString);
+            if(error) {
+              NSLog(@"\n  %@", error);
+              return ;
+            }
+            
+            NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+            if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
+              return;
+            }
+            
+            //todo leak ??
+            [self appendImage: data];
+            
+            [NSThread sleepForTimeInterval: 1.0 ];
+            
+            dispatch_semaphore_signal(sem);
+            dispatch_sync(dispatch_get_main_queue(), ^{
+              [self.collectionView reloadData];
+            });
+          }
+    ]
+   resume];
+  
+  dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+  
+  return result;
+}
+
+
 
 - (void) startLoadingImages: (NSArray*) images {
+  dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+    
+    for (int i = 0; i < images.count; i++) {
+      dispatch_sync(serial, ^{
+        [self startLoadingPicture: images[i]];
+      });
+    }
+    
+  });
+}
+
+- (void) startLoadingImagesSequentially: (NSArray*) images {
   for (int i = 0; i < images.count; i++) {
     [self startLoadingPicture: images[i]];
   }
