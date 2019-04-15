@@ -12,6 +12,11 @@
 #import "Config.h"
 
 @interface GalleryVC ()
+//https://youtu.be/Z436l0z72R8?t=211
+//UICollectionViewLayout custom
+{
+  NSArray *dataArr;
+}
 
 @property (nonatomic) NSMutableArray<UIImage*> *gallery;
 @end
@@ -30,7 +35,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSLog(@"%@", response.description);
   
   if(error) {
-    NSLog(@"%@", error);
+    NSLog(@"\n  %@", error);
     return nil;
   }
   
@@ -96,7 +101,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                            error: error];
             
             
-            id images = [self handleGetPublicPhotos: pkg];
+            id images = [self handleGetPublicPhotosJSON: pkg];
             [self startLoadingImages:images];
           }
     ]
@@ -104,14 +109,15 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 }
 
 //todo check docs on json
-- (id) handleGetPublicPhotos: (id) pkg {
+- (id) handleGetPublicPhotosJSON: (id) pkg {
   NSArray* images = pkg[@"photos"][@"photo"];
   
   NSRange range;
   range.location = 0;
-  range.length = 4;
+  range.length = 100;
   
-  return [images subarrayWithRange:range];
+  //return [images subarrayWithRange:range];
+  return images;
 }
 
 - (void) startLoadingPicture: (id) json {
@@ -121,7 +127,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSNumber* farm = json[@"farm"];
   
   NSString *imageUrlString = [NSString stringWithFormat:
-                              @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
+                              @"https://farm%@.staticflickr.com/%@/%@_%@_m.jpg",
                               farm, server, imageId, secret
                               ];
 
@@ -137,7 +143,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
   
-  NSLog(@"  start loading %@", imageUrlString);
+  NSLog(@"\n  start loading %@", imageUrlString);
   
   [[session dataTaskWithURL:url
           completionHandler:^(NSData * _Nullable data,

@@ -112,7 +112,7 @@
 }
 
 -(NSString *) description {
-  return [NSString stringWithFormat:@"Sanz -- %@", super.description];
+  return [NSString stringWithFormat:@"\n  Sanz -- %@", super.description];
 }
 
 @end
