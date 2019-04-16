@@ -134,7 +134,15 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   //можно загружать синхронно, а еще
   //можно при начале загрузки зарезервировать место, в которое записать результат после загрузки
   //[self startLoadingAsync:imageUrlString];
-  [self startLoadingSync:imageUrlString];
+  
+  //синхр:
+  NSData * _Nullable data = [self startLoadingSync:imageUrlString];
+  [self appendImage: data];
+  //
+  dispatch_sync(dispatch_get_main_queue(), ^{
+    [self.collectionView reloadData];
+  });
+  
 
 }
 
@@ -190,6 +198,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSLog(@"\n  start loading %@", imageUrlString);
   
   dispatch_semaphore_t sem;
+  //если здесь остановиться на 20 секунд, то дальше уже не идет
   sem = dispatch_semaphore_create(0);
   __block NSData * result = nil;
   
@@ -209,15 +218,11 @@ static NSString * const reuseIdentifier = @"SimpleCell";
               return;
             }
             
-            //todo leak ??
-            [self appendImage: data];
+            result = data;
             
             [NSThread sleepForTimeInterval: 1.0 ];
             
             dispatch_semaphore_signal(sem);
-            dispatch_sync(dispatch_get_main_queue(), ^{
-              [self.collectionView reloadData];
-            });
           }
     ]
    resume];
