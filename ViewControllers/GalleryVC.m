@@ -102,7 +102,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
             
             
             id images = [self handleGetPublicPhotosJSON: pkg];
-            [self startLoadingImages:images];
+            [self startLoadingImagesSequentially:images];
           }
     ]
    resume];
@@ -229,7 +229,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 
 
-- (void) startLoadingImages: (NSArray*) images {
+- (void) startLoadingImagesSequentially: (NSArray*) images {
   dispatch_async(dispatch_get_global_queue(0, 0), ^{
     dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
     
@@ -242,7 +242,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   });
 }
 
-- (void) startLoadingImagesSequentially: (NSArray*) images {
+- (void) startLoadingImages: (NSArray*) images {
   for (int i = 0; i < images.count; i++) {
     [self startLoadingPicture: images[i]];
   }
