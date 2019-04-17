@@ -56,7 +56,12 @@
   [self.contentView addSubview: self.imageView];
   
   self.imageView.layer.cornerRadius = 5;
-  //self.imageView.clipsToBounds = YES;
+  self.imageView.clipsToBounds = YES;
+  
+  //coursera Intro to UIImageView
+  self.imageView.layer.borderWidth = 1;
+  // instead of autofix:
+  self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
   
   //positioning
   self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
