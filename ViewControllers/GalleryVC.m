@@ -235,16 +235,17 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 
 - (void) startLoadingImagesSequentially: (NSArray*) images {
-  dispatch_async(dispatch_get_global_queue(0, 0), ^{
     dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
     
     for (int i = 0; i < images.count; i++) {
-      dispatch_sync(serial, ^{
+      //если фотки заканчивают загрузку в том же порядке, что и начинают,
+      //то неважно dispatch_sync или dispatch_async. Просто dispatch_async накидает в serial очередь задач, и они будут последовательно выполняться (в т.ч. completionHandler'ы).
+      // Если complitionHandler'ы могут вызываться беспорядочно, то
+      // Да вообще нет смысла dispatch_sync, раз кидаешь в serial очередь, раз они всё равно выстроятся в одну цепочку.
+      dispatch_async(serial, ^{
         [self startLoadingPicture: images[i]];
       });
     }
-    
-  });
 }
 
 - (void) startLoadingImages: (NSArray*) images {
