@@ -22,6 +22,10 @@
 @end
 
 @implementation GalleryVC
+{
+  //keeping to test a leak
+  PreviewViewController *previewViewController;
+}
 
 //https://www.youtube.com/watch?v=qV4gHfqwFPU
 //ObjectiveC, Autoresizing mask, Autolayout
@@ -91,7 +95,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSURL *url = [NSURL URLWithString:urlString];
   NSURLSession *session = [NSURLSession sharedSession];
   
-  [[session dataTaskWithURL:url
+  __auto_type __weak weakSelf = self;
+  NSURLSessionDataTask *task = [session dataTaskWithURL:url
           completionHandler:^(NSData * _Nullable data,
                               NSURLResponse * _Nullable response,
                               NSError * _Nullable error) {
@@ -101,16 +106,17 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                            error: error];
             
             
-            id images = [self handleGetPublicPhotosJSON: pkg];
-            [self startLoadingImagesSequentially:images];
+            id images = [weakSelf handleGetPublicPhotosJSON: pkg];
+            [weakSelf startLoadingImagesSequentially:images];
           }
-    ]
-   resume];
+    ];
+  [task resume];
 }
 
 //todo check docs on json
-- (id) handleGetPublicPhotosJSON: (id) pkg {
-  NSArray* images = pkg[@"photos"][@"photo"];
+- (id)handleGetPublicPhotosJSON:(id)pkg
+{
+  NSArray *images = pkg[@"photos"][@"photo"];
   
   NSRange range;
   range.location = 0;
@@ -127,7 +133,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSNumber* farm = json[@"farm"];
   
   NSString *imageUrlString = [NSString stringWithFormat:
-                              @"https://farm%@.staticflickr.com/%@/%@_%@_m.jpg",
+                              @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
                               farm, server, imageId, secret
                               ];
 
@@ -139,8 +145,10 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSData * _Nullable data = [self startLoadingSync:imageUrlString];
   [self appendImage: data];
   //
+  __auto_type __weak weakSelf = self;
+
   dispatch_sync(dispatch_get_main_queue(), ^{
-    [self.collectionView reloadData];
+    [weakSelf.collectionView reloadData];
   });
   
 
@@ -152,6 +160,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSURLSession *session = [NSURLSession sharedSession];
   
   NSLog(@"\n  start loading %@", imageUrlString);
+  
+  __auto_type __weak weakSelf = self;
   
   [[session dataTaskWithURL:url
           completionHandler:^(NSData * _Nullable data,
@@ -174,7 +184,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
             }
             
             //todo leak ??
-            [self appendImage: data];
+            [weakSelf appendImage: data];
 //            [self displayImageId: imageId
 //                          server: server
 //                          secret: secret
@@ -183,7 +193,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
             [NSThread sleepForTimeInterval: 1.0 ];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-              [self.collectionView reloadData];
+              [weakSelf.collectionView reloadData];
             });
           }
     ]
@@ -242,8 +252,11 @@ static NSString * const reuseIdentifier = @"SimpleCell";
       //то неважно dispatch_sync или dispatch_async. Просто dispatch_async накидает в serial очередь задач, и они будут последовательно выполняться (в т.ч. completionHandler'ы).
       // Если complitionHandler'ы могут вызываться беспорядочно, то
       // Да вообще нет смысла dispatch_sync, раз кидаешь в serial очередь, раз они всё равно выстроятся в одну цепочку.
+      
+      __auto_type __weak weakSelf = self;
+
       dispatch_async(serial, ^{
-        [self startLoadingPicture: images[i]];
+        [weakSelf startLoadingPicture: images[i]];
       });
     }
 }
@@ -276,9 +289,20 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 - (void) presentImage:(UIImage*) image {
   PreviewViewController *previewVC = [[PreviewViewController alloc] initWithImage: image];
   
-  [self presentViewController:previewVC animated:YES completion:nil];
+  __auto_type __weak weakSelf = self;
+  
+  previewVC.completion = ^{
+    [weakSelf previewDidSave];
+  };
+  
+  previewViewController = previewVC;
+  [self.navigationController pushViewController:previewVC animated:YES];
 }
 
+- (void)previewDidSave
+{
+  NSLog(@"Ricardo has saved preview");
+}
 
 
 
