@@ -35,6 +35,8 @@
   [self.appDelegate saveContext];
   
   NSLog(@"%@", [[self.appDelegate getPlaces] description]);
+  
+  [self presentGallery];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,10 +55,6 @@
 //  ]
   
   NSLog(@"view did appear");
-  
-  
-  
-//  [self presentGallery];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -113,10 +111,6 @@
   //  collectionVC.view.backgroundColor = UIColor.blueColor; //cant see effect
   //  collectionVC.view.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor); //animation disappears
   collectionVC.view.layer.opacity = 0.8;
-  //coursera Intro to UIImageView
-  collectionVC.view.layer.borderWidth = 15;
-  // instead of autofix:
-  collectionVC.view.layer.borderColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1].CGColor;
   
   //TODO why default is all black?
   // modally but 1st view disappears ?
@@ -133,7 +127,8 @@
   //The layout object is stored in the collectionViewLayout property. Setting this property directly updates the layout immediately, without animating the changes.
   NSLog(@"%@", collectionVC.collectionView.collectionViewLayout.description);
   
-  [self presentViewController:collectionVC animated:YES completion:nil];
+  //[self presentViewController:collectionVC animated:YES completion:nil];
+  [self.navigationController pushViewController:collectionVC animated:YES];
 }
 
 
