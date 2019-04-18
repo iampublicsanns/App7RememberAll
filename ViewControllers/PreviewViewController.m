@@ -8,10 +8,12 @@
 
 #import "PreviewViewController.h"
 
-@interface PreviewViewController ()
+// protocol adopting - coursera ScrollView
+@interface PreviewViewController () <UIScrollViewDelegate>
 {
   UIImage * _image;
 }
+@property (nonatomic) UIScrollView *scrollView;
 @end
 
 @implementation PreviewViewController
@@ -31,74 +33,52 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
   
+  [self setupViews];
+}
+
+- (void)onSave{
+  if (self.completion)
+  {
+    self.completion();
+  }
+}
+
+
+- (void)setupViews{
+  self.scrollView = [[UIScrollView alloc] init];
+  
+  CGSize parentSize = self.view.frame.size;
+  self.scrollView.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+  
+  self.scrollView.layer.borderWidth = 2;
+  self.scrollView.layer.borderColor = [UIColor colorWithRed:0.7 green:0.4 blue:1 alpha:0.8].CGColor;
+  
+  CGFloat zoom = 10.0;
+  self.scrollView.maximumZoomScale = zoom;
+  self.scrollView.minimumZoomScale = 0.1;
+  self.scrollView.delegate = self;
+  
+  self.scrollView.pagingEnabled = true;
+  
+  [self.view addSubview: self.scrollView];
+  
+  
   UIImageView* imageView = [[UIImageView alloc] initWithImage: _image];
-  [self.view addSubview:imageView];
+  
+  imageView.userInteractionEnabled = true;
+  //imageView.isUserInteractionEnabled = true;
+  imageView.multipleTouchEnabled = true;
+  
+  self.scrollView.contentSize = imageView.frame.size;
+  [self.scrollView addSubview:imageView];
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+#pragma mark <UIScrollViewDelegate>
+
+// return a view that will be scaled. if delegate returns nil, nothing happens
+- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+  return self.scrollView.subviews[0];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
