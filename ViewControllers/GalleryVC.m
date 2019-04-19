@@ -19,7 +19,9 @@
 }
 
 @property (nonatomic) NSMutableArray<UIImage*> *gallery;
-@property (nonatomic) NSArray<NSString*> *imagesCatalogue;
+@property (nonatomic) NSArray<NSDictionary*> *imagesCatalogue;
+
+//@property (class, nonatomic) NSDictionary *cachedImages;
 @end
 
 @implementation GalleryVC
@@ -31,6 +33,26 @@
 //https://www.youtube.com/watch?v=qV4gHfqwFPU
 //ObjectiveC, Autoresizing mask, Autolayout
 static NSString * const reuseIdentifier = @"SimpleCell";
+
+static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
+
+# pragma mark Static variable accessors
+
+//https://useyourloaf.com/blog/objective-c-class-properties
++ (NSMutableDictionary*)cachedImages{
+  if (_cachedImages == nil) {
+    _cachedImages = [NSMutableDictionary dictionaryWithDictionary:@{}];
+  }
+  
+  return _cachedImages;
+}
++ (void)addCachedImage:(NSData*)imageData
+                 byUrl:(NSString*)url{
+  _cachedImages[url] = imageData;
+}
+
+
+#pragma mark Static methods
 
 + (id) sessionCheckData: (NSData * _Nullable) data
                response:(NSURLResponse * _Nullable) response
@@ -63,7 +85,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 /*
  Creates a serial queue and dispatches asynchronously
  */
-+ (void)asyncGetImage:(id)json
++ (void)asyncGetImage:(NSDictionary*)json
            completion:(void(^)(UIImage*))completion{
   
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
@@ -71,9 +93,17 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
   
   dispatch_async(serial, ^{
+    NSData *data = GalleryVC.cachedImages[url];
+    
+    if(data != nil) {
+      UIImage *image = [UIImage imageWithData:data];
+      if(completion) completion(image);
+    }
     [GalleryVC startLoadingPictureWithUrl:url
                                completion:^(NSData *data){
+                                 [GalleryVC addCachedImage:data byUrl:url];
                                  UIImage *image = [UIImage imageWithData:data];
+                                 
                                  if(completion) completion(image);
                                }];
   });
@@ -92,15 +122,15 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return self;
 }
 
-- (void) setGallery {
-  self.gallery = [NSMutableArray arrayWithArray: @[] ];
+- (void) initGallery {
+  _gallery = [NSMutableArray arrayWithArray: @[] ];
 //  [self.gallery addObject:@4];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   if([super initWithCollectionViewLayout: layout] == nil) return nil;
   
-  [self setGallery];
+  [self initGallery];
   //[self startLoading];
   
   return self;
@@ -154,7 +184,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return images;
 }
 
-+ (NSString*)makeUrlStringFromJSON:(id)json{
++ (NSString*)makeUrlStringFromJSON:(NSDictionary*)json{
   NSString* imageId = json[@"id"];
   NSString* server = json[@"server"];
   NSString* secret = json[@"secret"];
@@ -254,6 +284,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //              [weakSelf.collectionView reloadData];
 //            });
+            
+            // (weakSelf.cancelLoading) unrecognized selector
             
             if(completion) completion(data);
           }
