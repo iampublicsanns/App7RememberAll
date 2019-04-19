@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PreviewViewController : UIViewController
+@property (nonatomic, copy) void (^completion)(void);
 
 - (instancetype) initWithImage: (UIImage *)image;
 @end
