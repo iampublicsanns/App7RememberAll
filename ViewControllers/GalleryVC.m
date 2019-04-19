@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic) NSMutableArray<UIImage*> *gallery;
+@property (nonatomic) NSArray<NSString*> *imagesCatalogue;
 @end
 
 @implementation GalleryVC
@@ -59,6 +60,25 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return pkg;
 }
 
+/*
+ Creates a serial queue and dispatches asynchronously
+ */
++ (void)asyncGetImage:(id)json
+           completion:(void(^)(UIImage*))completion{
+  
+  NSString *url = [GalleryVC makeUrlStringFromJSON:json];
+  
+  dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+  
+  dispatch_async(serial, ^{
+    [GalleryVC startLoadingPictureWithUrl:url
+                               completion:^(NSData *data){
+                                 UIImage *image = [UIImage imageWithData:data];
+                                 if(completion) completion(image);
+                               }];
+  });
+  
+}
 
 //like in coursera core data course
 - (id) init {
@@ -106,15 +126,23 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                            error: error];
             
             
-            id images = [weakSelf handleGetPublicPhotosJSON: pkg];
-            [weakSelf startLoadingImagesSequentially:images];
+            NSArray *images = [weakSelf handleGetPublicPhotosJSON: pkg];
+            
+            //[weakSelf startLoadingImagesSequentially:images];
+            weakSelf.imagesCatalogue = images;
+            
+            // signal the collection view to start loading images
+            dispatch_sync(dispatch_get_main_queue(), ^{
+              [weakSelf.collectionView reloadData];
+            });
+            
           }
     ];
   [task resume];
 }
 
 //todo check docs on json
-- (id)handleGetPublicPhotosJSON:(id)pkg
+- (NSArray*)handleGetPublicPhotosJSON:(id)pkg
 {
   NSArray *images = pkg[@"photos"][@"photo"];
   
@@ -126,7 +154,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return images;
 }
 
-- (void) startLoadingPicture: (id) json {
++ (NSString*)makeUrlStringFromJSON:(id)json{
   NSString* imageId = json[@"id"];
   NSString* server = json[@"server"];
   NSString* secret = json[@"secret"];
@@ -136,13 +164,19 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                               @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
                               farm, server, imageId, secret
                               ];
+  
+  return imageUrlString;
+}
+
+- (void)startLoadingPicture:(id)json {
+  NSString *imageUrlString = [GalleryVC makeUrlStringFromJSON:json];
 
   //можно загружать синхронно, а еще
   //можно при начале загрузки зарезервировать место, в которое записать результат после загрузки
   //[self startLoadingAsync:imageUrlString];
   
   //синхр:
-  NSData * _Nullable data = [self startLoadingSync:imageUrlString];
+  NSData * _Nullable data = [GalleryVC startLoadingSync:imageUrlString];
   [self appendImage: data];
   //
   __auto_type __weak weakSelf = self;
@@ -154,8 +188,32 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 }
 
+/**
+ Returns an image. Synchronous request
+ */
++ (UIImage*)startLoadingPictureWithUrl:(NSString*)imageUrlString{
+  //problem ?
+  NSData * _Nullable data = [GalleryVC startLoadingSync:imageUrlString];
+  
+  return [UIImage imageWithData:data];
+}
+/**
+ Returns an image. Asynchronous request
+ */
++ (void)startLoadingPictureWithUrl:(NSString*)imageUrlString
+                            completion:(void(^)(NSData *data))completion{
+  
+  [GalleryVC startLoadingAsync:imageUrlString
+                    completion:^(NSData *data){
+                      completion(data);
+                    }];
+}
 
-- (void) startLoadingAsync: (NSString*)imageUrlString {
+
+
++ (void)startLoadingAsync:(NSString*)imageUrlString
+               completion:(void(^)(NSData * _Nullable data))completion{
+  
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
   
@@ -184,23 +242,26 @@ static NSString * const reuseIdentifier = @"SimpleCell";
             }
             
             //todo leak ??
-            [weakSelf appendImage: data];
+            //[weakSelf appendImage: data];
+            
 //            [self displayImageId: imageId
 //                          server: server
 //                          secret: secret
 //                            farm: farm];
             
             [NSThread sleepForTimeInterval: 1.0 ];
+//
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//              [weakSelf.collectionView reloadData];
+//            });
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-              [weakSelf.collectionView reloadData];
-            });
+            if(completion) completion(data);
           }
     ]
    resume];
 }
 
-- (NSData * _Nullable) startLoadingSync: (NSString*)imageUrlString {
++ (NSData * _Nullable)startLoadingSync:(NSString*)imageUrlString{
   
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
@@ -322,6 +383,12 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     [self startLoading];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  NSLog(@"gallery did appear");
+  
+  [self.collectionView reloadData];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -341,7 +408,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return self.gallery.count;
+  return self.imagesCatalogue.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -349,11 +416,30 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   ItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
                                                                    forIndexPath:indexPath];
   
-  UIImage *image = self.gallery[indexPath.item];
+  [cell resetViews];
+//  UIImage *image = self.gallery[indexPath.item];
+  
+  __auto_type __weak weakSelf = self;
+  
+  
+  //todo leak?
+  __block UIImage *image = nil;
   
   // Configure the cell
   cell.contentView.backgroundColor = UIColor.redColor;
-  [cell setImage: image];
+  //[cell setImage: image];
+  
+  [GalleryVC asyncGetImage:self.imagesCatalogue[indexPath.item]
+                completion:^(UIImage* loadedImage){
+                  
+                  image = loadedImage;
+                  
+                  dispatch_async(dispatch_get_main_queue(),^{
+                    [cell setImage: loadedImage];
+                    //[weakSelf.collectionView reloadData];
+                  });
+                  
+  }];
   
   
 // todo what is it for ?
@@ -362,7 +448,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 //                                  )
 //  withSender:image];
   
-  __weak id weakSelf = self;
   
   [cell setOnClickBlock: ^{
     [weakSelf presentImage:image];
