@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (weak, nonatomic)
 @property (nonatomic) UIImage* image;
 
+- (void)resetViews;
 - (void) setOnClickBlock: (void (^)(void)) block;
 @end
 

@@ -74,7 +74,11 @@
   [singleTap setNumberOfTapsRequired:1];
   [self.imageView addGestureRecognizer:singleTap];
 }
-  
+
+- (void)resetViews{
+  self.imageView.image = nil;
+}
+
 -(void) setImage:(UIImage*) image {
   if (self.imageView == nil) [self createImageView];
   //[self makeButton];
