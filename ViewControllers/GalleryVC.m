@@ -6,6 +6,7 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
+#import "../ModelControllers/DataManager.h"
 #import "GalleryVC.h"
 #import "ItemViewCell.h"
 #import "PreviewViewController.h"
@@ -16,12 +17,11 @@
 //UICollectionViewLayout custom
 {
   NSArray *dataArr;
+  BOOL cancelLoading;
 }
 
 @property (nonatomic) NSMutableArray<UIImage*> *gallery;
 @property (nonatomic) NSArray<NSDictionary*> *imagesCatalogue;
-
-//@property (class, nonatomic) NSDictionary *cachedImages;
 @end
 
 @implementation GalleryVC
@@ -34,22 +34,6 @@
 //ObjectiveC, Autoresizing mask, Autolayout
 static NSString * const reuseIdentifier = @"SimpleCell";
 
-static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
-
-# pragma mark Static variable accessors
-
-//https://useyourloaf.com/blog/objective-c-class-properties
-+ (NSMutableDictionary*)cachedImages{
-  if (_cachedImages == nil) {
-    _cachedImages = [NSMutableDictionary dictionaryWithDictionary:@{}];
-  }
-  
-  return _cachedImages;
-}
-+ (void)addCachedImage:(NSData*)imageData
-                 byUrl:(NSString*)url{
-  _cachedImages[url] = imageData;
-}
 
 
 #pragma mark Static methods
@@ -90,27 +74,8 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
   
-  [GalleryVC asyncGetImageByUrl:url
+  [DataManager asyncGetImageByUrl:url
                      completion:completion];
-}
-/*
- Creates a serial queue and dispatches asynchronously
- */
-+ (void)asyncGetImageByUrl:(NSString*)url
-                completion:(void(^)(UIImage*))completion {
-  
-  dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
-  
-  dispatch_async(serial, ^{
-    [GalleryVC startLoadingPictureWithUrl:url
-                               completion:^(NSData *data){
-                                 [GalleryVC addCachedImage:data byUrl:url];
-                                 UIImage *image = [UIImage imageWithData:data];
-                                 
-                                 if(completion) completion(image);
-                               }];
-  });
-  
 }
 
 //like in coursera core data course
@@ -236,71 +201,6 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   
   return [UIImage imageWithData:data];
 }
-/**
- Returns an image. Asynchronous request
- */
-+ (void)startLoadingPictureWithUrl:(NSString*)imageUrlString
-                            completion:(void(^)(NSData *data))completion{
-  
-  [GalleryVC startLoadingAsync:imageUrlString
-                    completion:^(NSData *data){
-                      completion(data);
-                    }];
-}
-
-
-
-+ (void)startLoadingAsync:(NSString*)imageUrlString
-               completion:(void(^)(NSData * _Nullable data))completion{
-  
-  NSURL *url = [NSURL URLWithString:imageUrlString];
-  NSURLSession *session = [NSURLSession sharedSession];
-  
-  NSLog(@"\n  start loading %@", imageUrlString);
-  
-  __auto_type __weak weakSelf = self;
-  
-  [[session dataTaskWithURL:url
-          completionHandler:^(NSData * _Nullable data,
-                              NSURLResponse * _Nullable response,
-                              NSError * _Nullable error) {
-//do not check json here
-//            id pkg = [GalleryVC sessionCheckData: data
-//                                        response: response
-//                                           error: error];
-            
-            NSLog(@"\n  finished loading %@", imageUrlString);
-            if(error) {
-              NSLog(@"\n  %@", error);
-              return ;
-            }
-            
-            NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-            if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
-              return;
-            }
-            
-            //todo leak ??
-            //[weakSelf appendImage: data];
-            
-//            [self displayImageId: imageId
-//                          server: server
-//                          secret: secret
-//                            farm: farm];
-            
-            [NSThread sleepForTimeInterval: 1.0 ];
-//
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//              [weakSelf.collectionView reloadData];
-//            });
-            
-            // (weakSelf.cancelLoading) unrecognized selector
-            
-            if(completion) completion(data);
-          }
-    ]
-   resume];
-}
 
 + (NSData * _Nullable)startLoadingSync:(NSString*)imageUrlString{
   
@@ -405,7 +305,7 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   Opens the image in a new view controller.
  */
 - (void)presentImageByUrl:(NSString*)url {
-  UIImage *image = [UIImage imageWithData:_cachedImages[url] ];
+  UIImage *image = [UIImage imageWithData:[DataManager cachedImages][url]];
   
   PreviewViewController *previewVC;
   
@@ -482,7 +382,7 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   
   NSDictionary *json = self.imagesCatalogue[indexPath.item];
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
-  NSData *data = GalleryVC.cachedImages[url];
+  NSData *data = [DataManager cachedImages][url];
   
   if(data != nil) {
     UIImage *image = [UIImage imageWithData:data];
