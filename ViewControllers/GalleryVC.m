@@ -93,12 +93,6 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
   
   dispatch_async(serial, ^{
-    NSData *data = GalleryVC.cachedImages[url];
-    
-    if(data != nil) {
-      UIImage *image = [UIImage imageWithData:data];
-      if(completion) completion(image);
-    }
     [GalleryVC startLoadingPictureWithUrl:url
                                completion:^(NSData *data){
                                  [GalleryVC addCachedImage:data byUrl:url];
@@ -392,6 +386,13 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   [self.navigationController pushViewController:previewVC animated:YES];
 }
 
+- (void)presentImageByUrl:(NSString*)url {
+  UIImage *image = [UIImage imageWithData:_cachedImages[url] ];
+  
+  PreviewViewController *previewVC = [[PreviewViewController alloc] initWithImage:image];
+  [self.navigationController pushViewController:previewVC animated:YES];
+}
+
 - (void)previewDidSave
 {
   NSLog(@"Ricardo has saved preview");
@@ -448,30 +449,41 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   ItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier
                                                                    forIndexPath:indexPath];
   
-  [cell resetViews];
-//  UIImage *image = self.gallery[indexPath.item];
-  
   __auto_type __weak weakSelf = self;
   
   
   //todo leak?
   __block UIImage *image = nil;
   
-  // Configure the cell
-  cell.contentView.backgroundColor = UIColor.redColor;
-  //[cell setImage: image];
+  NSDictionary *json = self.imagesCatalogue[indexPath.item];
+  NSString *url = [GalleryVC makeUrlStringFromJSON:json];
+  NSData *data = GalleryVC.cachedImages[url];
   
-  [GalleryVC asyncGetImage:self.imagesCatalogue[indexPath.item]
-                completion:^(UIImage* loadedImage){
-                  
-                  image = loadedImage;
-                  
-                  dispatch_async(dispatch_get_main_queue(),^{
-                    [cell setImage: loadedImage];
-                    //[weakSelf.collectionView reloadData];
-                  });
-                  
-  }];
+  if(data != nil) {
+    UIImage *image = [UIImage imageWithData:data];
+    [cell setImage:image];
+  } else {
+    [cell resetViews];
+    
+    // Configure the cell
+    cell.contentView.backgroundColor = UIColor.redColor;
+    cell.contentView.layer.borderWidth = 1.0;
+    cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
+    
+    [GalleryVC asyncGetImage:self.imagesCatalogue[indexPath.item]
+                  completion:^(UIImage* loadedImage){
+                    
+                    //image = loadedImage;
+                    
+                    dispatch_async(dispatch_get_main_queue(),^{
+                      [cell setImage: loadedImage];
+                    });
+                    
+                  }];
+  }
+  
+  
+  
   
   
 // todo what is it for ?
@@ -480,9 +492,8 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
 //                                  )
 //  withSender:image];
   
-  
   [cell setOnClickBlock: ^{
-    [weakSelf presentImage:image];
+    [weakSelf presentImageByUrl:url];
   }];
   
   //coursera The Full Core Data Example 2
