@@ -90,6 +90,15 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
   
+  [GalleryVC asyncGetImageByUrl:url
+                     completion:completion];
+}
+/*
+ Creates a serial queue and dispatches asynchronously
+ */
++ (void)asyncGetImageByUrl:(NSString*)url
+                completion:(void(^)(UIImage*))completion {
+  
   dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
   
   dispatch_async(serial, ^{
@@ -178,18 +187,24 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   return images;
 }
 
-+ (NSString*)makeUrlStringFromJSON:(NSDictionary*)json{
++ (NSString*)makeUrlStringFromJSON:(NSDictionary*)json
+                            suffix:(NSString*)suffix{
   NSString* imageId = json[@"id"];
   NSString* server = json[@"server"];
   NSString* secret = json[@"secret"];
   NSNumber* farm = json[@"farm"];
   
   NSString *imageUrlString = [NSString stringWithFormat:
-                              @"https://farm%@.staticflickr.com/%@/%@_%@_b.jpg",
-                              farm, server, imageId, secret
+                              @"https://farm%@.staticflickr.com/%@/%@_%@_%@.jpg",
+                              farm, server, imageId, secret, suffix
                               ];
   
   return imageUrlString;
+}
+
++ (NSString*)makeUrlStringFromJSON:(NSDictionary*)json{
+  return [GalleryVC makeUrlStringFromJSON:json
+                            suffix:@"m"];
 }
 
 - (void)startLoadingPicture:(id)json {
@@ -386,10 +401,20 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   [self.navigationController pushViewController:previewVC animated:YES];
 }
 
+/**
+  Opens the image in a new view controller.
+ */
 - (void)presentImageByUrl:(NSString*)url {
   UIImage *image = [UIImage imageWithData:_cachedImages[url] ];
   
-  PreviewViewController *previewVC = [[PreviewViewController alloc] initWithImage:image];
+  PreviewViewController *previewVC;
+  
+  if (image == nil) {
+    previewVC = [[PreviewViewController alloc] initWithUrl:url];
+  } else {
+    previewVC = [[PreviewViewController alloc] initWithImage:image];
+  }
+  
   [self.navigationController pushViewController:previewVC animated:YES];
 }
 
@@ -491,6 +516,9 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
 //                                  presentImage:
 //                                  )
 //  withSender:image];
+  
+  url = [GalleryVC makeUrlStringFromJSON:json
+                                  suffix:@"b"];
   
   [cell setOnClickBlock: ^{
     [weakSelf presentImageByUrl:url];
