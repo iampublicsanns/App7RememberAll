@@ -12,8 +12,11 @@
 #import <UIKit/UIKit.h>
 
 @interface DataManager:NSObject
++ (void)asyncGetImage:(NSDictionary*)json
+           completion:(void(^)(UIImage*))completion;
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage *image))completion;
++ (NSMutableDictionary*)cachedImages;
 
 @end
 
