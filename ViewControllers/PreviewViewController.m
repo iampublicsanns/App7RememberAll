@@ -6,6 +6,7 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
+#import "../ModelControllers/DataManager.h"
 #import "PreviewViewController.h"
 
 // protocol adopting - coursera ScrollView
@@ -13,16 +14,46 @@
 {
   UIImage * _image;
 }
+@property (nonatomic) dispatch_group_t group;
+@property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UIScrollView *scrollView;
 @end
 
 @implementation PreviewViewController
 
-- (instancetype) initWithImage: (UIImage *)image {
-  _image = image;
 
+- (instancetype)init
+{
+  self = [super init];
+  if (self) {
+    self->_group = dispatch_group_create();
+  }
   return self;
 }
+
+- (instancetype) initWithImage: (UIImage *)image {
+  self = [self init];
+  
+  _image = image;
+  
+  return self;
+}
+
+- (instancetype)initWithUrl:(NSString*)url {
+  self = [self init];
+  
+  dispatch_group_enter(self->_group);
+  
+  [DataManager asyncGetImageByUrl:url
+                     completion:^(UIImage *image) {
+                       //autofix
+                       self->_image = image;
+                       
+                       dispatch_group_leave(self->_group);
+                     }];
+  return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,21 +94,28 @@
   [self.view addSubview: self.scrollView];
   
   
-  UIImageView* imageView = [[UIImageView alloc] initWithImage: _image];
+  self.imageView = [[UIImageView alloc] initWithImage:_image];
   
-  imageView.userInteractionEnabled = true;
+  self.imageView.userInteractionEnabled = true;
   //imageView.isUserInteractionEnabled = true;
-  imageView.multipleTouchEnabled = true;
+  self.imageView.multipleTouchEnabled = true;
   
-  self.scrollView.contentSize = imageView.frame.size;
-  [self.scrollView addSubview:imageView];
+  [self.scrollView addSubview:self.imageView];
+  
+  
+  dispatch_group_notify(self.group, dispatch_get_main_queue(), ^{
+    self.imageView.image = self->_image;
+    [self.imageView sizeToFit];
+    self.scrollView.contentSize = self.imageView.frame.size;
+  });
 }
 
 
 #pragma mark <UIScrollViewDelegate>
 
-// return a view that will be scaled. if delegate returns nil, nothing happens
+//if delegate returns nil, nothing happens
 - (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+  //если скроллвью пустой, то в этот момент в нем всё равно возникают два каких-то UIImageView.
   return self.scrollView.subviews[0];
 }
 
