@@ -16,7 +16,7 @@
            completion:(void(^)(UIImage*))completion;
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage *image))completion;
-+ (NSMutableDictionary*)cachedImages;
++ (NSData*)getCachedImage:(NSString*)url;
 
 @end
 

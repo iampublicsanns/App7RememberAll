@@ -19,25 +19,42 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
 //можно обращаться
 //NSData *data = DataManager.cachedImages[url];
 
+static NSCache *_imagesCache;
 
 # pragma mark Static variable accessors
 
+
 //https://useyourloaf.com/blog/objective-c-class-properties
-+ (NSMutableDictionary*)cachedImages{
-  if (_cachedImages == nil) {
-    _cachedImages = [NSMutableDictionary dictionaryWithDictionary:@{}];
++ (void)makeCache {
+  if (_imagesCache == nil) {
+    //_cachedImages = [NSMutableDictionary dictionaryWithDictionary:@{}];
+    _imagesCache = [[NSCache alloc] init];
   }
+}
++ (NSCache*)cachedImages{
+  [DataManager makeCache];
   
   return _cachedImages;
 }
++ (NSCache*)imagesCache{
+  [DataManager makeCache];
+  
+  return _imagesCache;
+}
 + (void)addCachedImage:(NSData*)imageData
                  byUrl:(NSString*)url{
-  _cachedImages[url] = imageData;
+  [DataManager makeCache];
+  
+  //_cachedImages[url] = imageData;
+  [_imagesCache setObject:imageData forKey:url];
+}
++ (NSData*)getCachedImage:(NSString*)url {
+  return [[DataManager imagesCache] objectForKey:url];
 }
 
 #pragma mark static methods
 
-/*
+/**
  Creates a serial queue and dispatches asynchronously
  */
 + (void)asyncGetImageByUrl:(NSString*)url
@@ -60,6 +77,9 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
   
 }
 
+/**
+ completion evaluates on some NSURLSession completion thread.
+ */
 + (NSURLSessionDataTask*)startLoadingAsync:(NSString*)imageUrlString
                                 completion:(void(^)(NSData * _Nullable data))completion {
   
@@ -98,7 +118,7 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
                                         //                          secret: secret
                                         //                            farm: farm];
                                         
-//                                        [NSThread sleepForTimeInterval: 1.0 ];
+                                        [NSThread sleepForTimeInterval: 1.0 ];
                                         //
                                         //            dispatch_async(dispatch_get_main_queue(), ^{
                                         //              [weakSelf.collectionView reloadData];
