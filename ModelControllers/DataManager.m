@@ -20,6 +20,7 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
 //NSData *data = DataManager.cachedImages[url];
 
 static NSCache *_imagesCache;
+static dispatch_queue_t _serialQueue;
 
 # pragma mark Static variable accessors
 
@@ -31,7 +32,7 @@ static NSCache *_imagesCache;
     _imagesCache = [[NSCache alloc] init];
   }
 }
-+ (NSCache*)cachedImages{
++ (NSMutableDictionary*)cachedImages{
   [DataManager makeCache];
   
   return _cachedImages;
@@ -56,6 +57,9 @@ static NSCache *_imagesCache;
 
 /**
  Creates a serial queue and dispatches asynchronously
+ запускай большую картинку на другой очереди.
+ Хотя вооще-то что мешает загрузкам завершаться в производльном порядке? ведь так раньше и было. Добавляются-то они в очереь последовательно, но запускаются сразу, так что не имеет значения очередность - считай все разом запустились. Ведь завершения загрузки они не ждут, чтобы поставить в очередь следующую?
+   Делов том , что комплишн NSURLSession всё время в одном и том же треде.
  */
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage*))completion {
@@ -94,39 +98,24 @@ static NSCache *_imagesCache;
                                       completionHandler:^(NSData * _Nullable data,
                                                           NSURLResponse * _Nullable response,
                                                           NSError * _Nullable error) {
-                                        //do not check json here
-                                        //            id pkg = [GalleryVC sessionCheckData: data
-                                        //                                        response: response
-                                        //                                           error: error];
                                         
                                         NSLog(@"\n  finished loading %@", imageUrlString);
-                                        if(error) {
-                                          NSLog(@"\n  %@", error);
-                                          return ;
-                                        }
                                         
-                                        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                                        if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
-                                          return;
-                                        }
-                                        
-                                        //todo leak ??
-                                        //[weakSelf appendImage: data];
-                                        
-                                        //            [self displayImageId: imageId
-                                        //                          server: server
-                                        //                          secret: secret
-                                        //                            farm: farm];
-                                        
-                                        [NSThread sleepForTimeInterval: 1.0 ];
-                                        //
-                                        //            dispatch_async(dispatch_get_main_queue(), ^{
-                                        //              [weakSelf.collectionView reloadData];
-                                        //            });
-                                        
-                                        // (weakSelf.cancelLoading) unrecognized selector
-                                        
-                                        if(completion) completion(data);
+                                        dispatch_async([DataManager serialQueue], ^{
+                                          if(error) {
+                                            NSLog(@"\n  %@", error);
+                                            return ;
+                                          }
+                                          
+                                          NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                                          if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
+                                            return;
+                                          }
+                                          
+                                          [NSThread sleepForTimeInterval: 1.0 ];
+                                          
+                                          if(completion) completion(data);
+                                        });
                                       }
                                 ];
   
