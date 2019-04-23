@@ -53,6 +53,17 @@ static dispatch_queue_t _serialQueue;
   return [[DataManager imagesCache] objectForKey:url];
 }
 
++ (void)makeSerialQueue {
+  if (_serialQueue == nil) {
+    _serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+  }
+}
++ (dispatch_queue_t)serialQueue {
+  [DataManager makeSerialQueue];
+  
+  return _serialQueue;
+}
+
 #pragma mark static methods
 
 /**
