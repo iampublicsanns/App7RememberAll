@@ -66,8 +66,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return pkg;
 }
 
-/*
- Creates a serial queue and dispatches asynchronously
+/**
+ Evaluated on a serial DataManager's queue.
  */
 + (void)asyncGetImage:(NSDictionary*)json
            completion:(void(^)(UIImage*))completion{
@@ -305,7 +305,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   Opens the image in a new view controller.
  */
 - (void)presentImageByUrl:(NSString*)url {
-  UIImage *image = [UIImage imageWithData:[DataManager cachedImages][url]];
+  UIImage *image = [UIImage imageWithData:[DataManager getCachedImage:url]];
   
   PreviewViewController *previewVC;
   
@@ -382,7 +382,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   
   NSDictionary *json = self.imagesCatalogue[indexPath.item];
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
-  NSData *data = [DataManager cachedImages][url];
+  NSData *data = [DataManager getCachedImage:url];
   
   if(data != nil) {
     UIImage *image = [UIImage imageWithData:data];
