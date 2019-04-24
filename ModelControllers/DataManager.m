@@ -21,6 +21,9 @@ static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
 
 static NSCache *_imagesCache;
 static dispatch_queue_t _serialQueue;
+static NSArray<__kindof NSURLSessionTask *> *_tasks;
+/** All tasks mapped by url */
+static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
 
 # pragma mark Static variable accessors
 
@@ -53,6 +56,25 @@ static dispatch_queue_t _serialQueue;
   return [[DataManager imagesCache] objectForKey:url];
 }
 
+//tasks hash
++ (void)makeTasksHash {
+  if (_tasksHash == nil) {
+    _tasksHash = [[NSMutableDictionary alloc] init];
+  }
+}
++ (void)addTaskToHash:(NSURLSessionDataTask*)task
+                byUrl:(NSString*)url{
+  [DataManager makeTasksHash];
+  
+  [_tasksHash setObject:task forKey:url];
+}
++ (NSURLSessionDataTask*)getTaskByUrl:(NSString*)url{
+  [DataManager makeTasksHash];
+  
+  return [_tasksHash objectForKey:url];
+}
+
+//serial queue
 + (void)makeSerialQueue {
   if (_serialQueue == nil) {
     _serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
@@ -94,9 +116,20 @@ static dispatch_queue_t _serialQueue;
 
 /**
  completion evaluates on some NSURLSession completion thread.
+ Returns the same task for this imageUrlString.
  */
 + (NSURLSessionDataTask*)startLoadingAsync:(NSString*)imageUrlString
-                                completion:(void(^)(NSData * _Nullable data))completion {
+                                completion:(void(^)(NSData * _Nullable data))completion
+                                onError:(void(^)(NSData * _Nullable data))onError {
+  
+  NSURLSessionDataTask *taskCached = [DataManager getTaskByUrl:imageUrlString];
+  // считай, что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
+  if (taskCached != nil
+  && (taskCached.state == NSURLSessionTaskStateRunning
+  || taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil
+  )) {
+    return taskCached;
+  }
   
   NSURL *url = [NSURL URLWithString:imageUrlString];
   NSURLSession *session = [NSURLSession sharedSession];
@@ -110,11 +143,12 @@ static dispatch_queue_t _serialQueue;
                                                           NSURLResponse * _Nullable response,
                                                           NSError * _Nullable error) {
                                         
-                                        NSLog(@"\n  finished loading %@", imageUrlString);
                                         
                                         dispatch_async([DataManager serialQueue], ^{
                                           if(error) {
-                                            NSLog(@"\n  %@", error);
+                                            NSLog(@"\n  error loading %@ \n  %@", imageUrlString, error);
+                                            
+                                            onError(data);
                                             return ;
                                           }
                                           
@@ -123,6 +157,7 @@ static dispatch_queue_t _serialQueue;
                                             return;
                                           }
                                           
+                                          NSLog(@"\n  finished loading %@", imageUrlString);
                                           [NSThread sleepForTimeInterval: 1.0 ];
                                           
                                           if(completion) completion(data);
@@ -131,6 +166,9 @@ static dispatch_queue_t _serialQueue;
                                 ];
   
   [task resume];
+  
+  [DataManager addTaskToHash:task
+                       byUrl:imageUrlString];
   
   return task;
 }
