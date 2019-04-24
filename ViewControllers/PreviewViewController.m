@@ -44,7 +44,7 @@
   
   dispatch_group_enter(self->_group);
   
-  [DataManager asyncGetImageByUrl:url
+  [DataManager asyncGetBigImageByUrl:url
                      completion:^(UIImage *image) {
                        //autofix
                        self->_image = image;
