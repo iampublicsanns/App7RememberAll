@@ -85,7 +85,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   self.gallery = [NSMutableArray arrayWithArray: @[@1,@2,@3] ];
   [self.gallery addObject:@4];
   
-  [self startLoading];
+  [self startLoadingCatalogue];
   
   return self;
 }
@@ -104,7 +104,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return self;
 }
 
-- (void) startLoading {
+- (void)startLoadingCatalogue {
   NSString * urlString = [NSString stringWithFormat: kPhotosUrl,
                           APIKEY,
                           USERID
@@ -338,7 +338,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     [self.collectionView registerClass:[ItemViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
-    [self startLoading];
+    [self startLoadingCatalogue];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -388,6 +388,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     UIImage *image = [UIImage imageWithData:data];
     [cell setImage:image];
   } else {
+    cell.imageUrl = url;
     [cell resetViews];
     
     // Configure the cell
@@ -396,11 +397,27 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
     
     [GalleryVC asyncGetImage:self.imagesCatalogue[indexPath.item]
-                  completion:^(UIImage* loadedImage){
+                  completion:^(UIImage* loadedImage) {
                     
-                    //image = loadedImage;
+                    
+                    // currently visible or not, we should notify the collection of newly income data
+                    if (url != cell.imageUrl) {
+                      dispatch_async(dispatch_get_main_queue(),^{
+                        // this triggers a new call to cellForItemAtIndexPath()
+                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                      });
+                      
+                      return;
+                    }
                     
                     dispatch_async(dispatch_get_main_queue(),^{
+                      if(loadedImage == nil) {
+                        cell.contentView.backgroundColor = UIColor.brownColor;
+                        cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
+                      } else {
+                        cell.contentView.backgroundColor = UIColor.yellowColor;
+                      }
+                      
                       [cell setImage: loadedImage];
                     });
                     
