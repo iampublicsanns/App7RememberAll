@@ -113,6 +113,29 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
   });
   
 }
++ (void)asyncGetBigImageByUrl:(NSString*)url
+                completion:(void(^)(UIImage*))completion {
+
+  NSURLSession *session = [NSURLSession sharedSession];
+  
+  [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+    _tasks = tasks;
+    
+    [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
+      [task suspend];
+    }];
+    
+    [DataManager asyncGetImageByUrl:url
+                         completion:^(UIImage *bigImage) {
+                           completion(bigImage);
+                           
+                           [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task,
+                                                               NSUInteger idx, BOOL * _Nonnull stop) {
+                             [task resume];
+                           }];
+                           
+                         }];
+  }];}
 
 /**
  completion evaluates on some NSURLSession completion thread.

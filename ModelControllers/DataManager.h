@@ -14,6 +14,8 @@
 @interface DataManager:NSObject
 + (void)asyncGetImage:(NSDictionary*)json
            completion:(void(^)(UIImage*))completion;
++ (void)asyncGetBigImageByUrl:(NSDictionary*)json
+                   completion:(void(^)(UIImage*))completion;
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage *image))completion;
 + (NSData*)getCachedImage:(NSString*)url;
