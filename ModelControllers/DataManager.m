@@ -90,6 +90,7 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
 
 /**
  Creates a serial queue and dispatches asynchronously
+ Completion handler valuated on a serial DataManager's queue.
  запускай большую картинку на другой очереди.
  Хотя вооще-то что мешает загрузкам завершаться в производльном порядке? ведь так раньше и было. Добавляются-то они в очереь последовательно, но запускаются сразу, так что не имеет значения очередность - считай все разом запустились. Ведь завершения загрузки они не ждут, чтобы поставить в очередь следующую?
    Делов том , что комплишн NSURLSession всё время в одном и том же треде.
@@ -138,6 +139,7 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
   }];}
 
 /**
+ Creates and starts a task.
  completion evaluates on some NSURLSession completion thread.
  Returns the same task for this imageUrlString.
  */
@@ -149,7 +151,8 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
   // считай, что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
   if (taskCached != nil
   && (taskCached.state == NSURLSessionTaskStateRunning
-  || taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil
+  || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil)
+  || taskCached.state == NSURLSessionTaskStateSuspended
   )) {
     return taskCached;
   }
@@ -177,6 +180,8 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                           
                                           NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
                                           if(httpResp.statusCode <200 || httpResp.statusCode > 300) {
+                                            NSLog(@"\n  2error loading %@ \n  %@", imageUrlString);
+                                            
                                             return;
                                           }
                                           

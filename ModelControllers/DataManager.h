@@ -12,8 +12,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DataManager:NSObject
-+ (void)asyncGetImage:(NSDictionary*)json
-           completion:(void(^)(UIImage*))completion;
 + (void)asyncGetBigImageByUrl:(NSDictionary*)json
                    completion:(void(^)(UIImage*))completion;
 + (void)asyncGetImageByUrl:(NSString*)url
