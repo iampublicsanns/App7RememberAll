@@ -10,6 +10,7 @@
 
 @interface ItemViewCell ()
 @property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UILabel *label;
 @property (nonatomic) UIButton *button;
 
 @property (nonatomic) void(^block)(void);
@@ -77,11 +78,19 @@
 
 - (void)resetViews{
   self.imageView.image = nil;
+  self.label.text = @"reset";
+}
+
+- (void)setImage:(UIImage*)image
+          number:(NSNumber*)number {
+  [self setImage:image];
+  
+  self.label.text = [NSString stringWithFormat:@"%@", number];
 }
 
 -(void) setImage:(UIImage*) image {
-  if (self.imageView == nil) [self createImageView];
-  //[self makeButton];
+  [self setupViews];
+  
   [self.button setImage:image
                forState:UIControlStateNormal];
 //  [self.button setBackgroundImage: image
@@ -109,6 +118,22 @@
 //  }
 }
 
+
+-(void)setupViews {
+  if (self.imageView == nil) [self createImageView];
+  //[self makeButton];
+  
+  CGSize parentSize = self.frame.size;
+  
+  if (self.label == nil) {
+    self.label = [[UILabel alloc] init];
+    self.label.text = @"new";
+    self.label.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+    
+    [self.contentView addSubview:self.label];
+  }
+  
+}
 
 #pragma mark touch events
 
