@@ -56,26 +56,14 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   }
   
   NSError *parseErr;
-  id pkg = [NSJSONSerialization JSONObjectWithData:data
+  id json = [NSJSONSerialization JSONObjectWithData:data
                                            options:0
                                              error:&parseErr];
-  if(!pkg){
+  if(!json){
     return nil;
   }
   
-  return pkg;
-}
-
-/**
- Evaluated on a serial DataManager's queue.
- */
-+ (void)asyncGetImage:(NSDictionary*)json
-           completion:(void(^)(UIImage*))completion{
-  
-  NSString *url = [GalleryVC makeUrlStringFromJSON:json];
-  
-  [DataManager asyncGetImageByUrl:url
-                     completion:completion];
+  return json;
 }
 
 //like in coursera core data course
