@@ -107,12 +107,12 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                               NSURLResponse * _Nullable response,
                               NSError * _Nullable error) {
             
-            id pkg = [GalleryVC sessionCheckData: data
+            id json = [GalleryVC sessionCheckData: data
                                         response: response
                                            error: error];
             
             
-            NSArray *images = [weakSelf handleGetPublicPhotosJSON: pkg];
+            NSArray *images = [weakSelf handleGetPublicPhotosJSON: json];
             
             //[weakSelf startLoadingImagesSequentially:images];
             weakSelf.imagesCatalogue = images;
@@ -156,9 +156,24 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 }
 
 + (NSString*)makeUrlStringFromJSON:(NSDictionary*)json{
-  return [GalleryVC makeUrlStringFromJSON:json
-                            suffix:@"m"];
+    return [GalleryVC makeUrlStringFromJSON:json
+                              suffix:@"z"];
 }
++ (NSString*)makeUrlStringFromJSON:(NSDictionary*)json
+                            number:(NSNumber*)number {
+  
+  
+  return [GalleryVC makeUrlStringFromJSON:json
+                                   suffix:@"z"];
+  
+//  NSNumber *num = number;
+//  num++;
+  return [NSString stringWithFormat: @"https://placehold.it/1640x1512&text=%@", number];
+  
+}
+
+
+# pragma mark Synchronous loading
 
 - (void)startLoadingPicture:(id)json {
   NSString *imageUrlString = [GalleryVC makeUrlStringFromJSON:json];
