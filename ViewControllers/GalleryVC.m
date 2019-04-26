@@ -244,6 +244,9 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   
   dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
   
+//  dispatch_semaphore_wait(sem,
+//                          dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 4.0));
+  
   return result;
 }
 
@@ -272,23 +275,12 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   }
 }
 
-/*
-- (void) displayImageId: (NSString*) imageId
-                 server: (NSString*) server
-                 secret: (NSString*) secret
-                   farm: (NSNumber*) farm {
-  
-  self.gallery = [NSMutableArray arrayWithArray: @[
-                                                   
-                                                   ] ];
-}
-*/
-
 - (void) appendImage: (id) imageData {
   UIImage* image = [UIImage imageWithData:imageData];
   [self.gallery addObject: image ];
 }
 
+# pragma mark Showing the preview
 
 
 - (void) presentImage:(UIImage*) image {
