@@ -8,23 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface Myfile : NSObject
-
--(instancetype) init;
-
-@end
-
-
-@implementation Myfile
--(instancetype) init {
-  self = [super init];
-  return self;
-}
-
-@end
-
-
 @interface ViewController : UIViewController
 
 
