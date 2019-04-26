@@ -25,25 +25,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   NSLog(@"view did load");
-//  NSLog(@"%@", [[UIImage new] performSelector:@selector(myDescription)]); //no compile error
-//  NSLog(@"%@", [[UIImage new] myDescription]); //has compiler error
-  
-  
-  //coursera Bars
-  [self setNeedsStatusBarAppearanceUpdate];
-  
-  self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-  
-  [self.appDelegate createPlaceMO];
-  [self.appDelegate saveContext];
-  
-  NSLog(@"%@", [[self.appDelegate getPlaces] description]);
-  
+
   [self presentGallery];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  //ничего страшного, если не вызвать супер?
   [super viewWillAppear:animated];
   
   NSLog(@"view will appear");
@@ -51,12 +37,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
   [super viewDidAppear:animated];
-  
-  NSMutableDictionary* example = [NSMutableDictionary new];
-    //  [example enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//   
-//  ]
-  
+
   NSLog(@"view did appear");
 }
 
@@ -72,55 +53,17 @@
   NSLog(@"view did disappear");
 }
 
-//coursera Bars
-// нет фона, поэтому белые буквы не видно на моем белом приложении.
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  bool light = false;
-  if(light) {
-    //dark text
-    return UIStatusBarStyleDefault;
-  }
-  
-  //light text, not background
-  return UIStatusBarStyleLightContent;
-}
-
-//- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//  
-//}
-
-//- (void) unwindForSegue:(UIStoryboardSegue *)unwindSegue towardsViewController:(UIViewController *)subsequentVC {
-//
-//}
-//
-//- (void) unwindBla:(UIStoryboardSegue *)unwindSegue  {
-//
-//
-//}
-- (IBAction) unwindToRed:(UIStoryboardSegue*)unwindSegue {
-  
-}
 
 
 
 - (void) presentGallery {
   
   UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-  
-  //  UICollectionViewController *collectionVC = [UICollectionViewController new]; //error no layout
+
   GalleryVC *collectionVC = [[GalleryVC alloc]
                              initWithCollectionViewLayout:flowLayout
                              ];
-  //  collectionVC.view.backgroundColor = UIColor.blueColor; //cant see effect
-  //  collectionVC.view.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor); //animation disappears
   collectionVC.view.layer.opacity = 0.8;
-  
-  //TODO why default is all black?
-  // modally but 1st view disappears ?
-  //
-  //collectionVC.collectionView.backgroundColor = UIColor.blueColor;
-  //aufo fixed:
-  //collectionVC.collectionView.layer.backgroundColor = (__bridge CGColorRef _Nullable)(UIColor.blueColor);
   collectionVC.collectionView.layer.opacity = 0.8;
   collectionVC.clearsSelectionOnViewWillAppear = NO;
   
