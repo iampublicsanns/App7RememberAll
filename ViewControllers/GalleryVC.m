@@ -379,11 +379,14 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
   NSData *data = [DataManager getCachedImage:url];
   
+  //todo stop setting an image directly. Do it with just url instead.
+  cell.imageUrl = url;
+  
   if(data != nil) {
     UIImage *image = [UIImage imageWithData:data];
-    [cell setImage:image];
+    [cell setImage:image
+            number:position];
   } else {
-    cell.imageUrl = url;
     [cell resetViews];
     
     // Configure the cell
@@ -391,8 +394,8 @@ static NSString * const reuseIdentifier = @"SimpleCell";
     cell.contentView.layer.borderWidth = 1.0;
     cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
     
-    [GalleryVC asyncGetImage:self.imagesCatalogue[indexPath.item]
-                  completion:^(UIImage* loadedImage) {
+    [DataManager asyncGetImageByUrl:url
+                         completion:^(UIImage* loadedImage) {
                     
                     
                     // currently visible or not, we should notify the collection of newly income data
@@ -413,7 +416,10 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                         cell.contentView.backgroundColor = UIColor.yellowColor;
                       }
                       
-                      [cell setImage: loadedImage];
+                      NSLog(@"\n  index %ld \n  %@", indexPath.item + 1, url);
+                      
+                      [cell setImage:loadedImage
+                              number:position];
                     });
                     
                   }];
