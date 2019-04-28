@@ -13,12 +13,6 @@
 #import "Config.h"
 
 @interface GalleryVC ()
-//https://youtu.be/Z436l0z72R8?t=211
-//UICollectionViewLayout custom
-{
-  NSArray *dataArr;
-  BOOL cancelLoading;
-}
 
 @property (nonatomic) NSMutableArray<UIImage*> *gallery;
 @property (nonatomic) NSArray<NSDictionary*> *imagesCatalogue;
