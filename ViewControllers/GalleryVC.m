@@ -89,6 +89,9 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   [self initGallery];
   //[self startLoading];
   
+//  self.block = ^{
+//    NSLog(self);
+//  };
   return self;
 }
 
@@ -286,13 +289,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 - (void) presentImage:(UIImage*) image {
   PreviewViewController *previewVC = [[PreviewViewController alloc] initWithImage: image];
   
-  __auto_type __weak weakSelf = self;
-  
-  previewVC.completion = ^{
-    [weakSelf previewDidSave];
-  };
-  
-  previewViewController = previewVC;
   [self.navigationController pushViewController:previewVC animated:YES];
 }
 
@@ -312,13 +308,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   
   [self.navigationController pushViewController:previewVC animated:YES];
 }
-
-- (void)previewDidSave
-{
-  NSLog(@"Ricardo has saved preview");
-}
-
-
 
 
 
