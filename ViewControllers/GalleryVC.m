@@ -364,6 +364,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   //todo leak?
   __block UIImage *image = nil;
   
+  NSNumber *position = [NSNumber numberWithInteger:indexPath.item +1];
   NSDictionary *json = self.imagesCatalogue[indexPath.item];
   NSString *url = [GalleryVC makeUrlStringFromJSON:json];
   NSData *data = [DataManager getCachedImage:url];
