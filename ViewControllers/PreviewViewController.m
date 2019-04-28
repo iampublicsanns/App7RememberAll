@@ -69,17 +69,6 @@
   [self setupViews];
 }
 
-- (void)dealloc
-{
-  
-}
-- (void)onSave{
-  if (self.completion)
-  {
-    self.completion();
-  }
-}
-
 
 - (void)setupViews{
   self.scrollView = [[UIScrollView alloc] init];
