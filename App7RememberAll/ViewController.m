@@ -18,6 +18,9 @@
 
 
 @implementation ViewController
+{
+  UIViewController *gallery;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
