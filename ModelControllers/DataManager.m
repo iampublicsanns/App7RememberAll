@@ -107,9 +107,12 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                                      UIImage *image = [UIImage imageWithData:data];
                                                      
                                                      if(completion) completion(image);
-                                                   }];
+                                                   }
+                                                    onError:^(NSData *data){
+                                                      if(completion) completion(nil);
+                                                    }];
     
-    NSString *url = [[[task currentRequest] URL] absoluteString];
+    //NSString *url = [[[task currentRequest] URL] absoluteString];
     
   });
   
@@ -137,6 +140,27 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                            
                          }];
   }];}
+
+//+ (void)pauseAllTasksAndRunBlock:(void(^)((void(^)())))beforeResume {
+//  NSURLSession *session = [NSURLSession sharedSession];
+//
+//  [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+//    _tasks = tasks;
+//
+//    [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
+//      [task suspend];
+//    }];
+//
+//    beforeResume();
+//
+//    //resuming
+//    [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task,
+//                                        NSUInteger idx, BOOL * _Nonnull stop) {
+//      [task resume];
+//    }];
+//
+//  }];
+//}
 
 /**
  Creates and starts a task.
@@ -186,7 +210,7 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                           }
                                           
                                           NSLog(@"\n  finished loading %@", imageUrlString);
-                                          [NSThread sleepForTimeInterval: 1.0 ];
+//                                          [NSThread sleepForTimeInterval: 1.0 ];
                                           
                                           if(completion) completion(data);
                                         });
