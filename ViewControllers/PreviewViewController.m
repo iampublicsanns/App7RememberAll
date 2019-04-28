@@ -57,7 +57,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave)];
+  
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -67,6 +69,10 @@
   [self setupViews];
 }
 
+- (void)dealloc
+{
+  
+}
 - (void)onSave{
   if (self.completion)
   {
