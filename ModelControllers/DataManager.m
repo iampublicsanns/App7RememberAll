@@ -15,10 +15,6 @@
 
 @implementation DataManager
 
-static NSMutableDictionary<NSString*,NSData*> *_cachedImages;
-//можно обращаться
-//NSData *data = DataManager.cachedImages[url];
-
 static NSCache *_imagesCache;
 static dispatch_queue_t _serialQueue;
 static NSArray<__kindof NSURLSessionTask *> *_tasks;
@@ -31,14 +27,8 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
 //https://useyourloaf.com/blog/objective-c-class-properties
 + (void)makeCache {
   if (_imagesCache == nil) {
-    //_cachedImages = [NSMutableDictionary dictionaryWithDictionary:@{}];
     _imagesCache = [[NSCache alloc] init];
   }
-}
-+ (NSMutableDictionary*)cachedImages{
-  [DataManager makeCache];
-  
-  return _cachedImages;
 }
 + (NSCache*)imagesCache{
   [DataManager makeCache];
@@ -49,7 +39,6 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                  byUrl:(NSString*)url{
   [DataManager makeCache];
   
-  //_cachedImages[url] = imageData;
   [_imagesCache setObject:imageData forKey:url];
 }
 + (NSData*)getCachedImage:(NSString*)url {
@@ -91,9 +80,6 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
 /**
  Creates a serial queue and dispatches asynchronously
  Completion handler valuated on a serial DataManager's queue.
- запускай большую картинку на другой очереди.
- Хотя вооще-то что мешает загрузкам завершаться в производльном порядке? ведь так раньше и было. Добавляются-то они в очереь последовательно, но запускаются сразу, так что не имеет значения очередность - считай все разом запустились. Ведь завершения загрузки они не ждут, чтобы поставить в очередь следующую?
-   Делов том , что комплишн NSURLSession всё время в одном и том же треде.
  */
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage*))completion {
@@ -111,9 +97,6 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                                     onError:^(NSData *data){
                                                       if(completion) completion(nil);
                                                     }];
-    
-    //NSString *url = [[[task currentRequest] URL] absoluteString];
-    
   });
   
 }
@@ -141,26 +124,6 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                          }];
   }];}
 
-//+ (void)pauseAllTasksAndRunBlock:(void(^)((void(^)())))beforeResume {
-//  NSURLSession *session = [NSURLSession sharedSession];
-//
-//  [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
-//    _tasks = tasks;
-//
-//    [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
-//      [task suspend];
-//    }];
-//
-//    beforeResume();
-//
-//    //resuming
-//    [tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask * _Nonnull task,
-//                                        NSUInteger idx, BOOL * _Nonnull stop) {
-//      [task resume];
-//    }];
-//
-//  }];
-//}
 
 /**
  Creates and starts a task.
@@ -172,7 +135,7 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                 onError:(void(^)(NSData * _Nullable data))onError {
   
   NSURLSessionDataTask *taskCached = [DataManager getTaskByUrl:imageUrlString];
-  // считай, что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
+  // что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
   if (taskCached != nil
   && (taskCached.state == NSURLSessionTaskStateRunning
   || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil)
