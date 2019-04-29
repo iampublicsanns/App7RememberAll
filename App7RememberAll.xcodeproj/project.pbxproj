@@ -42,6 +42,8 @@
 		115BC77D2276F3B000E5892E /* ItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewCell.m; sourceTree = "<group>"; };
 		115BC7802276F41200E5892E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		115BC7812276F41200E5892E /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		115BC784227717F300E5892E /* Config.h */ = {isa = PBXFileReference; path = Config.h; sourceTree = "<group>"; };
+		115BC787227717FB00E5892E /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		1101C6DD2242AF07007C4F26 = {
 			isa = PBXGroup;
 			children = (
+				115BC786227717FB00E5892E /* Config */,
 				115BC77F2276F41200E5892E /* ModelControllers */,
 				115BC77B2276F3B000E5892E /* ViewCells */,
 				115BC7722276F37400E5892E /* ViewControllers */,
@@ -123,10 +126,29 @@
 		115BC77F2276F41200E5892E /* ModelControllers */ = {
 			isa = PBXGroup;
 			children = (
+				115BC785227717F300E5892E /* Config */,
 				115BC7802276F41200E5892E /* DataManager.h */,
 				115BC7812276F41200E5892E /* DataManager.m */,
 			);
 			path = ModelControllers;
+			sourceTree = "<group>";
+		};
+		115BC785227717F300E5892E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				115BC784227717F300E5892E /* Config.h */,
+			);
+			name = Config;
+			path = "/Users/alexander/sberproj/ios-start/App7-5download/App7RememberAll/ModelControllers/Config";
+			sourceTree = "<absolute>";
+		};
+		115BC786227717FB00E5892E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				115BC787227717FB00E5892E /* Config.h */,
+			);
+			name = Config;
+			path = ModelControllers/Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
