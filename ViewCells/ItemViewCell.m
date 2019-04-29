@@ -31,6 +31,8 @@
   // instead of autofix:
   self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
   
+  self.imageView.userInteractionEnabled = YES;
+  
   UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc]
                                         initWithTarget:self
                                         action:@selector(handleClick)];
