@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "UIView+MyDescription.h"
 #import "AppDelegate.h"
 #import "GalleryVC.h"
 
