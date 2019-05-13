@@ -6,23 +6,51 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
+#import "../ViewControllers/GalleryVC.h"
 #import "AppDelegate.h"
+#import "ViewController.h"
 // у курсеры этот файл создается без +CoreDataClass
 #import "../MO/PlaceMO+CoreDataClass.h"
 
 #define PLACE @"Place"
 
 @interface AppDelegate ()
-
+@property (nonatomic) UINavigationController *navigationController;
 @end
 
 @implementation AppDelegate
+
+
+- (void) presentGallery {
+  
+  UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+  
+  GalleryVC *collectionVC = [[GalleryVC alloc]
+                             initWithCollectionViewLayout:flowLayout
+                             ];
+  
+  [self.navigationController pushViewController:collectionVC animated:YES];
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
   
   NSLog(@"did finish launch");
+  
+  UINavigationController *navigationVC = [[UINavigationController alloc] init];
+  ViewController *mainVC = [[ViewController alloc] initWithNibName:nil bundle:nil];
+  navigationVC.viewControllers = @[mainVC];
+  
+//  navigationVC.navigationBar.titleTextAttributes =
+  [UINavigationBar appearance].barTintColor = UIColor.blueColor;
+  
+  self.window.rootViewController = navigationVC;
+//  self.window.makeKeyAndVisible; // ?????
+  [self.window makeKeyAndVisible];
+  
+  self.navigationController = navigationVC;
+  //[self presentGallery];
   
   return YES;
 }
