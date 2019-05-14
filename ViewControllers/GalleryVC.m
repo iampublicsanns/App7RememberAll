@@ -56,6 +56,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
   return json;
 }
 
+#pragma Init
 
 - (void) initGallery {
   _gallery = [NSMutableArray arrayWithArray: @[] ];
@@ -151,7 +152,7 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 }
 
 
-
+#pragma lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -163,8 +164,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  NSLog(@"gallery did appear");
-  
   [self.collectionView reloadData];
 }
 
@@ -187,10 +186,6 @@ static NSString * const reuseIdentifier = @"SimpleCell";
                                                                    forIndexPath:indexPath];
   
   __auto_type __weak weakSelf = self;
-  
-  
-  //todo leak?
-  __block UIImage *image = nil;
   
   NSNumber *position = [NSNumber numberWithInteger:indexPath.item +1];
   NSDictionary *json = self.imagesCatalogue[indexPath.item];
