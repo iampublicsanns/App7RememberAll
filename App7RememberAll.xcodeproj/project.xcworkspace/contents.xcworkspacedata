@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:App7RememberAll.xcodeproj">
+      location = "group:/Users/alexander/sberproj/ios-start/App7-9gitlab/App7RememberAll/Main.storyboard">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
