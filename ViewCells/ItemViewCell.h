@@ -6,13 +6,13 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ItemViewCell : UICollectionViewCell
-@property (nonatomic) UIImage* image;
-@property (nonatomic) NSString* imageUrl;
+@property (nonatomic, strong) UIImage* image;
+@property (nonatomic, strong) NSString* imageUrl;
 
 - (void)resetViews;
 - (void)setImage:(UIImage*)image

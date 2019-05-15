@@ -9,15 +9,16 @@
 #import "../ModelControllers/DataManager.h"
 #import "PreviewViewController.h"
 
-// protocol adopting - coursera ScrollView
+
 @interface PreviewViewController () <UIScrollViewDelegate>
-{
-  UIImage * _image;
-}
-@property (nonatomic) dispatch_group_t group;
-@property (nonatomic) UIImageView *imageView;
-@property (nonatomic) UIScrollView *scrollView;
+
+@property (nonatomic, strong) dispatch_group_t group;
+@property (nonatomic, strong) UIImage * image;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIScrollView *scrollView;
+
 @end
+
 
 @implementation PreviewViewController
 
@@ -73,8 +74,9 @@
 - (void)setupViews{
   self.scrollView = [[UIScrollView alloc] init];
   
-  CGSize parentSize = self.view.frame.size;
-  self.scrollView.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+  CGFloat parentWidth = CGRectGetWidth(self.view.frame);
+  CGFloat parentHeight = CGRectGetHeight(self.view.frame);
+  self.scrollView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
   
   self.scrollView.layer.borderWidth = 2;
   self.scrollView.layer.borderColor = [UIColor colorWithRed:0.7 green:0.4 blue:1 alpha:0.8].CGColor;

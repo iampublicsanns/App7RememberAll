@@ -6,7 +6,8 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "DataManager.h"
 #import "GalleryVC.h"
 
@@ -55,6 +56,7 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                 byUrl:(NSString*)url{
   [DataManager makeTasksHash];
   
+  //проблема куча тредов
   [_tasksHash setObject:task forKey:url];
 }
 + (NSURLSessionDataTask*)getTaskByUrl:(NSString*)url{
@@ -92,10 +94,16 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                                      [DataManager addCachedImage:data byUrl:url];
                                                      UIImage *image = [UIImage imageWithData:data];
                                                      
-                                                     if(completion) completion(image);
+                                                     if(completion)
+                                                     {
+                                                       completion(image);
+                                                     }
                                                    }
                                                     onError:^(NSData *data){
-                                                      if(completion) completion(nil);
+                                                      if(completion)
+                                                      {
+                                                        completion(nil);
+                                                      }
                                                     }];
   });
   
@@ -140,7 +148,8 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
   && (taskCached.state == NSURLSessionTaskStateRunning
   || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil)
   || taskCached.state == NSURLSessionTaskStateSuspended
-  )) {
+  ))
+  {
     return taskCached;
   }
   
@@ -175,7 +184,10 @@ static NSMutableDictionary<NSString*,NSURLSessionDataTask*> *_tasksHash;
                                           NSLog(@"\n  finished loading %@", imageUrlString);
 //                                          [NSThread sleepForTimeInterval: 1.0 ];
                                           
-                                          if(completion) completion(data);
+                                          if(completion)
+                                          {
+                                            completion(data);
+                                          }
                                         });
                                       }
                                 ];

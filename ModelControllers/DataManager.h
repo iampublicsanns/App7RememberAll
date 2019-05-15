@@ -9,10 +9,10 @@
 #ifndef DataManager_h
 #define DataManager_h
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface DataManager:NSObject
-+ (void)asyncGetBigImageByUrl:(NSDictionary*)json
++ (void)asyncGetBigImageByUrl:(NSString*)json
                    completion:(void(^)(UIImage*))completion;
 + (void)asyncGetImageByUrl:(NSString*)url
                 completion:(void(^)(UIImage *image))completion;

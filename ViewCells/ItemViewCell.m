@@ -8,16 +8,19 @@
 
 #import "ItemViewCell.h"
 
-@interface ItemViewCell ()
-@property (nonatomic) UIImageView *imageView;
-@property (nonatomic) UILabel *label;
-@property (nonatomic) UIButton *button;
 
-@property (nonatomic) void(^block)(void);
+@interface ItemViewCell ()
+
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIButton *button;
+
+@property (nonatomic, strong) void(^clickHandler)(void);
+
 @end
 
-@implementation ItemViewCell
 
+@implementation ItemViewCell
 
 -(void) createImageView {
   self.imageView = [[UIImageView alloc] init];
@@ -57,22 +60,27 @@
   
   self.imageView.image = image;
   
-  CGSize parentSize = self.frame.size;
+  CGFloat parentWidth = CGRectGetWidth(self.frame);
+  CGFloat parentHeight = CGRectGetHeight(self.frame);
   
   //https://www.youtube.com/watch?v=qV4gHfqwFPU
-  self.imageView.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+  self.imageView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
 }
 
 
 -(void)setupViews {
-  if (self.imageView == nil) [self createImageView];
+  if (self.imageView == nil)
+  {
+    [self createImageView];
+  }
   
-  CGSize parentSize = self.frame.size;
+  CGFloat parentWidth = CGRectGetWidth(self.frame);
+  CGFloat parentHeight = CGRectGetHeight(self.frame);
   
   if (self.label == nil) {
     self.label = [[UILabel alloc] init];
     self.label.text = @"new";
-    self.label.frame = CGRectMake(0, 0, parentSize.width, parentSize.height);
+    self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
     
     [self.contentView addSubview:self.label];
   }
@@ -82,11 +90,11 @@
 #pragma mark touch events
 
 - (void) setOnClickBlock: (void (^)(void)) block {
-  self.block = block;
+  self.clickHandler = block;
 }
 
 -(void) handleClick {
-  self.block();
+  self.clickHandler();
 }
 
 -(NSString *) description {

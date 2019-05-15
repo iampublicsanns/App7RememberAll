@@ -8,11 +8,13 @@
 
 #import "../ViewControllers/GalleryVC.h"
 #import "AppDelegate.h"
-#import "ViewController.h"
 
 @interface AppDelegate ()
-@property (nonatomic) UINavigationController *navigationController;
+
+@property (nonatomic, strong) UINavigationController *navigationController;
+
 @end
+
 
 @implementation AppDelegate
 

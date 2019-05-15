@@ -6,15 +6,17 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PreviewViewController : UIViewController
+
 @property (nonatomic, copy) void (^completion)(void);
 
 - (instancetype) initWithImage: (UIImage *)image;
 - (instancetype) initWithUrl: (NSString *)url;
+
 @end
 
 NS_ASSUME_NONNULL_END
