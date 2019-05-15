@@ -18,24 +18,23 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-  
-  GalleryVC *collectionVC = [[GalleryVC alloc]
-                             initWithCollectionViewLayout:flowLayout
-                             ];
-  
-  UINavigationController *navigationVC = [[UINavigationController alloc] init];
-  navigationVC.viewControllers = @[collectionVC];
-  
-  [UINavigationBar appearance].barTintColor = UIColor.blueColor;
-  
-  self.window.rootViewController = navigationVC;
-  [self.window makeKeyAndVisible];
-  
-  self.navigationController = navigationVC;
-  
-  return YES;
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+
+	GalleryVC *collectionVC = [[GalleryVC alloc] initWithCollectionViewLayout:flowLayout];
+
+	UINavigationController *navigationVC = [[UINavigationController alloc] init];
+	navigationVC.viewControllers = @[collectionVC];
+
+	[UINavigationBar appearance].barTintColor = UIColor.blueColor;
+
+	self.window.rootViewController = navigationVC;
+	[self.window makeKeyAndVisible];
+
+	self.navigationController = navigationVC;
+
+	return YES;
 }
 
 @end

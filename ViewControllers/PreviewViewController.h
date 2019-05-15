@@ -14,8 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) void (^completion)(void);
 
-- (instancetype) initWithImage: (UIImage *)image;
-- (instancetype) initWithUrl: (NSString *)url;
+- (instancetype)initWithImage:(UIImage *)image;
+
+- (instancetype)initWithUrl:(NSString *)url;
 
 @end
 

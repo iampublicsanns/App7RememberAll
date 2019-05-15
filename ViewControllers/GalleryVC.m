@@ -15,8 +15,8 @@
 
 @interface GalleryVC ()
 
-@property(nonatomic, strong) NSMutableArray<UIImage *> *gallery;
-@property(nonatomic, strong) NSArray<NSDictionary *> *imagesCatalogue;
+@property (nonatomic, strong) NSMutableArray<UIImage *> *gallery;
+@property (nonatomic, strong) NSArray<NSDictionary *> *imagesCatalogue;
 
 @end
 
@@ -61,10 +61,11 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-  if ([super initWithCollectionViewLayout:layout] == nil) {
-    return nil;
-  }
-  
+	if ([super initWithCollectionViewLayout:layout] == nil)
+	{
+		return nil;
+	}
+
 	[self setupGallery];
 	return self;
 }
@@ -136,7 +137,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		previewVC = [[PreviewViewController alloc] initWithUrl:url];
 	}
-  else
+	else
 	{
 		previewVC = [[PreviewViewController alloc] initWithImage:image];
 	}
@@ -195,7 +196,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		UIImage *image = [UIImage imageWithData:data];
 		[cell setImage:image number:position];
-	} else
+	}
+	else
 	{
 		[cell resetViews];
 
@@ -223,7 +225,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 				{
 					cell.contentView.backgroundColor = UIColor.brownColor;
 					cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
-				} else
+				}
+				else
 				{
 					cell.contentView.backgroundColor = UIColor.yellowColor;
 				}
