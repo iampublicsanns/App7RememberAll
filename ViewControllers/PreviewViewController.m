@@ -62,14 +62,6 @@
 {
 	[super viewDidLoad];
 
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave)];
-
-	// Uncomment the following line to preserve selection between presentations.
-	// self.clearsSelectionOnViewWillAppear = NO;
-
-	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
 	[self setupViews];
 }
 
@@ -98,7 +90,6 @@
 	self.imageView = [[UIImageView alloc] initWithImage:_image];
 
 	self.imageView.userInteractionEnabled = true;
-	//imageView.isUserInteractionEnabled = true;
 	self.imageView.multipleTouchEnabled = true;
 
 	[self.scrollView addSubview:self.imageView];
