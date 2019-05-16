@@ -44,6 +44,10 @@
 
 - (void)resetViews
 {
+	self.contentView.backgroundColor = UIColor.blueColor;
+	self.contentView.layer.borderWidth = 1.0;
+	self.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;\
+
 	self.imageView.image = nil;
 	self.label.text = @"reset";
 }
