@@ -16,7 +16,18 @@
 
 + (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
 
-+ (NSData *)getCachedImage:(NSString *)url;
+/**
+ * Вернет картинку, если есть в кэше, либо nil.
+ * */
++ (nullable NSData *)tryGetCachedImage:(NSString *)url;
+
++ (NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(id)pkg;
+
++ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json;
+
++ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json suffix:(NSString *)suffix;
+
++ (id)sessionCheckData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
 
 @end
 

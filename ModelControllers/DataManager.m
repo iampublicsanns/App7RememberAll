@@ -22,10 +22,9 @@ static NSArray<__kindof NSURLSessionTask *> *_tasks;
 /** All tasks mapped by url */
 static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
+
 # pragma mark Static variable accessors
 
-
-//https://useyourloaf.com/blog/objective-c-class-properties
 + (void)makeCache
 {
 	if (_imagesCache == nil)
@@ -48,7 +47,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	[_imagesCache setObject:imageData forKey:url];
 }
 
-+ (NSData *)getCachedImage:(NSString *)url
++ (NSData *)tryGetCachedImage:(NSString *)url
 {
 	return [[DataManager imagesCache] objectForKey:url];
 }
@@ -93,7 +92,9 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	return _serialQueue;
 }
 
-#pragma mark static methods
+
+#pragma mark Static methods
+#pragma mark - Public
 
 /**
  Creates a serial queue and dispatches asynchronously
@@ -146,6 +147,57 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	}];
 }
 
+//todo check docs on json
++ (NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(id)pkg
+{
+	NSArray<NSDictionary *> *images = pkg[@"photos"][@"photo"];
+
+	return images;
+}
+
++ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json suffix:(NSString *)suffix
+{
+	NSString *imageId = json[@"id"];
+	NSString *server = json[@"server"];
+	NSString *secret = json[@"secret"];
+	NSNumber *farm = json[@"farm"];
+
+	NSString *imageUrlString = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_%@.jpg", farm, server, imageId, secret, suffix];
+
+	return imageUrlString;
+}
+
++ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json
+{
+	return [self makeUrlStringFromJSON:json suffix:@"t"];
+}
+
++ (id)sessionCheckData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
+{
+	if (error)
+	{
+		NSLog(@"\n  %@", error);
+		return nil;
+	}
+
+	NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *) response;
+	if (httpResp.statusCode < 200 || httpResp.statusCode > 300)
+	{
+		return nil;
+	}
+
+	NSError *parseErr;
+	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
+	if (!json)
+	{
+		return nil;
+	}
+
+	return json;
+}
+
+
+#pragma mark - Private
 
 /**
  Creates and starts a task.
