@@ -6,7 +6,7 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "../ModelControllers/DataManager.h"
+#import "DataManager.h"
 #import "PreviewViewController.h"
 
 

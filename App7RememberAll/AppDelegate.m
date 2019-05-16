@@ -6,7 +6,7 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "../ViewControllers/GalleryVC.h"
+#import "GalleryVC.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
