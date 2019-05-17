@@ -18,7 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetViews;
 
-- (void)setImage:(UIImage *)image number:(NSNumber *)number;
+- (void)setImage:(UIImage *)image;
+
+- (void)setNumber:(NSNumber *)number;
 
 - (void)setOnClickBlock:(void (^)(void))block;
 @end

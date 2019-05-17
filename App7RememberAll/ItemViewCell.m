@@ -42,21 +42,28 @@
 	[self.imageView addGestureRecognizer:singleTap];
 }
 
+- (void)createLabel
+{
+	CGFloat parentWidth = CGRectGetWidth(self.frame);
+	CGFloat parentHeight = CGRectGetHeight(self.frame);
+
+	self.label = [[UILabel alloc] init];
+	self.label.text = @"new";
+	self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
+
+	[self.contentView addSubview:self.label];
+}
+
 - (void)resetViews
 {
+	[self setupViews];
+
 	self.contentView.backgroundColor = UIColor.blueColor;
 	self.contentView.layer.borderWidth = 1.0;
 	self.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;\
 
 	self.imageView.image = nil;
 	self.label.text = @"reset";
-}
-
-- (void)setImage:(UIImage *)image number:(NSNumber *)number
-{
-	[self setImage:image];
-
-	self.label.text = [NSString stringWithFormat:@"%@", number];
 }
 
 - (void)setImage:(UIImage *)image
@@ -72,6 +79,12 @@
 	self.imageView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
 }
 
+- (void)setNumber:(NSNumber *)number
+{
+	[self setupViews];
+
+	self.label.text = [NSString stringWithFormat:@"%@", number];
+}
 
 - (void)setupViews
 {
@@ -80,16 +93,9 @@
 		[self createImageView];
 	}
 
-	CGFloat parentWidth = CGRectGetWidth(self.frame);
-	CGFloat parentHeight = CGRectGetHeight(self.frame);
-
 	if (self.label == nil)
 	{
-		self.label = [[UILabel alloc] init];
-		self.label.text = @"new";
-		self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
-
-		[self.contentView addSubview:self.label];
+		[self createLabel];
 	}
 
 }

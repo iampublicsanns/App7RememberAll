@@ -141,7 +141,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	if (data)
 	{
 		UIImage *image = [UIImage imageWithData:data];
-		[cell setImage:image number:position];
+		[cell setImage:image];
+		[cell setNumber:position];
 	}
 	else
 	{
@@ -177,7 +178,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 				NSLog(@"\n  index %@ \n  %@", position, url);
 
-				[cell setImage:loadedImage number:position];
+				[cell setImage:loadedImage];
+				[cell setNumber:position];
 			});
 
 		}];
