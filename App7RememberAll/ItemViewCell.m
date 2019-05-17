@@ -22,37 +22,7 @@
 
 @implementation ItemViewCell
 
-- (void)createImageView
-{
-	self.imageView = [[UIImageView alloc] init];
-	[self.contentView addSubview:self.imageView];
-
-	self.imageView.layer.cornerRadius = 5;
-	self.imageView.clipsToBounds = YES;
-
-	//coursera Intro to UIImageView
-	self.imageView.layer.borderWidth = 1;
-	// instead of autofix:
-	self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
-
-	self.imageView.userInteractionEnabled = YES;
-
-	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick)];
-	[singleTap setNumberOfTapsRequired:1];
-	[self.imageView addGestureRecognizer:singleTap];
-}
-
-- (void)createLabel
-{
-	CGFloat parentWidth = CGRectGetWidth(self.frame);
-	CGFloat parentHeight = CGRectGetHeight(self.frame);
-
-	self.label = [[UILabel alloc] init];
-	self.label.text = @"new";
-	self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
-
-	[self.contentView addSubview:self.label];
-}
+#pragma mark - Public
 
 - (void)resetViews
 {
@@ -86,6 +56,44 @@
 	self.label.text = [NSString stringWithFormat:@"%@", number];
 }
 
+- (void)setOnClickBlock:(void (^)(void))block
+{
+	self.clickHandler = block;
+}
+
+
+#pragma mark - Private
+
+- (void)createImageView
+{
+	self.imageView = [[UIImageView alloc] init];
+	[self.contentView addSubview:self.imageView];
+
+	self.imageView.layer.cornerRadius = 5;
+	self.imageView.clipsToBounds = YES;
+
+	self.imageView.layer.borderWidth = 1;
+	self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
+
+	self.imageView.userInteractionEnabled = YES;
+
+	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick)];
+	[singleTap setNumberOfTapsRequired:1];
+	[self.imageView addGestureRecognizer:singleTap];
+}
+
+- (void)createLabel
+{
+	CGFloat parentWidth = CGRectGetWidth(self.frame);
+	CGFloat parentHeight = CGRectGetHeight(self.frame);
+
+	self.label = [[UILabel alloc] init];
+	self.label.text = @"new";
+	self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
+
+	[self.contentView addSubview:self.label];
+}
+
 - (void)setupViews
 {
 	if (self.imageView == nil)
@@ -101,11 +109,6 @@
 }
 
 #pragma mark touch events
-
-- (void)setOnClickBlock:(void (^)(void))block
-{
-	self.clickHandler = block;
-}
 
 - (void)handleClick
 {
