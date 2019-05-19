@@ -35,14 +35,14 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 + (NSCache *)imagesCache
 {
-	[DataManager makeCache];
+	[self makeCache];
 
 	return _imagesCache;
 }
 
 + (void)addCachedImage:(NSData *)imageData byUrl:(NSString *)url
 {
-	[DataManager makeCache];
+	[self makeCache];
 
 	[_imagesCache setObject:imageData forKey:url];
 }
@@ -63,7 +63,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 + (void)addTaskToHash:(NSURLSessionDataTask *)task byUrl:(NSString *)url
 {
-	[DataManager makeTasksHash];
+	[self makeTasksHash];
 
 	//проблема куча тредов
 	[_tasksHash setObject:task forKey:url];
@@ -71,7 +71,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 + (NSURLSessionDataTask *)getTaskByUrl:(NSString *)url
 {
-	[DataManager makeTasksHash];
+	[self makeTasksHash];
 
 	return [_tasksHash objectForKey:url];
 }
@@ -85,9 +85,10 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	}
 }
 
+//todo must be thread-safe. It is accessed via concurrent threads.
 + (dispatch_queue_t)serialQueue
 {
-	[DataManager makeSerialQueue];
+	[self makeSerialQueue];
 
 	return _serialQueue;
 }
@@ -202,6 +203,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 /**
  Creates and starts a task.
  completion evaluates on some NSURLSession completion thread.
+ --- but continues to my serial queue.
  Returns the same task for this imageUrlString.
  */
 + (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion onError:(void (^)(NSData *_Nullable data))onError
@@ -219,10 +221,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 	NSLog(@"\n  start loading %@", imageUrlString);
 
-	__auto_type __weak weakSelf = self;
-
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
-
 
 		dispatch_async([DataManager serialQueue], ^{
 			if (error)
@@ -242,7 +241,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 			}
 
 			NSLog(@"\n  finished loading %@", imageUrlString);
-//                                          [NSThread sleepForTimeInterval: 1.0 ];
+			//[NSThread sleepForTimeInterval: 1.0 ];
 
 			if (completion)
 			{
