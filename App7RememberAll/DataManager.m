@@ -8,6 +8,7 @@
 
 @import Foundation;
 
+#import "Config.h"
 #import "DataManager.h"
 #import "GalleryVC.h"
 
@@ -169,7 +170,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 + (NSString *)makeUrlStringFromJSON:(NSDictionary *)json
 {
-	return [self makeUrlStringFromJSON:json suffix:@"t"];
+	return [self makeUrlStringFromJSON:json suffix:ConfigThumbnailSuffix];
 }
 
 + (id)sessionCheckData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
