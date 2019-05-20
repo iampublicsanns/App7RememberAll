@@ -22,17 +22,17 @@
 {
 	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
 
-	GalleryVC *collectionVC = [[GalleryVC alloc] initWithCollectionViewLayout:flowLayout];
+	GalleryVC *collectionViewController = [[GalleryVC alloc] initWithCollectionViewLayout:flowLayout];
 
-	UINavigationController *navigationVC = [[UINavigationController alloc] init];
-	navigationVC.viewControllers = @[collectionVC];
+	UINavigationController *navigationViewController = [[UINavigationController alloc] init];
+	navigationViewController.viewControllers = @[collectionViewController];
 
 	[UINavigationBar appearance].barTintColor = UIColor.blueColor;
 
-	self.window.rootViewController = navigationVC;
+	self.window.rootViewController = navigationViewController;
 	[self.window makeKeyAndVisible];
 
-	self.navigationController = navigationVC;
+	self.navigationController = navigationViewController;
 
 	return YES;
 }

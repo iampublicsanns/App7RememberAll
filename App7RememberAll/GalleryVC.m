@@ -97,18 +97,18 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 {
 	UIImage *image = [UIImage imageWithData:[DataManager tryGetCachedImage:url]];
 
-	PreviewViewController *previewVC;
+	PreviewViewController *previewViewController;
 
 	if (image)
 	{
-		previewVC = [[PreviewViewController alloc] initWithImage:image];
+		previewViewController = [[PreviewViewController alloc] initWithImage:image];
 	}
 	else
 	{
-		previewVC = [[PreviewViewController alloc] initWithUrl:url];
+		previewViewController = [[PreviewViewController alloc] initWithUrl:url];
 	}
 
-	[self.navigationController pushViewController:previewVC animated:YES];
+	[self.navigationController pushViewController:previewViewController animated:YES];
 }
 
 
