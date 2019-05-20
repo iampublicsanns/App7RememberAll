@@ -60,6 +60,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	}
 }
 
+//todo rename addTask:task
 + (void)addTaskToHash:(NSURLSessionDataTask *)task byUrl:(NSString *)url
 {
 	[self makeTasksHash];
@@ -97,15 +98,16 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 #pragma mark - Public
 
 /**
- Creates a serial queue and dispatches asynchronously
- Completion handler valuated on a serial DataManager's queue.
+ Calls startLoadingAsync. По-окончании кидает в кеш то, что скачалось, и вызывает completion с ним же.
  */
-+ (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
++ (void)asyncGetImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
 {
 
-	dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+	//это создаёт кучу тредов с одним и тем же лейблом? А затем я запускал их асинхронно, а значит, они шли параллельно?
+	//dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
 
-	dispatch_async(serial, ^{
+	//просто в main пусть запускается асинхронная закачка. Вроде, нет смысла сами запуски закачки выстраивать в serial-очередь.
+	//dispatch_async([self serialQueue], ^{
 		NSURLSessionDataTask *task = [DataManager startLoadingAsync:url completion:^(NSData *data) {
 			[DataManager addCachedImage:data byUrl:url];
 			UIImage *image = [UIImage imageWithData:data];
@@ -120,8 +122,15 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 				completion(nil);
 			}
 		}];
-	});
+	
+	//});
+	
+	task.priority = priority;
+}
 
++ (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+{
+	[self asyncGetImageByUrl:url priority: NSURLSessionTaskPriorityDefault completion:completion];
 }
 
 + (void)asyncGetBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
@@ -135,7 +144,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 			[task suspend];
 		}];
 
-		[DataManager asyncGetImageByUrl:url completion:^(UIImage *bigImage) {
+		[DataManager asyncGetImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
 			completion(bigImage);
 
 			[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
