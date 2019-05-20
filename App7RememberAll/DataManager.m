@@ -18,7 +18,6 @@
 
 static NSCache *_imagesCache;
 static dispatch_queue_t _serialQueue;
-static NSArray<__kindof NSURLSessionTask *> *_tasks;
 /** All tasks mapped by url */
 static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
@@ -131,7 +130,6 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	NSURLSession *session = [NSURLSession sharedSession];
 
 	[session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> *_Nonnull tasks) {
-		_tasks = tasks;
 
 		[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
 			[task suspend];
