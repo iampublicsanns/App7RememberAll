@@ -1,5 +1,5 @@
 //
-//  GalleryVC.h
+//  GalleryViewController.h
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GalleryVC : UICollectionViewController
+@interface GalleryViewController : UICollectionViewController
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout;
 

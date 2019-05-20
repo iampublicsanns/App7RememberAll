@@ -1,5 +1,5 @@
 //
-//  GalleryVC.m
+//  GalleryViewController.m
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
@@ -7,20 +7,20 @@
 //
 
 #import "DataManager.h"
-#import "GalleryVC.h"
+#import "GalleryViewController.h"
 #import "ItemViewCell.h"
 #import "PreviewViewController.h"
 #import "Config.h"
 
 
-@interface GalleryVC ()
+@interface GalleryViewController ()
 
 @property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
 
 @end
 
 
-@implementation GalleryVC
+@implementation GalleryViewController
 
 static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
@@ -58,7 +58,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 /**
  * Приведет к вызову cellForItemAtIndexPath().
  */
-- (void)reloadItemsAt:(NSIndexPath *)indexPath
+- (void)reloadItemAt:(NSIndexPath *)indexPath
 {
 	[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
@@ -155,7 +155,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			if (url != cell.imageUrl)
 			{
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[weakSelf reloadItemsAt:indexPath];
+					[weakSelf reloadItemAt:indexPath];
 				});
 
 				return;

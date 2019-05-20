@@ -10,7 +10,6 @@
 
 #import "Config.h"
 #import "DataManager.h"
-#import "GalleryVC.h"
 
 
 //@property (class, nonatomic) NSDictionary *cachedImages;
@@ -47,7 +46,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	[_imagesCache setObject:imageData forKey:url];
 }
 
-+ (NSData *)tryGetCachedImage:(NSString *)url
++ (nullable NSData *)tryGetCachedImage:(NSString *)url
 {
 	return [[DataManager imagesCache] objectForKey:url];
 }

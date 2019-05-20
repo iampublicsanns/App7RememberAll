@@ -6,7 +6,7 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "GalleryVC.h"
+#import "GalleryViewController.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -22,7 +22,7 @@
 {
 	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
 
-	GalleryVC *collectionViewController = [[GalleryVC alloc] initWithCollectionViewLayout:flowLayout];
+	GalleryViewController *collectionViewController = [[GalleryViewController alloc] initWithCollectionViewLayout:flowLayout];
 
 	UINavigationController *navigationViewController = [[UINavigationController alloc] init];
 	navigationViewController.viewControllers = @[collectionViewController];
@@ -33,6 +33,7 @@
 	[self.window makeKeyAndVisible];
 
 	self.navigationController = navigationViewController;
+	self.navigationController.navigationBar.barTintColor = [[UIColor alloc] initWithRed:188 green:255 blue:255 alpha:.8];
 
 	return YES;
 }
