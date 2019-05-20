@@ -15,8 +15,7 @@
 
 @interface GalleryVC ()
 
-@property (nonatomic, strong) NSMutableArray<UIImage *> *gallery;
-@property (nonatomic, strong) NSArray<NSDictionary *> *imagesCatalogue;
+@property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
 
 @end
 
@@ -35,7 +34,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 		return nil;
 	}
 
-	[self setupGallery];
 	return self;
 }
 
@@ -57,9 +55,12 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 #pragma mark - Private
 
-- (void)setupGallery
+/**
+ * Приведет к вызову cellForItemAtIndexPath().
+ */
+- (void)reloadItemsAt:(NSIndexPath *)indexPath
 {
-	_gallery = [NSMutableArray arrayWithArray:@[]];
+	[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
 
 - (void)startLoadingCatalogue
@@ -154,12 +155,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			if (url != cell.imageUrl)
 			{
 				dispatch_async(dispatch_get_main_queue(), ^{
-					if (!weakSelf) {
-						return;
-					}
-
-					// this triggers a new call to cellForItemAtIndexPath()
-					[weakSelf.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+					[weakSelf reloadItemsAt:indexPath];
 				});
 
 				return;
