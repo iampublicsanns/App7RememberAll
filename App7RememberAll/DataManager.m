@@ -102,29 +102,21 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
  */
 + (void)asyncGetImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
 {
+	NSURLSessionDataTask *task = [DataManager startLoadingAsync:url completion:^(NSData *data) {
+		[DataManager addCachedImage:data byUrl:url];
+		UIImage *image = [UIImage imageWithData:data];
 
-	//это создаёт кучу тредов с одним и тем же лейблом? А затем я запускал их асинхронно, а значит, они шли параллельно?
-	//dispatch_queue_t serial = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+		if (completion)
+		{
+			completion(image);
+		}
+	} onError:^(NSData *data) {
+		if (completion)
+		{
+			completion(nil);
+		}
+	}];
 
-	//просто в main пусть запускается асинхронная закачка. Вроде, нет смысла сами запуски закачки выстраивать в serial-очередь.
-	//dispatch_async([self serialQueue], ^{
-		NSURLSessionDataTask *task = [DataManager startLoadingAsync:url completion:^(NSData *data) {
-			[DataManager addCachedImage:data byUrl:url];
-			UIImage *image = [UIImage imageWithData:data];
-
-			if (completion)
-			{
-				completion(image);
-			}
-		} onError:^(NSData *data) {
-			if (completion)
-			{
-				completion(nil);
-			}
-		}];
-	
-	//});
-	
 	task.priority = priority;
 }
 
