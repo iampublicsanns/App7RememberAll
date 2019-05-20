@@ -13,10 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PreviewViewController : UIViewController
 
 @property (nonatomic, copy) void (^completion)(void);
+@property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, copy) NSString *url;
 
-- (instancetype)initWithImage:(UIImage *)image;
+//- (instancetype)initWithImage:(UIImage *)image;
+//
+//- (instancetype)initWithUrl:(NSString *)url;
 
-- (instancetype)initWithUrl:(NSString *)url;
+/** Starts download */
+- (void)reload;
 
 @end
 

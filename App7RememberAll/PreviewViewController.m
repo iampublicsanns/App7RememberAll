@@ -33,38 +33,37 @@
 	return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image
-{
-	self = [self init];
-
-	_image = image;
-
-	return self;
-}
-
-- (instancetype)initWithUrl:(NSString *)url
-{
-	self = [self init];
-
-	dispatch_group_enter(self->_group);
-
-	[DataManager asyncGetBigImageByUrl:url completion:^(UIImage *image) {
-			//autofix
-			self->_image = image;
-
-			dispatch_group_leave(self->_group);
-		}];
-	return self;
-}
-
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 
 	[self setupViews];
+	[self updateImageIfNeeded];
 }
 
+
+- (void)reload
+{
+	NSData *cached = [self.dataManager tryGetCachedImage:self.url];
+	if (cached)
+	{
+		self.image = [UIImage imageWithData:cached];
+		[self updateImageIfNeeded];
+	}
+	
+	[self.dataManager asyncGetBigImageByUrl:self.url completion:^(UIImage *image) {
+		self.image = image;
+		
+		if (!NSThread.isMainThread)
+		{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self updateImageIfNeeded];
+			});
+		}
+		
+	}];
+}
 
 - (void)setupViews
 {
@@ -87,19 +86,28 @@
 	[self.view addSubview:self.scrollView];
 
 
-	self.imageView = [[UIImageView alloc] initWithImage:_image];
-
+	self.imageView = [UIImageView new];
 	self.imageView.userInteractionEnabled = true;
 	self.imageView.multipleTouchEnabled = true;
 
 	[self.scrollView addSubview:self.imageView];
 
+	//dispatch_group_notify(self.group, dispatch_get_main_queue(), ^{
+	//	self.imageView.image = self->_image;
+	//	[self.imageView sizeToFit];
+	//	self.scrollView.contentSize = self.imageView.frame.size;
+	//});
+}
 
-	dispatch_group_notify(self.group, dispatch_get_main_queue(), ^{
-		self.imageView.image = self->_image;
-		[self.imageView sizeToFit];
-		self.scrollView.contentSize = self.imageView.frame.size;
-	});
+- (void)updateImageIfNeeded
+{
+	if (!self.imageView)
+	{
+		return;
+	}
+	self.imageView.image = self.image;
+	[self.imageView sizeToFit];
+	self.scrollView.contentSize = self.imageView.frame.size;
 }
 
 

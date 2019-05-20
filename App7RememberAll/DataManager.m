@@ -12,47 +12,46 @@
 #import "DataManager.h"
 
 
-//@property (class, nonatomic) NSDictionary *cachedImages;
+@interface DataManager()
+
+@property (nonatomic, copy) NSCache *imagesCache;
+@property (nonatomic, copy) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash;
+
+@end
+
 
 @implementation DataManager
 
-static NSCache *_imagesCache;
 static dispatch_queue_t _serialQueue;
 /** All tasks mapped by url */
-static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 
-# pragma mark Static variable accessors
+#pragma mark - Init
 
-+ (void)makeCache
+- (instancetype)initWithCache:(NSCache *)cache
 {
-	if (_imagesCache == nil)
+	self = [super init];
+	
+	if (self)
 	{
-		_imagesCache = [[NSCache alloc] init];
+		self->_imagesCache = cache;
 	}
+
+	return self;
 }
 
-+ (NSCache *)imagesCache
+- (void)addCachedImage:(NSData *)imageData byUrl:(NSString *)url
 {
-	[self makeCache];
-
-	return _imagesCache;
+	[self.imagesCache setObject:imageData forKey:url];
 }
 
-+ (void)addCachedImage:(NSData *)imageData byUrl:(NSString *)url
+- (nullable NSData *)tryGetCachedImage:(NSString *)url
 {
-	[self makeCache];
-
-	[_imagesCache setObject:imageData forKey:url];
-}
-
-+ (nullable NSData *)tryGetCachedImage:(NSString *)url
-{
-	return [[DataManager imagesCache] objectForKey:url];
+	return [self.imagesCache objectForKey:url];
 }
 
 //tasks hash
-+ (void)makeTasksHash
+- (void)makeTasksHash
 {
 	if (_tasksHash == nil)
 	{
@@ -60,8 +59,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	}
 }
 
-//todo rename addTask:task
-+ (void)addTaskToHash:(NSURLSessionDataTask *)task byUrl:(NSString *)url
+- (void)addTask:(NSURLSessionDataTask *)task byUrl:(NSString *)url
 {
 	[self makeTasksHash];
 
@@ -69,7 +67,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	[_tasksHash setObject:task forKey:url];
 }
 
-+ (NSURLSessionDataTask *)getTaskByUrl:(NSString *)url
+- (NSURLSessionDataTask *)getTaskByUrl:(NSString *)url
 {
 	[self makeTasksHash];
 
@@ -77,7 +75,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 }
 
 //serial queue
-+ (void)makeSerialQueue
+- (void)makeSerialQueue
 {
 	if (_serialQueue == nil)
 	{
@@ -86,7 +84,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 }
 
 //todo must be thread-safe. It is accessed via concurrent threads.
-+ (dispatch_queue_t)serialQueue
+- (dispatch_queue_t)serialQueue
 {
 	[self makeSerialQueue];
 
@@ -100,10 +98,14 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 /**
  Calls startLoadingAsync. По-окончании кидает в кеш то, что скачалось, и вызывает completion с ним же.
  */
-+ (void)asyncGetImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
+- (void)asyncGetImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
 {
-	NSURLSessionDataTask *task = [DataManager startLoadingAsync:url completion:^(NSData *data) {
-		[DataManager addCachedImage:data byUrl:url];
+	__weak typeof(self)weakSelf = self;
+	
+	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *data) {
+		__strong typeof(self)strongSelf = weakSelf;
+		
+		[strongSelf addCachedImage:data byUrl:url];
 		UIImage *image = [UIImage imageWithData:data];
 
 		if (completion)
@@ -120,12 +122,12 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 	task.priority = priority;
 }
 
-+ (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
 	[self asyncGetImageByUrl:url priority: NSURLSessionTaskPriorityDefault completion:completion];
 }
 
-+ (void)asyncGetBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)asyncGetBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
 
 	NSURLSession *session = [NSURLSession sharedSession];
@@ -136,7 +138,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 			[task suspend];
 		}];
 
-		[DataManager asyncGetImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
+		[self asyncGetImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
 			completion(bigImage);
 
 			[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
@@ -205,10 +207,10 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
  --- but continues to my serial queue.
  Returns the same task for this imageUrlString.
  */
-+ (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion onError:(void (^)(NSData *_Nullable data))onError
+- (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion onError:(void (^)(NSData *_Nullable data))onError
 {
 
-	NSURLSessionDataTask *taskCached = [DataManager getTaskByUrl:imageUrlString];
+	NSURLSessionDataTask *taskCached = [self getTaskByUrl:imageUrlString];
 	// что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
 	if (taskCached != nil && (taskCached.state == NSURLSessionTaskStateRunning || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil) || taskCached.state == NSURLSessionTaskStateSuspended))
 	{
@@ -222,7 +224,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
 
-		dispatch_async([DataManager serialQueue], ^{
+		dispatch_async([self serialQueue], ^{
 			if (error)
 			{
 				NSLog(@"\n  error loading %@ \n  %@", imageUrlString, error);
@@ -251,7 +253,7 @@ static NSMutableDictionary<NSString *, NSURLSessionDataTask *> *_tasksHash;
 
 	[task resume];
 
-	[DataManager addTaskToHash:task byUrl:imageUrlString];
+	[self addTask:task byUrl:imageUrlString];
 
 	return task;
 }

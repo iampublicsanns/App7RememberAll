@@ -16,6 +16,7 @@
 @interface GalleryViewController ()
 
 @property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -33,6 +34,10 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		return nil;
 	}
+
+	//todo move to app delegate
+	NSCache *cache = [NSCache new];
+	_dataManager = [[DataManager alloc] initWithCache:cache];
 
 	return self;
 }
@@ -79,9 +84,12 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 		weakSelf.imagesCatalogue = images;
 
 		// signal the collection view to start loading images
-		dispatch_sync(dispatch_get_main_queue(), ^{
-			[weakSelf.collectionView reloadData];
-		});
+		if (!NSThread.isMainThread)
+		{
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[weakSelf.collectionView reloadData];
+			});
+		}
 
 	}];
 	[task resume];
@@ -95,18 +103,14 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
  */
 - (void)presentImageByUrl:(NSString *)url
 {
-	UIImage *image = [UIImage imageWithData:[DataManager tryGetCachedImage:url]];
+	//UIImage *image = [UIImage imageWithData:[self.dataManager tryGetCachedImage:url]];
 
 	PreviewViewController *previewViewController;
 
-	if (image)
-	{
-		previewViewController = [[PreviewViewController alloc] initWithImage:image];
-	}
-	else
-	{
-		previewViewController = [[PreviewViewController alloc] initWithUrl:url];
-	}
+	previewViewController = [PreviewViewController new];
+	previewViewController.dataManager = self.dataManager;
+	previewViewController.url = url;
+	[previewViewController reload];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];
 }
@@ -134,7 +138,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	NSNumber *position = @(indexPath.item + 1);
 	NSDictionary *json = self.imagesCatalogue[indexPath.item];
 	NSString *url = [DataManager makeUrlStringFromJSON:json];
-	NSData *data = [DataManager tryGetCachedImage:url];
+	NSData *data = [self.dataManager tryGetCachedImage:url];
 
 	//todo stop setting an image directly. Do it with just url instead.
 	cell.imageUrl = url;
@@ -149,34 +153,45 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		[cell resetViews];
 
-		[DataManager asyncGetImageByUrl:url completion:^(UIImage *loadedImage) {
+		[self.dataManager asyncGetImageByUrl:url completion:^(UIImage *loadedImage) {
 
 			// currently visible or not, we should notify the collection of newly income data
 			if (url != cell.imageUrl)
 			{
-				dispatch_async(dispatch_get_main_queue(), ^{
+				if (NSThread.isMainThread)
+				{
 					[weakSelf reloadItemAt:indexPath];
-				});
+				}
+				else
+				{
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[weakSelf reloadItemAt:indexPath];
+					});
+				}
 
 				return;
 			}
 
-			dispatch_async(dispatch_get_main_queue(), ^{
-				if (loadedImage)
-				{
-					cell.contentView.backgroundColor = UIColor.yellowColor;
-				}
-				else
-				{
-					cell.contentView.backgroundColor = UIColor.brownColor;
-					cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
-				}
+			if (!NSThread.isMainThread)
+			{
+				dispatch_async(dispatch_get_main_queue(), ^{
+					if (loadedImage)
+					{
+						cell.contentView.backgroundColor = UIColor.yellowColor;
+					}
+					else
+					{
+						cell.contentView.backgroundColor = UIColor.brownColor;
+						cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
+					}
 
-				NSLog(@"\n  index %@ \n  %@", position, url);
+					NSLog(@"\n  index %@ \n  %@", position, url);
 
-				[cell setImage:loadedImage];
-				[cell setNumber:position];
-			});
+					[cell setImage:loadedImage];
+					[cell setNumber:position];
+				});
+
+			}
 
 		}];
 	}

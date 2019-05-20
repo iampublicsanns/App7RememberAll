@@ -13,14 +13,16 @@
 
 @interface DataManager : NSObject
 
-+ (void)asyncGetBigImageByUrl:(NSString *)json completion:(void (^)(UIImage *))completion;
+- (instancetype)initWithCache:(NSCache *)cache;
 
-+ (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
+- (void)asyncGetBigImageByUrl:(NSString *)json completion:(void (^)(UIImage *))completion;
+
+- (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
 
 /**
  * Вернет картинку, если есть в кэше, либо nil.
  * */
-+ (nullable NSData *)tryGetCachedImage:(NSString *)url;
+- (nullable NSData *)tryGetCachedImage:(NSString *)url;
 
 + (NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(id)pkg;
 
