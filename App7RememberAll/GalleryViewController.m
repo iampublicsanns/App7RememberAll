@@ -54,6 +54,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+
 	[self.collectionView reloadData];
 }
 
@@ -153,7 +155,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		[cell resetViews];
 
-		[self.dataManager asyncGetImageByUrl:url completion:^(UIImage *loadedImage) {
+		[self.dataManager loadImageByUrl:url completion:^(UIImage *loadedImage) {
 
 			// currently visible or not, we should notify the collection of newly income data
 			if (url != cell.imageUrl)

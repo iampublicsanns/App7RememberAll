@@ -15,9 +15,9 @@
 
 - (instancetype)initWithCache:(NSCache *)cache;
 
-- (void)asyncGetBigImageByUrl:(NSString *)json completion:(void (^)(UIImage *))completion;
+- (void)loadBigImageByUrl:(NSString *)json completion:(void (^)(UIImage *))completion;
 
-- (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
+- (void)loadImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
 
 /**
  * Вернет картинку, если есть в кэше, либо nil.

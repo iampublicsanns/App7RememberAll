@@ -52,7 +52,7 @@
 		[self updateImageIfNeeded];
 	}
 	
-	[self.dataManager asyncGetBigImageByUrl:self.url completion:^(UIImage *image) {
+	[self.dataManager loadBigImageByUrl:self.url completion:^(UIImage *image) {
 		self.image = image;
 		
 		if (!NSThread.isMainThread)

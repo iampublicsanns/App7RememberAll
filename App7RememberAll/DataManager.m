@@ -98,7 +98,7 @@ static dispatch_queue_t _serialQueue;
 /**
  Calls startLoadingAsync. По-окончании кидает в кеш то, что скачалось, и вызывает completion с ним же.
  */
-- (void)asyncGetImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
+- (void)loadImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
 {
 	__weak typeof(self)weakSelf = self;
 	
@@ -122,12 +122,12 @@ static dispatch_queue_t _serialQueue;
 	task.priority = priority;
 }
 
-- (void)asyncGetImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)loadImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
-	[self asyncGetImageByUrl:url priority: NSURLSessionTaskPriorityDefault completion:completion];
+	[self loadImageByUrl:url priority: NSURLSessionTaskPriorityDefault completion:completion];
 }
 
-- (void)asyncGetBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)loadBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
 
 	NSURLSession *session = [NSURLSession sharedSession];
@@ -138,7 +138,7 @@ static dispatch_queue_t _serialQueue;
 			[task suspend];
 		}];
 
-		[self asyncGetImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
+		[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
 			completion(bigImage);
 
 			[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
