@@ -12,11 +12,12 @@
 		1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F52242AF08007C4F26 /* Assets.xcassets */; };
 		1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */; };
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
-		1173F7CF228AFBB70062F842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1173F7CD228AFBB70062F842 /* Main.storyboard */; };
+		11935109229319F4002AA10D /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11935108229319F4002AA10D /* CacheManager.m */; };
+		1193511422944E5E002AA10D /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* Utils.m */; };
 		B21250298E5238D21229FB96 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* DataManager.m */; };
 		B2125A7002FAD4F575BBE26C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2125B3111A9EFBB2C89153C /* PreviewViewController.m */; };
 		B2125B0D15B24769F1813832 /* ItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21259A3B5E75E045245D060 /* ItemViewCell.m */; };
-		B2125DC97BC419030826142B /* GalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B212513A24870D9AF46AEF1D /* GalleryVC.m */; };
+		B2125DC97BC419030826142B /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B212513A24870D9AF46AEF1D /* GalleryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +30,13 @@
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		115BC787227717FB00E5892E /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		1173F7CE228AFBB70062F842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		11935108229319F4002AA10D /* CacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
+		1193510A22931A0B002AA10D /* CacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
+		1193510E22942C0D002AA10D /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		1193511322944E5E002AA10D /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		B212504D254CBC60A62E233E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		B212511688BBA2D84684B4B6 /* GalleryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryVC.h; sourceTree = "<group>"; };
-		B212513A24870D9AF46AEF1D /* GalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryVC.m; sourceTree = "<group>"; };
+		B212511688BBA2D84684B4B6 /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
+		B212513A24870D9AF46AEF1D /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
 		B21253095397F59FB46406E3 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
 		B2125949F29ACF34C3A1D204 /* ItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewCell.h; sourceTree = "<group>"; };
@@ -77,11 +81,12 @@
 				1101C6E92242AF07007C4F26 /* AppDelegate.h */,
 				1101C6EA2242AF07007C4F26 /* AppDelegate.m */,
 				1101C6F52242AF08007C4F26 /* Assets.xcassets */,
-				1173F7CD228AFBB70062F842 /* Main.storyboard */,
 				1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */,
 				1101C6FA2242AF08007C4F26 /* Info.plist */,
 				1101C6FB2242AF08007C4F26 /* main.m */,
 				1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */,
+				1193510E22942C0D002AA10D /* Utils.h */,
+				1193511322944E5E002AA10D /* Utils.m */,
 			);
 			path = App7RememberAll;
 			sourceTree = "<group>";
@@ -89,8 +94,8 @@
 		115BC7722276F37400E5892E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B212513A24870D9AF46AEF1D /* GalleryVC.m */,
-				B212511688BBA2D84684B4B6 /* GalleryVC.h */,
+				B212513A24870D9AF46AEF1D /* GalleryViewController.m */,
+				B212511688BBA2D84684B4B6 /* GalleryViewController.h */,
 				B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */,
 				B2125B3111A9EFBB2C89153C /* PreviewViewController.m */,
 			);
@@ -113,6 +118,8 @@
 			children = (
 				B212504D254CBC60A62E233E /* DataManager.h */,
 				B21253095397F59FB46406E3 /* DataManager.m */,
+				1193510A22931A0B002AA10D /* CacheManager.h */,
+				11935108229319F4002AA10D /* CacheManager.m */,
 			);
 			name = ModelControllers;
 			path = App7RememberAll;
@@ -123,8 +130,7 @@
 			children = (
 				115BC787227717FB00E5892E /* Config.h */,
 			);
-			name = Config;
-			path = ModelControllers/Config;
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,7 +190,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1173F7CF228AFBB70062F842 /* Main.storyboard in Resources */,
 				1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */,
 				1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */,
 			);
@@ -197,12 +202,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1193511422944E5E002AA10D /* Utils.m in Sources */,
+				11935109229319F4002AA10D /* CacheManager.m in Sources */,
 				1101C6F42242AF07007C4F26 /* App7RememberAll.xcdatamodeld in Sources */,
 				1101C6FC2242AF08007C4F26 /* main.m in Sources */,
 				1101C6EB2242AF07007C4F26 /* AppDelegate.m in Sources */,
 				B2125B0D15B24769F1813832 /* ItemViewCell.m in Sources */,
 				B21250298E5238D21229FB96 /* DataManager.m in Sources */,
-				B2125DC97BC419030826142B /* GalleryVC.m in Sources */,
+				B2125DC97BC419030826142B /* GalleryViewController.m in Sources */,
 				B2125A7002FAD4F575BBE26C /* PreviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,14 +223,6 @@
 				1101C6F82242AF08007C4F26 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		1173F7CD228AFBB70062F842 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1173F7CE228AFBB70062F842 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -346,7 +345,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
 				INFOPLIST_FILE = App7RememberAll/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -362,7 +363,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
 				INFOPLIST_FILE = App7RememberAll/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
