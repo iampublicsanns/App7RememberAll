@@ -9,23 +9,10 @@
 #ifndef Utils_h
 #define Utils_h
 
-void performOnMainThread(void (^block)(void))
-{
-	if (NULL == block)
-	{
-		return;
-	}
-	
-	if (!NSThread.isMainThread)
-	{
-		dispatch_async(dispatch_get_main_queue(), ^{
-			block();
-		});
-	}
-	else
-	{
-		block();
-	}
-}
+@interface Utils : NSObject
+
++ (void)performOnMainThread:(void (^)(void))block;
+
+@end
 
 #endif /* Utils_h */
