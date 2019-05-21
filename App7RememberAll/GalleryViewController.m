@@ -73,7 +73,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)startLoadingCatalogue
 {
-	
+
 	//TODO:
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
 	NSURL *url = [NSURL URLWithString:urlString];
@@ -81,7 +81,10 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	__auto_type __weak weakSelf = self;
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
-		if (!weakSelf) return;
+		if (!weakSelf)
+		{
+			return;
+		}
 
 		id json = [DataManager validateData:data response:response error:error];
 		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
@@ -100,8 +103,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	[Utils performOnMainThread:^{
 		[weakSelf reload];
-	}] ;
-	
+	}];
+
 }
 
 
@@ -159,40 +162,30 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			// currently visible or not, we should notify the collection of newly income data
 			if (url != cell.imageUrl)
 			{
-				if (NSThread.isMainThread)
-				{
+				[Utils performOnMainThread:^{
 					[weakSelf reloadItemAt:indexPath];
-				}
-				else
-				{
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[weakSelf reloadItemAt:indexPath];
-					});
-				}
+				}];
 
 				return;
 			}
 
-			if (!NSThread.isMainThread)
-			{
-				dispatch_async(dispatch_get_main_queue(), ^{
-					if (loadedImage)
-					{
-						cell.contentView.backgroundColor = UIColor.yellowColor;
-					}
-					else
-					{
-						cell.contentView.backgroundColor = UIColor.brownColor;
-						cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
-					}
 
-					NSLog(@"\n  index %@ \n  %@", position, url);
+			[Utils performOnMainThread:^{
+				if (loadedImage)
+				{
+					cell.contentView.backgroundColor = UIColor.yellowColor;
+				}
+				else
+				{
+					cell.contentView.backgroundColor = UIColor.brownColor;
+					cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
+				}
 
-					[cell setImage:loadedImage];
-					[cell setNumber:position];
-				});
+				NSLog(@"\n  index %@ \n  %@", position, url);
 
-			}
+				[cell setImage:loadedImage];
+				[cell setNumber:position];
+			}];
 
 		}];
 	}
