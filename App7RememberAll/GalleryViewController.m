@@ -15,7 +15,7 @@
 
 @interface GalleryViewController ()
 
-@property (atomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
+@property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -54,7 +54,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 {
 	[super viewDidAppear:animated];
 
-	[self.collectionView reloadData];
+	[self reload];
 }
 
 
@@ -65,9 +65,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	[self.collectionView reloadData];
 }
 
-/**
- * Приведет к вызову cellForItemAtIndexPath().
- */
 - (void)reloadItemAt:(NSIndexPath *)indexPath
 {
 	[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
@@ -75,6 +72,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)startLoadingCatalogue
 {
+	
+	//TODO:
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
 	NSURL *url = [NSURL URLWithString:urlString];
 	NSURLSession *session = [NSURLSession sharedSession];
@@ -98,12 +97,15 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	__auto_type __weak weakSelf = self;
 
-	// signal the collection view to start loading images
 	if (!NSThread.isMainThread)
 	{
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[weakSelf reload];
 		});
+	}
+	else
+	{
+		
 	}
 }
 
@@ -115,8 +117,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
  */
 - (void)presentImageByUrl:(NSString *)url
 {
-	PreviewViewController *previewViewController = [PreviewViewController new];
-	previewViewController.dataManager = self.dataManager;
+	PreviewViewController *previewViewController = [[PreviewViewController alloc] initWithDataManager:self.dataManager];
 	[previewViewController showImageWithUrlString:url];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];
@@ -125,7 +126,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 #pragma mark <UICollectionViewDataSource>
 
-//optional
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
 	return 1;
@@ -210,6 +210,5 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	return cell;
 }
-
 
 @end

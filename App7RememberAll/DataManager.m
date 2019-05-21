@@ -81,7 +81,7 @@
  */
 - (void)loadImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
 {
-	__weak typeof(self)weakSelf = self;
+	__weak typeof(self) weakSelf = self;
 	
 	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *data) {
 		__strong typeof(self)strongSelf = weakSelf;
@@ -105,12 +105,11 @@
 
 - (void)loadImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
-	[self loadImageByUrl:url priority: NSURLSessionTaskPriorityDefault completion:completion];
+	[self loadImageByUrl:url priority:NSURLSessionTaskPriorityDefault completion:completion];
 }
 
 - (void)loadBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
 {
-
 	NSURLSession *session = [NSURLSession sharedSession];
 
 	[session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> *_Nonnull tasks) {
@@ -193,7 +192,7 @@
 
 	NSURLSessionDataTask *taskCached = [self getTaskByUrl:imageUrlString];
 	// что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
-	if (taskCached != nil && (taskCached.state == NSURLSessionTaskStateRunning || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil) || taskCached.state == NSURLSessionTaskStateSuspended))
+	if (taskCached != nil && (taskCached.state == NSURLSessionTaskStateRunning || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil && [self tryGetCachedImage:imageUrlString] != nil) || taskCached.state == NSURLSessionTaskStateSuspended))
 	{
 		return taskCached;
 	}

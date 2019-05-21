@@ -8,14 +8,15 @@
 
 #import "DataManager.h"
 #import "PreviewViewController.h"
+#import "Utils.h"
 
 
 @interface PreviewViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) dispatch_group_t group;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -23,16 +24,15 @@
 @implementation PreviewViewController
 
 
-- (instancetype)init
+- (instancetype)initWithDataManager:(DataManager *)dataManager
 {
 	self = [super init];
 	if (self)
 	{
-		self->_group = dispatch_group_create();
+		_dataManager = dataManager;
 	}
 	return self;
 }
-
 
 - (void)viewDidLoad
 {
@@ -42,61 +42,50 @@
 	[self updateImageIfNeeded];
 }
 
-
-- (void)reload
+- (void)showImageWithUrlString:(NSString *)urlString
 {
-	NSData *cached = [self.dataManager tryGetCachedImage:self.url];
+	NSData *cached = [self.dataManager tryGetCachedImage:urlString];
 	if (cached)
 	{
 		self.image = [UIImage imageWithData:cached];
 		[self updateImageIfNeeded];
 	}
+
+	__auto_type __weak weakSelf = self;
 	
-	[self.dataManager loadBigImageByUrl:self.url completion:^(UIImage *image) {
-		self.image = image;
-		
-		if (!NSThread.isMainThread)
-		{
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self updateImageIfNeeded];
-			});
-		}
-		
+	[self.dataManager loadBigImageByUrl:urlString completion:^(UIImage *image) {
+		[weakSelf didLoadImage:image];
 	}];
+}
+
+- (void)didLoadImage:(UIImage *)image
+{
+	self.image = image;
+
+	performOnMainThread(^{
+		[self updateImageIfNeeded];
+	});
 }
 
 - (void)setupViews
 {
 	self.scrollView = [[UIScrollView alloc] init];
-
-	CGFloat parentWidth = CGRectGetWidth(self.view.frame);
-	CGFloat parentHeight = CGRectGetHeight(self.view.frame);
-	self.scrollView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
-
+	self.scrollView.frame = self.view.bounds;
 	self.scrollView.layer.borderWidth = 2;
 	self.scrollView.layer.borderColor = [UIColor colorWithRed:0.7 green:0.4 blue:1 alpha:0.8].CGColor;
-
-	CGFloat zoom = 10.0;
-	self.scrollView.maximumZoomScale = zoom;
+	self.scrollView.backgroundColor = UIColor.blackColor;
+	self.scrollView.maximumZoomScale = 10.0;
 	self.scrollView.minimumZoomScale = 0.1;
 	self.scrollView.delegate = self;
-
 	self.scrollView.pagingEnabled = true;
 
 	[self.view addSubview:self.scrollView];
-
 
 	self.imageView = [UIImageView new];
 	self.imageView.userInteractionEnabled = true;
 	self.imageView.multipleTouchEnabled = true;
 
 	[self.scrollView addSubview:self.imageView];
-
-	//dispatch_group_notify(self.group, dispatch_get_main_queue(), ^{
-	//	self.imageView.image = self->_image;
-	//	[self.imageView sizeToFit];
-	//	self.scrollView.contentSize = self.imageView.frame.size;
-	//});
 }
 
 - (void)updateImageIfNeeded
@@ -105,19 +94,24 @@
 	{
 		return;
 	}
+	
 	self.imageView.image = self.image;
+	self.imageView.alpha = 0.0;
+	
 	[self.imageView sizeToFit];
 	self.scrollView.contentSize = self.imageView.frame.size;
+	
+	[UIView animateWithDuration:.25 animations:^{
+		self.imageView.alpha = 1.0;
+	}];
 }
 
 
 #pragma mark <UIScrollViewDelegate>
 
-//if delegate returns nil, nothing happens
 - (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-	//если скроллвью пустой, то в этот момент в нем всё равно возникают два каких-то UIImageView.
-	return self.scrollView.subviews[0];
+	return self.imageView;
 }
 
 @end

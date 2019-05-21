@@ -8,20 +8,21 @@
 
 @import UIKit;
 
+@class DataManager;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PreviewViewController : UIViewController
 
-@property (nonatomic, copy) void (^completion)(void);
-@property (nonatomic, strong) DataManager *dataManager;
-@property (nonatomic, copy) NSString *url;
+- (instancetype)initWithDataManager:(DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
-//- (instancetype)initWithImage:(UIImage *)image;
-//
-//- (instancetype)initWithUrl:(NSString *)url;
+- (void)showImageWithUrlString:(NSString *)urlString;
 
-/** Starts download */
-- (void)reload;
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+												 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
 
