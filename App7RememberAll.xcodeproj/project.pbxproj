@@ -12,7 +12,6 @@
 		1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F52242AF08007C4F26 /* Assets.xcassets */; };
 		1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */; };
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
-		11935109229319F4002AA10D /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11935108229319F4002AA10D /* CacheManager.m */; };
 		1193511422944E5E002AA10D /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* Utils.m */; };
 		B21250298E5238D21229FB96 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* DataManager.m */; };
 		B2125A7002FAD4F575BBE26C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2125B3111A9EFBB2C89153C /* PreviewViewController.m */; };
@@ -30,8 +29,6 @@
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		115BC787227717FB00E5892E /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		11935108229319F4002AA10D /* CacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CacheManager.m; sourceTree = "<group>"; };
-		1193510A22931A0B002AA10D /* CacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheManager.h; sourceTree = "<group>"; };
 		1193510E22942C0D002AA10D /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		B212504D254CBC60A62E233E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -118,8 +115,6 @@
 			children = (
 				B212504D254CBC60A62E233E /* DataManager.h */,
 				B21253095397F59FB46406E3 /* DataManager.m */,
-				1193510A22931A0B002AA10D /* CacheManager.h */,
-				11935108229319F4002AA10D /* CacheManager.m */,
 			);
 			name = ModelControllers;
 			path = App7RememberAll;
@@ -203,7 +198,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1193511422944E5E002AA10D /* Utils.m in Sources */,
-				11935109229319F4002AA10D /* CacheManager.m in Sources */,
 				1101C6F42242AF07007C4F26 /* App7RememberAll.xcdatamodeld in Sources */,
 				1101C6FC2242AF08007C4F26 /* main.m in Sources */,
 				1101C6EB2242AF07007C4F26 /* AppDelegate.m in Sources */,
