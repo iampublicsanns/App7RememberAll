@@ -30,7 +30,7 @@
 
 + (NSString *)makeUrlStringFromJSON:(NSDictionary *)json suffix:(NSString *)suffix;
 
-+ (id)sessionCheckData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
++ (id)validateData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
 
 @end
 

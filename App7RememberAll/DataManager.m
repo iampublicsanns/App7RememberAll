@@ -15,15 +15,13 @@
 @interface DataManager()
 
 @property (nonatomic, copy) NSCache *imagesCache;
-@property (nonatomic, copy) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash;
+@property (nonatomic, copy) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
+@property (atomic, strong) dispatch_queue_t serialQueue;
 
 @end
 
 
 @implementation DataManager
-
-static dispatch_queue_t _serialQueue;
-/** All tasks mapped by url */
 
 
 #pragma mark - Init
@@ -34,7 +32,8 @@ static dispatch_queue_t _serialQueue;
 	
 	if (self)
 	{
-		self->_imagesCache = cache;
+		_imagesCache = cache;
+		_serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
 	}
 
 	return self;
@@ -74,25 +73,7 @@ static dispatch_queue_t _serialQueue;
 	return [_tasksHash objectForKey:url];
 }
 
-//serial queue
-- (void)makeSerialQueue
-{
-	if (_serialQueue == nil)
-	{
-		_serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
-	}
-}
 
-//todo must be thread-safe. It is accessed via concurrent threads.
-- (dispatch_queue_t)serialQueue
-{
-	[self makeSerialQueue];
-
-	return _serialQueue;
-}
-
-
-#pragma mark Static methods
 #pragma mark - Public
 
 /**
@@ -174,7 +155,7 @@ static dispatch_queue_t _serialQueue;
 	return [self makeUrlStringFromJSON:json suffix:ConfigThumbnailSuffix];
 }
 
-+ (id)sessionCheckData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
++ (id)validateData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
 {
 	if (error)
 	{
