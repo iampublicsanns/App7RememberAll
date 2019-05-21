@@ -15,7 +15,7 @@
 
 @interface GalleryViewController ()
 
-@property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
+@property (atomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -28,16 +28,16 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+- (instancetype)initWithDataManager:(DataManager *)dataManager
 {
-	if (![super initWithCollectionViewLayout:layout])
-	{
-		return nil;
-	}
+	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
 
-	//todo move to app delegate
-	NSCache *cache = [NSCache new];
-	_dataManager = [[DataManager alloc] initWithCache:cache];
+	self = [super initWithCollectionViewLayout:flowLayout];
+
+	if (self)
+	{
+		_dataManager = dataManager;
+	}
 
 	return self;
 }
@@ -45,10 +45,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	// Register cell classes
-	[self.collectionView registerClass:[ItemViewCell class] forCellWithReuseIdentifier:GalleryVCReuseIdentifier];
 
-	// Do any additional setup after loading the view.
+	[self.collectionView registerClass:[ItemViewCell class] forCellWithReuseIdentifier:GalleryVCReuseIdentifier];
 	[self startLoadingCatalogue];
 }
 
@@ -61,6 +59,11 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 
 #pragma mark - Private
+
+- (void)reload
+{
+	[self.collectionView reloadData];
+}
 
 /**
  * Приведет к вызову cellForItemAtIndexPath().
@@ -80,21 +83,28 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
 		if (!weakSelf) return;
 
-		id json = [DataManager sessionCheckData:data response:response error:error];
+		id json = [DataManager validateData:data response:response error:error];
 		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
 
-		weakSelf.imagesCatalogue = images;
-
-		// signal the collection view to start loading images
-		if (!NSThread.isMainThread)
-		{
-			dispatch_sync(dispatch_get_main_queue(), ^{
-				[weakSelf.collectionView reloadData];
-			});
-		}
+		[weakSelf updateCatalogueWithImages:images];
 
 	}];
 	[task resume];
+}
+
+- (void)updateCatalogueWithImages:(NSArray<NSDictionary *> *)images
+{
+	self.imagesCatalogue = images;
+
+	__auto_type __weak weakSelf = self;
+
+	// signal the collection view to start loading images
+	if (!NSThread.isMainThread)
+	{
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[weakSelf reload];
+		});
+	}
 }
 
 
@@ -105,14 +115,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
  */
 - (void)presentImageByUrl:(NSString *)url
 {
-	//UIImage *image = [UIImage imageWithData:[self.dataManager tryGetCachedImage:url]];
-
-	PreviewViewController *previewViewController;
-
-	previewViewController = [PreviewViewController new];
+	PreviewViewController *previewViewController = [PreviewViewController new];
 	previewViewController.dataManager = self.dataManager;
-	previewViewController.url = url;
-	[previewViewController reload];
+	[previewViewController showImageWithUrlString:url];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];
 }
@@ -142,7 +147,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	NSString *url = [DataManager makeUrlStringFromJSON:json];
 	NSData *data = [self.dataManager tryGetCachedImage:url];
 
-	//todo stop setting an image directly. Do it with just url instead.
 	cell.imageUrl = url;
 
 	if (data)
@@ -198,11 +202,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 		}];
 	}
 
-	url = [DataManager makeUrlStringFromJSON:json suffix:@"b"];
+	url = [DataManager makeUrlStringFromJSON:json suffix:ConfigBigImageSuffix];
 
 	[cell setOnClickBlock:^{
-		if (!weakSelf) return;
-
 		[weakSelf presentImageByUrl:url];
 	}];
 
