@@ -73,13 +73,34 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)startLoadingCatalogue
 {
-
 	//TODO:
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
 	NSURL *url = [NSURL URLWithString:urlString];
 	NSURLSession *session = [NSURLSession sharedSession];
 
 	__auto_type __weak weakSelf = self;
+
+	[self.dataManager startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
+		if (!weakSelf)
+		{
+			return;
+		}
+
+		NSError *parseErr;
+		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
+		if (!json)
+		{
+			return;
+		}
+
+		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
+
+		[weakSelf updateCatalogueWithImages:images];
+	} onError:^(NSData *data) {
+
+	}];
+
+
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
 		if (!weakSelf)
 		{

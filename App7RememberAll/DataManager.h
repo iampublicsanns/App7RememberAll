@@ -19,6 +19,8 @@
 
 - (void)loadImageByUrl:(NSString *)url completion:(void (^)(UIImage *image))completion;
 
+- (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion onError:(void (^)(NSData *_Nullable data))onError;
+
 /**
  * Вернет картинку, если есть в кэше, либо nil.
  * */
