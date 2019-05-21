@@ -62,9 +62,9 @@
 {
 	self.image = image;
 
-	performOnMainThread(^{
+	[Utils performOnMainThread: ^{
 		[self updateImageIfNeeded];
-	});
+	}];
 }
 
 - (void)setupViews

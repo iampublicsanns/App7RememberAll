@@ -11,6 +11,7 @@
 #import "ItemViewCell.h"
 #import "PreviewViewController.h"
 #import "Config.h"
+#import "Utils.h"
 
 
 @interface GalleryViewController ()
@@ -97,16 +98,10 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	__auto_type __weak weakSelf = self;
 
-	if (!NSThread.isMainThread)
-	{
-		dispatch_sync(dispatch_get_main_queue(), ^{
-			[weakSelf reload];
-		});
-	}
-	else
-	{
-		
-	}
+	[Utils performOnMainThread:^{
+		[weakSelf reload];
+	}] ;
+	
 }
 
 
