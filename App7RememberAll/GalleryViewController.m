@@ -73,47 +73,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)startLoadingCatalogue
 {
-	//TODO:
-	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
-	NSURL *url = [NSURL URLWithString:urlString];
-	NSURLSession *session = [NSURLSession sharedSession];
-
-	__auto_type __weak weakSelf = self;
-
-	[self.dataManager startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
-		if (!weakSelf)
-		{
-			return;
-		}
-
-		NSError *parseErr;
-		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
-		if (!json)
-		{
-			return;
-		}
-
-		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
-
-		[weakSelf updateCatalogueWithImages:images];
-	} failure:^(NSData *data) {
-
+	[self.dataManager loadCatalogueWithCompletion:^(NSArray<NSDictionary *> *images) {
+		[self updateCatalogueWithImages:images];
 	}];
-
-
-	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
-		if (!weakSelf)
-		{
-			return;
-		}
-
-		id json = [DataManager validateData:data response:response error:error];
-		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
-
-		[weakSelf updateCatalogueWithImages:images];
-
-	}];
-	[task resume];
 }
 
 - (void)updateCatalogueWithImages:(NSArray<NSDictionary *> *)images
@@ -178,7 +140,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		[cell resetViews];
 
-		[self.dataManager loadImageByUrl:url completion:^(UIImage *loadedImage) {
+		[self.dataManager loadImageByUrl:url completion:^(NSData *loadedImageData) {
+			UIImage *loadedImage = [UIImage imageWithData:loadedImageData];
 
 			// currently visible or not, we should notify the collection of newly income data
 			if (url != cell.imageUrl)

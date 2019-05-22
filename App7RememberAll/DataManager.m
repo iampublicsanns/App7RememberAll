@@ -74,15 +74,14 @@
 /**
  Calls startLoadingAsync. По-окончании кидает в кеш то, что скачалось, и вызывает completion с ним же.
  */
-- (void)loadImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(UIImage *))completion
+- (void)loadImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(NSData *))completion
 {
-	__weak typeof(self) weakSelf = self;
+	__auto_type __weak weakSelf = self;
 	
-	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *data) {
-		__strong typeof(self) strongSelf = weakSelf;
+	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *image) {
+		__auto_type __strong strongSelf = weakSelf;
 		
-		[strongSelf addCachedImage:data byUrl:url];
-		UIImage *image = [UIImage imageWithData:data];
+		[strongSelf addCachedImage:image byUrl:url];
 
 		if (completion)
 		{
@@ -98,12 +97,41 @@
 	task.priority = priority;
 }
 
-- (void)loadImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)loadCatalogueWithCompletion:(void (^)(NSArray<NSDictionary *> *))completion
+{
+	
+	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
+	
+	__auto_type __weak weakSelf = self;
+	
+	[self startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
+		if (!weakSelf)
+		{
+			return;
+		}
+		
+		NSError *parseErr;
+		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
+		if (!json)
+		{
+			return;
+		}
+		
+		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
+		
+		completion(images);
+		
+	} failure:^(NSData *data) {
+		
+	}];
+	}
+
+- (void)loadImageByUrl:(NSString *)url completion:(void (^)(NSData *))completion
 {
 	[self loadImageByUrl:url priority:NSURLSessionTaskPriorityDefault completion:completion];
 }
 
-- (void)loadBigImageByUrl:(NSString *)url completion:(void (^)(UIImage *))completion
+- (void)loadBigImageByUrl:(NSString *)url completion:(void (^)(NSData *))completion
 {
 	NSURLSession *session = [NSURLSession sharedSession];
 
@@ -113,7 +141,7 @@
 			[task suspend];
 		}];
 
-		[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
+		[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(NSData *bigImage) {
 			completion(bigImage);
 
 			[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {

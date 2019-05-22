@@ -53,13 +53,15 @@
 
 	__auto_type __weak weakSelf = self;
 	
-	[self.dataManager loadBigImageByUrl:urlString completion:^(UIImage *image) {
-		[weakSelf didLoadImage:image];
+	[self.dataManager loadBigImageByUrl:urlString completion:^(NSData *image) {
+		[weakSelf didLoadImageData:image];
 	}];
 }
 
-- (void)didLoadImage:(UIImage *)image
+- (void)didLoadImageData:(NSData *)data
 {
+	UIImage *image = [UIImage imageWithData:data];
+
 	self.image = image;
 
 	[Utils performOnMainThread: ^{
