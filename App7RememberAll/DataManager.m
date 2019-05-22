@@ -12,7 +12,7 @@
 #import "DataManager.h"
 
 
-@interface DataManager()
+@interface DataManager ()
 
 @property (nonatomic, strong) NSCache<NSString *, NSData *> *imagesCache;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
@@ -29,7 +29,7 @@
 - (instancetype)initWithCache:(NSCache *)cache
 {
 	self = [super init];
-	
+
 	if (self)
 	{
 		_imagesCache = cache;
@@ -77,10 +77,10 @@
 - (void)loadImageByUrl:(NSString *)url priority:(float)priority completion:(void (^)(NSData *))completion
 {
 	__auto_type __weak weakSelf = self;
-	
+
 	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *image) {
 		__auto_type __strong strongSelf = weakSelf;
-		
+
 		[strongSelf addCachedImage:image byUrl:url];
 
 		if (completion)
@@ -94,37 +94,42 @@
 		}
 	}];
 
+	if (!task)
+	{
+		return;
+	}
+
 	task.priority = priority;
 }
 
 - (void)loadCatalogueWithCompletion:(void (^)(NSArray<NSDictionary *> *))completion
 {
-	
+
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
-	
+
 	__auto_type __weak weakSelf = self;
-	
+
 	[self startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
 		if (!weakSelf)
 		{
 			return;
 		}
-		
+
 		NSError *parseErr;
 		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
 		if (!json)
 		{
 			return;
 		}
-		
+
 		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
-		
+
 		completion(images);
-		
+
 	} failure:^(NSData *data) {
-		
+
 	}];
-	}
+}
 
 - (void)loadImageByUrl:(NSString *)url completion:(void (^)(NSData *))completion
 {
@@ -141,7 +146,7 @@
 			[task suspend];
 		}];
 
-		[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(NSData *bigImage) {
+		[self loadImageByUrl:url priority:NSURLSessionTaskPriorityHigh completion:^(NSData *bigImage) {
 			completion(bigImage);
 
 			[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
@@ -214,27 +219,31 @@
  --- but continues to my serial queue.
  Returns the same task for this imageUrlString.
  */
-- (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion failure:(void (^)(NSData *_Nullable data))failure
+- (nullable NSURLSessionDataTask *)startLoadingAsync:(NSString *)urlString completion:(void (^)(NSData *_Nullable data))completion failure:(void (^)(NSData *_Nullable data))failure
 {
 
-	NSURLSessionDataTask *taskCached = [self getTaskByUrl:imageUrlString];
+	NSURLSessionDataTask *taskCached = [self getTaskByUrl:urlString];
 	// что картинка могла загрузиться, но еще не произошел ее completionHandler. Тогда не надо запускать еще раз закачку.
-	if (taskCached != nil && (taskCached.state == NSURLSessionTaskStateRunning || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil && [self tryGetCachedImage:imageUrlString] != nil) || taskCached.state == NSURLSessionTaskStateSuspended))
+	if (taskCached != nil && (taskCached.state == NSURLSessionTaskStateRunning || (taskCached.state == NSURLSessionTaskStateCompleted && taskCached.error == nil && [self tryGetCachedImage:urlString] != nil) || taskCached.state == NSURLSessionTaskStateSuspended))
 	{
 		return taskCached;
 	}
 
-	NSURL *url = [NSURL URLWithString:imageUrlString];
+	NSURL *url = [NSURL URLWithString:urlString];
+	if (!url)
+	{
+		return nil;
+	}
 	NSURLSession *session = [NSURLSession sharedSession];
 
-	NSLog(@"\n  start loading %@", imageUrlString);
+	NSLog(@"\n  start loading %@", urlString);
 
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
 
 		dispatch_async(self.serialQueue, ^{
 			if (error)
 			{
-				NSLog(@"\n  error loading %@ \n  %@", imageUrlString, error);
+				NSLog(@"\n  error loading %@ \n  %@", urlString, error);
 
 				failure(data);
 				return;
@@ -243,12 +252,12 @@
 			NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *) response;
 			if (httpResp.statusCode < 200 || httpResp.statusCode > 300)
 			{
-				NSLog(@"\n  2error loading %@ \n  %@", imageUrlString);
+				NSLog(@"\n  2error loading %@ \n  %@", urlString);
 
 				return;
 			}
 
-			NSLog(@"\n  finished loading %@", imageUrlString);
+			NSLog(@"\n  finished loading %@", urlString);
 			//[NSThread sleepForTimeInterval: 1.0 ];
 
 			if (completion)
@@ -260,7 +269,7 @@
 
 	[task resume];
 
-	[self addTask:task byUrl:imageUrlString];
+	[self addTask:task byUrl:urlString];
 
 	return task;
 }

@@ -45,19 +45,13 @@
 		[self.imageView.widthAnchor constraintEqualToAnchor:self.widthAnchor],
 		[self.imageView.heightAnchor constraintEqualToAnchor:self.heightAnchor]
 	]];
-
-	//CGFloat parentWidth = CGRectGetWidth(self.frame);
-	//CGFloat parentHeight = CGRectGetHeight(self.frame);
-	//
-	////https://www.youtube.com/watch?v=qV4gHfqwFPU
-	//self.imageView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
 }
 
-- (void)setNumber:(NSNumber *)number
+- (void)setLabelText:(nullable NSString *)string
 {
 	[self setupViews];
 
-	self.label.text = [NSString stringWithFormat:@"%@", number];
+	self.label.text = [NSString stringWithFormat:@"%@", string];
 	[self.label sizeToFit];
 }
 

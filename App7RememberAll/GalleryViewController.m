@@ -16,7 +16,7 @@
 
 @interface GalleryViewController ()
 
-@property (nonatomic, copy) NSArray<NSDictionary *> *imagesCatalogue;
+@property (nonatomic, nullable, copy) NSArray<NSDictionary *> *imagesCatalogue;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -124,6 +124,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	__auto_type __weak weakSelf = self;
 
 	NSNumber *position = @(indexPath.item + 1);
+	NSString *positionString = [NSString stringWithFormat:@"%@", position];
 	NSDictionary *json = self.imagesCatalogue[indexPath.item];
 	NSString *url = [DataManager makeUrlStringFromJSON:json];
 	NSData *data = [self.dataManager tryGetCachedImage:url];
@@ -134,7 +135,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		UIImage *image = [UIImage imageWithData:data];
 		[cell setImage:image];
-		[cell setNumber:position];
+		[cell setLabelText:positionString];
 	}
 	else
 	{
@@ -167,7 +168,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 				NSLog(@"\n  index %@ \n  %@", position, url);
 
 				[cell setImage:loadedImage];
-				[cell setNumber:position];
+				[cell setLabelText:positionString];
 			}];
 
 		}];

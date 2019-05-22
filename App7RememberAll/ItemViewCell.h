@@ -6,7 +6,6 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-//#import <UIKit/UIKit.h>
 @import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -14,14 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ItemViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, copy) NSString *imageUrl; /** Служит идентификатором ячейки */
 @property (nonatomic, copy) void (^clickHandler)(void);
 
 - (void)resetViews;
 
 - (void)setImage:(UIImage *)image;
 
-- (void)setNumber:(NSNumber *)number;
+- (void)setLabelText:(nullable NSString *)string;
 
 @end
 

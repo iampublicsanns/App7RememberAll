@@ -79,7 +79,6 @@
 	self.scrollView.maximumZoomScale = 10.0;
 	self.scrollView.minimumZoomScale = 0.1;
 	self.scrollView.delegate = self;
-	self.scrollView.pagingEnabled = YES;
 
 	[self.view addSubview:self.scrollView];
 
