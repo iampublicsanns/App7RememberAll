@@ -28,7 +28,6 @@
 		1101C6F82242AF08007C4F26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		115BC787227717FB00E5892E /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		1193510E22942C0D002AA10D /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		B212504D254CBC60A62E233E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
 		B2125949F29ACF34C3A1D204 /* ItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewCell.h; sourceTree = "<group>"; };
 		B21259A3B5E75E045245D060 /* ItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewCell.m; sourceTree = "<group>"; };
+		B2125AC95DDBB29D03CD9CEB /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		B2125B3111A9EFBB2C89153C /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,9 +123,10 @@
 		115BC786227717FB00E5892E /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				115BC787227717FB00E5892E /* Config.h */,
+				B2125AC95DDBB29D03CD9CEB /* Config.h */,
 			);
-			path = Config;
+			name = Config;
+			path = App7RememberAll;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
