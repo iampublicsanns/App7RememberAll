@@ -26,8 +26,7 @@
 
 	GalleryViewController *collectionViewController = [[GalleryViewController alloc] initWithDataManager:dataManager];
 
-	UINavigationController *navigationViewController = [[UINavigationController alloc] init];
-	navigationViewController.viewControllers = @[collectionViewController];
+	UINavigationController *navigationViewController = [[UINavigationController alloc] initWithRootViewController:collectionViewController];
 
 	[UINavigationBar appearance].barTintColor = UIColor.blueColor;
 

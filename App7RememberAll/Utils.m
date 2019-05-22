@@ -22,7 +22,7 @@
 	
 	if (!NSThread.isMainThread)
 	{
-		dispatch_async(dispatch_get_main_queue(), ^{
+		dispatch_sync(dispatch_get_main_queue(), ^{
 			block();
 		});
 	}

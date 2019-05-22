@@ -26,7 +26,7 @@
 
 - (instancetype)initWithDataManager:(DataManager *)dataManager
 {
-	self = [super init];
+	self = [super initWithNibName:nil bundle:nil];
 	if (self)
 	{
 		_dataManager = dataManager;

@@ -96,7 +96,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
 
 		[weakSelf updateCatalogueWithImages:images];
-	} onError:^(NSData *data) {
+	} failure:^(NSData *data) {
 
 	}];
 
@@ -189,7 +189,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 				return;
 			}
-
 
 			[Utils performOnMainThread:^{
 				if (loadedImage)

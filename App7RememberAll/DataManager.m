@@ -14,8 +14,8 @@
 
 @interface DataManager()
 
-@property (nonatomic, copy) NSCache *imagesCache;
-@property (nonatomic, copy) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
+@property (nonatomic, strong) NSCache<NSString *, NSData *> *imagesCache;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
 @property (atomic, strong) dispatch_queue_t serialQueue;
 
 @end
@@ -33,7 +33,8 @@
 	if (self)
 	{
 		_imagesCache = cache;
-		_serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_SERIAL);
+		_serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_CONCURRENT);
+		_tasksHash = [NSMutableDictionary new];
 	}
 
 	return self;
@@ -50,27 +51,21 @@
 }
 
 //tasks hash
-- (void)makeTasksHash
-{
-	if (_tasksHash == nil)
-	{
-		_tasksHash = [[NSMutableDictionary alloc] init];
-	}
-}
-
 - (void)addTask:(NSURLSessionDataTask *)task byUrl:(NSString *)url
 {
-	[self makeTasksHash];
-
-	//проблема куча тредов
-	[_tasksHash setObject:task forKey:url];
+	dispatch_barrier_async(self.serialQueue, ^{
+		self.tasksHash[url] = task;
+	});
 }
 
 - (NSURLSessionDataTask *)getTaskByUrl:(NSString *)url
 {
-	[self makeTasksHash];
+	__block NSURLSessionDataTask *task;
 
-	return [_tasksHash objectForKey:url];
+	dispatch_async(self.serialQueue, ^{
+		task = self.tasksHash[url];
+	});
+	return task;
 }
 
 
@@ -84,7 +79,7 @@
 	__weak typeof(self) weakSelf = self;
 	
 	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *data) {
-		__strong typeof(self)strongSelf = weakSelf;
+		__strong typeof(self) strongSelf = weakSelf;
 		
 		[strongSelf addCachedImage:data byUrl:url];
 		UIImage *image = [UIImage imageWithData:data];
@@ -93,7 +88,7 @@
 		{
 			completion(image);
 		}
-	} onError:^(NSData *data) {
+	} failure:^(NSData *data) {
 		if (completion)
 		{
 			completion(nil);
@@ -127,6 +122,10 @@
 
 		}];
 	}];
+
+	//[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
+	//	completion(bigImage);
+	//}];
 }
 
 //todo check docs on json
@@ -187,7 +186,7 @@
  --- but continues to my serial queue.
  Returns the same task for this imageUrlString.
  */
-- (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion onError:(void (^)(NSData *_Nullable data))onError
+- (NSURLSessionDataTask *)startLoadingAsync:(NSString *)imageUrlString completion:(void (^)(NSData *_Nullable data))completion failure:(void (^)(NSData *_Nullable data))failure
 {
 
 	NSURLSessionDataTask *taskCached = [self getTaskByUrl:imageUrlString];
@@ -204,12 +203,12 @@
 
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
 
-		dispatch_async([self serialQueue], ^{
+		dispatch_async(self.serialQueue, ^{
 			if (error)
 			{
 				NSLog(@"\n  error loading %@ \n  %@", imageUrlString, error);
 
-				onError(data);
+				failure(data);
 				return;
 			}
 
