@@ -79,13 +79,13 @@
 	self.scrollView.maximumZoomScale = 10.0;
 	self.scrollView.minimumZoomScale = 0.1;
 	self.scrollView.delegate = self;
-	self.scrollView.pagingEnabled = true;
+	self.scrollView.pagingEnabled = YES;
 
 	[self.view addSubview:self.scrollView];
 
 	self.imageView = [UIImageView new];
-	self.imageView.userInteractionEnabled = true;
-	self.imageView.multipleTouchEnabled = true;
+	self.imageView.userInteractionEnabled = YES;
+	self.imageView.multipleTouchEnabled = YES;
 
 	[self.scrollView addSubview:self.imageView];
 }
