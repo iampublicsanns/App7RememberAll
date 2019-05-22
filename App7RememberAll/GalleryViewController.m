@@ -175,9 +175,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	url = [DataManager makeUrlStringFromJSON:json suffix:ConfigBigImageSuffix];
 
-	[cell setOnClickBlock:^{
+	cell.clickHandler = ^{
 		[weakSelf presentImageByUrl:url];
-	}];
+	};
 
 	return cell;
 }

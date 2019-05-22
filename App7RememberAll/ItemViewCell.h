@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, copy) void (^clickHandler)(void);
 
 - (void)resetViews;
 
@@ -22,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setNumber:(NSNumber *)number;
 
-- (void)setOnClickBlock:(void (^)(void))block;
 @end
 
 NS_ASSUME_NONNULL_END

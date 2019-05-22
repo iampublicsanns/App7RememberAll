@@ -15,8 +15,6 @@
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UIButton *button;
 
-@property (nonatomic, strong) void (^clickHandler)(void);
-
 @end
 
 
@@ -30,7 +28,7 @@
 
 	self.contentView.backgroundColor = UIColor.blueColor;
 	self.contentView.layer.borderWidth = 1.0;
-	self.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;\
+	self.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
 
 	self.imageView.image = nil;
 	self.label.text = @"reset";
@@ -41,12 +39,18 @@
 	[self setupViews];
 
 	self.imageView.image = image;
+	self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
 
-	CGFloat parentWidth = CGRectGetWidth(self.frame);
-	CGFloat parentHeight = CGRectGetHeight(self.frame);
+	[NSLayoutConstraint activateConstraints:@[
+		[self.imageView.widthAnchor constraintEqualToAnchor:self.widthAnchor],
+		[self.imageView.heightAnchor constraintEqualToAnchor:self.heightAnchor]
+	]];
 
-	//https://www.youtube.com/watch?v=qV4gHfqwFPU
-	self.imageView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
+	//CGFloat parentWidth = CGRectGetWidth(self.frame);
+	//CGFloat parentHeight = CGRectGetHeight(self.frame);
+	//
+	////https://www.youtube.com/watch?v=qV4gHfqwFPU
+	//self.imageView.frame = CGRectMake(0, 0, parentWidth, parentHeight);
 }
 
 - (void)setNumber:(NSNumber *)number
@@ -54,11 +58,7 @@
 	[self setupViews];
 
 	self.label.text = [NSString stringWithFormat:@"%@", number];
-}
-
-- (void)setOnClickBlock:(void (^)(void))block
-{
-	self.clickHandler = block;
+	[self.label sizeToFit];
 }
 
 
@@ -96,12 +96,12 @@
 
 - (void)setupViews
 {
-	if (self.imageView == nil)
+	if (!self.imageView)
 	{
 		[self createImageView];
 	}
 
-	if (self.label == nil)
+	if (!self.label)
 	{
 		[self createLabel];
 	}
@@ -112,6 +112,11 @@
 
 - (void)handleClick
 {
+	if (!self.clickHandler)
+	{
+		return;
+	}
+
 	self.clickHandler();
 }
 
