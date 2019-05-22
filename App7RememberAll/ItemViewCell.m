@@ -26,10 +26,6 @@
 {
 	[self setupViews];
 
-	self.contentView.backgroundColor = UIColor.blueColor;
-	self.contentView.layer.borderWidth = 1.0;
-	self.contentView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:1].CGColor;
-
 	self.imageView.image = nil;
 	self.label.text = @"reset";
 }
@@ -84,6 +80,7 @@
 	self.label = [[UILabel alloc] init];
 	self.label.text = @"new";
 	self.label.frame = CGRectMake(0, 0, parentWidth, parentHeight);
+	self.label.textColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1];
 
 	[self.contentView addSubview:self.label];
 }
@@ -112,11 +109,6 @@
 	}
 
 	self.clickHandler();
-}
-
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"\n  Sanz -- %@", super.description];
 }
 
 @end

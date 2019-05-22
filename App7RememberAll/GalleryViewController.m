@@ -32,6 +32,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 - (instancetype)initWithDataManager:(DataManager *)dataManager
 {
 	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+	flowLayout.itemSize = CGSizeMake(100, 100);
 
 	self = [super initWithCollectionViewLayout:flowLayout];
 
@@ -155,14 +156,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			}
 
 			[Utils performOnMainThread:^{
-				if (loadedImage)
-				{
-					cell.contentView.backgroundColor = UIColor.yellowColor;
-				}
-				else
+				if (!loadedImage)
 				{
 					cell.contentView.backgroundColor = UIColor.brownColor;
-					cell.contentView.layer.borderColor = [UIColor colorWithRed:0 green:1 blue:0.5 alpha:1].CGColor;
 				}
 
 				NSLog(@"\n  index %@ \n  %@", position, url);
