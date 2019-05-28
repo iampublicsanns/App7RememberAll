@@ -30,6 +30,7 @@
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1193510E22942C0D002AA10D /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		119351182296E23C002AA10D /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
 		B212504D254CBC60A62E233E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		B212511688BBA2D84684B4B6 /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
 		B212513A24870D9AF46AEF1D /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 				1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */,
 				1193510E22942C0D002AA10D /* Utils.h */,
 				1193511322944E5E002AA10D /* Utils.m */,
+				119351182296E23C002AA10D /* response.h */,
 			);
 			path = App7RememberAll;
 			sourceTree = "<group>";
@@ -91,8 +93,8 @@
 		115BC7722276F37400E5892E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B212513A24870D9AF46AEF1D /* GalleryViewController.m */,
 				B212511688BBA2D84684B4B6 /* GalleryViewController.h */,
+				B212513A24870D9AF46AEF1D /* GalleryViewController.m */,
 				B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */,
 				B2125B3111A9EFBB2C89153C /* PreviewViewController.m */,
 			);

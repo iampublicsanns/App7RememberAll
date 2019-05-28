@@ -12,10 +12,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Вью-контроллер, управляющий отображением превью с возможностью зума
+ */
 @interface PreviewViewController : UIViewController
 
+
+/**
+ Инициализатор
+ @param dataManager менеджер данных для этого вью-контроллера
+ @return Новый инстанс
+ */
 - (instancetype)initWithDataManager:(DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
+/**
+ Отобразить изображение по урлу
+ @param urlString url-адрес, по которому располагается изображение
+ */
 - (void)showImageWithUrlString:(NSString *)urlString;
 
 + (instancetype)new NS_UNAVAILABLE;

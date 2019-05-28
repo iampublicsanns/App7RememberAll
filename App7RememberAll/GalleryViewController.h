@@ -14,6 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GalleryViewController : UICollectionViewController
 
+
+/**
+ Инициализатор
+ @param dataManager менеджер данных для этого вью-контроллера
+ @return Новый инстанс
+ */
 - (instancetype)initWithDataManager:(DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;

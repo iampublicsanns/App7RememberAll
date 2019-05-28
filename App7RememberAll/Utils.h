@@ -9,8 +9,15 @@
 #ifndef Utils_h
 #define Utils_h
 
+/**
+ Класс со вспомогательными методами общего назначения
+ * */
 @interface Utils : NSObject
 
+/**
+ Если вызван с главного потока, выполнит блок сразу. Иначе - запустит асинхронно на главном.
+ @param block блок, который вызвать на главном потоке
+ */
 + (void)performOnMainThread:(void (^)(void))block;
 
 @end
