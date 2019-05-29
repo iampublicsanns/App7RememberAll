@@ -17,7 +17,7 @@
 @interface GalleryViewController ()
 
 @property (nonatomic, nullable, copy) NSArray<NSDictionary *> *imagesCatalogue;
-@property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) DataManager *dataManager;
 
 @end
 

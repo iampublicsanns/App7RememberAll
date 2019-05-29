@@ -11,9 +11,9 @@
 
 @interface ItemViewCell ()
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, nullable, strong) UIImageView *imageView;
+@property (nonatomic, nullable, strong) UILabel *label;
+@property (nonatomic, nullable, strong) UIButton *button;
 
 @end
 
@@ -43,7 +43,7 @@
 	]];
 }
 
-- (void)setLabelText:(nullable NSString *)string
+- (void)setLabelText:(nonnull NSString *)string
 {
 	[self setupViews];
 
@@ -65,6 +65,7 @@
 	self.imageView.layer.borderWidth = 1;
 	self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
 
+	self.imageView.contentMode = UIViewContentModeScaleAspectFill;
 	self.imageView.userInteractionEnabled = YES;
 
 	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick)];

@@ -23,19 +23,19 @@ NS_ASSUME_NONNULL_BEGIN
  @param dataManager менеджер данных для этого вью-контроллера
  @return Новый инстанс
  */
-- (instancetype)initWithDataManager:(DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
-
-/**
- Отобразить изображение по урлу
- @param urlString url-адрес, по которому располагается изображение
- */
-- (void)showImageWithUrlString:(NSString *)urlString;
+- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
 												 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+
+/**
+ Отобразить изображение по урлу
+ @param urlString url-адрес, по которому располагается изображение
+ */
+- (void)showImageWithUrlString:(nonnull NSString *)urlString;
 
 @end
 

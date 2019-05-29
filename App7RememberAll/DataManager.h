@@ -19,34 +19,34 @@
  @param cache Кэш, в котором будут храниться изображения
  @return Новый инстанс.
  */
-- (instancetype)initWithCache:(NSCache *)cache;
+- (nullable instancetype)initWithCache:(NSCache *_Nonnull)cache;
 
 /**
  Начать загрузку каталога
  @param completion блок, в который передается результрующий каталог
  */
-- (void)loadCatalogueWithCompletion:(void (^)(NSArray<NSDictionary *> *))completion;
+- (void)loadCatalogueWithCompletion:(nonnull void (^)(NSArray<NSDictionary *> *_Nullable))completion;
 
 /**
  Начать загрузку изображения с приоритетом над остальными загрузками
  @param url адрес картинки
  @param completion блок, в который передается результрующее изображение
  */
-- (void)loadBigImageByUrl:(NSString *)url completion:(void (^)(NSData *))completion;
+- (void)loadBigImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData *_Nullable))completion;
 
 /**
  Начать загрузку изображения
  @param url адрес картинки
  @param completion блок, в который передается результрующее изображение
  */
-- (void)loadImageByUrl:(NSString *)url completion:(void (^)(NSData *image))completion;
+- (void)loadImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData * _Nullable image))completion;
 
 /**
  Вернет картинку, если есть в кэше, либо nil
  @param url ссылка, у которой поискать, есть ли кеш
  @return Закешированное значение, если есть, либо nil
  */
-- (nullable NSData *)tryGetCachedImage:(NSString *)url;
+- (nullable NSData *)tryGetCachedImage:(nonnull NSString *)url;
 
 
 /**
@@ -54,7 +54,7 @@
  @param pkg json-объект, который вернулся из JSONObjectWithData
  @return Ма
  */
-+ (NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(id)pkg;
++ (nullable NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(nonnull id)pkg;
 
 
 /**
@@ -62,7 +62,7 @@
  @param json информация об изображении на сервере
  @return url-строка, по которой доступна миниатюра
  */
-+ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json;
++ (nullable NSString *)makeUrlStringFromJSON:(nonnull NSDictionary *)json;
 
 /**
  Создать url из json-информации по одной картинке
@@ -70,8 +70,8 @@
  @param suffix суффикс, который будет присоединен к имени файла для получения соответствующей ему версии
  @return url-строка, по которой доступно изображение
  */
-+ (NSString *)makeUrlStringFromJSON:(NSDictionary *)json suffix:(NSString *)suffix;
++ (nullable NSString *)makeUrlStringFromJSON:(nonnull NSDictionary *)json suffix:(nonnull NSString *)suffix;
 
-+ (id)validateData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
++ (nullable id)validateData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
 
 @end

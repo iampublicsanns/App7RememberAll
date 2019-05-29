@@ -13,10 +13,10 @@
 
 @interface PreviewViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) UIImage *image;
+@property (nonatomic, nullable, strong) UIImageView *imageView;
+@property (nonatomic, nullable, strong) UIScrollView *scrollView;
+@property (nonatomic, nullable, strong) DataManager *dataManager;
 
 @end
 
@@ -24,7 +24,7 @@
 @implementation PreviewViewController
 
 
-- (instancetype)initWithDataManager:(DataManager *)dataManager
+- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager
 {
 	self = [super initWithNibName:nil bundle:nil];
 	if (self)
@@ -42,7 +42,7 @@
 	[self updateImageIfNeeded];
 }
 
-- (void)showImageWithUrlString:(NSString *)urlString
+- (void)showImageWithUrlString:(nonnull NSString *)urlString
 {
 	NSData *cached = [self.dataManager tryGetCachedImage:urlString];
 	if (cached)
@@ -58,7 +58,7 @@
 	}];
 }
 
-- (void)didLoadImageData:(NSData *)data
+- (void)didLoadImageData:(nonnull NSData *)data
 {
 	UIImage *image = [UIImage imageWithData:data];
 
@@ -110,7 +110,7 @@
 
 #pragma mark <UIScrollViewDelegate>
 
-- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+- (nullable UIView *)viewForZoomingInScrollView:(nonnull UIScrollView *)scrollView
 {
 	return self.imageView;
 }

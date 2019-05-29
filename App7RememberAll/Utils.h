@@ -18,7 +18,7 @@
  Если вызван с главного потока, выполнит блок сразу. Иначе - запустит асинхронно на главном.
  @param block блок, который вызвать на главном потоке
  */
-+ (void)performOnMainThread:(void (^)(void))block;
++ (void)performOnMainThread:(nullable void (^)(void))block;
 
 @end
 

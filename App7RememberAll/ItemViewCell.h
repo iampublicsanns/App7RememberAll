@@ -8,17 +8,14 @@
 
 @import UIKit;
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 /**
  Ячейка для CollectionView, отображающая миниатюру изображения
  */
 @interface ItemViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) UIImage *image; /**< Изображение для отображения в этой ячейке */
-@property (nonatomic, copy) NSString *imageUrl; /**< Служит идентификатором ячейки */
-@property (nonatomic, copy) void (^clickHandler)(void); /**< Действие по нажатию на изображение */
+@property (nonatomic, nullable, strong) UIImage *image; /**< Изображение для отображения в этой ячейке */
+@property (nonatomic, nullable, copy) NSString *imageUrl; /**< Служит идентификатором ячейки */
+@property (nonatomic, nullable, copy) void (^clickHandler)(void); /**< Действие по нажатию на изображение */
 
 
 /**
@@ -30,14 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
  Присвоить изображение, и сразу отобразить в режиме aspect fill
  @param image изображение для отрисовки
  */
-- (void)setImage:(UIImage *)image;
+- (void)setImage:(nonnull UIImage *)image;
 
 /**
  Установить строку в тестовое поле ячейки
  @param string текст для отображения в ячейке
  */
-- (void)setLabelText:(nullable NSString *)string;
+- (void)setLabelText:(nonnull NSString *)string;
 
 @end
-
-NS_ASSUME_NONNULL_END

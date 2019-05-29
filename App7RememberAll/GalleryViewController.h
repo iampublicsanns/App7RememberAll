@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param dataManager менеджер данных для этого вью-контроллера
  @return Новый инстанс
  */
-- (instancetype)initWithDataManager:(DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

@@ -13,7 +13,7 @@
 
 @implementation Utils
 
-+ (void)performOnMainThread:(void (^)(void))block
++ (void)performOnMainThread:(nullable void (^)(void))block
 {
 	if (NULL == block)
 	{
