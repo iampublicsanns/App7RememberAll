@@ -12,7 +12,6 @@
 		1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F52242AF08007C4F26 /* Assets.xcassets */; };
 		1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */; };
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
-		111F3FAC22A17F8A0054F550 /* App8TestingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3F9A22A17D0F0054F550 /* App8TestingTests.m */; };
 		111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */; };
 		111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */; };
 		1193511422944E5E002AA10D /* ASRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* ASRUtils.m */; };
@@ -44,8 +43,6 @@
 		1101C6F82242AF08007C4F26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		111F3F9A22A17D0F0054F550 /* App8TestingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = App8TestingTests.m; sourceTree = "<group>"; };
-		111F3F9B22A17D0F0054F550 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111F3FA222A17F550054F550 /* App7RememberAllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = App7RememberAllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		111F3FA622A17F550054F550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRDataManagerTests.m; sourceTree = "<group>"; };
@@ -95,7 +92,6 @@
 				115BC77B2276F3B000E5892E /* ViewCells */,
 				115BC7722276F37400E5892E /* ViewControllers */,
 				1101C6E82242AF07007C4F26 /* App7RememberAll */,
-				111F3F9922A17D0F0054F550 /* App7Tests */,
 				111F3FA322A17F550054F550 /* App7RememberAllTests */,
 				1101C6E72242AF07007C4F26 /* Products */,
 				111F3FB122A519A00054F550 /* Frameworks */,
@@ -126,15 +122,6 @@
 				119351182296E23C002AA10D /* response.h */,
 			);
 			path = App7RememberAll;
-			sourceTree = "<group>";
-		};
-		111F3F9922A17D0F0054F550 /* App7Tests */ = {
-			isa = PBXGroup;
-			children = (
-				111F3F9A22A17D0F0054F550 /* App8TestingTests.m */,
-				111F3F9B22A17D0F0054F550 /* Info.plist */,
-			);
-			path = App7Tests;
 			sourceTree = "<group>";
 		};
 		111F3FA322A17F550054F550 /* App7RememberAllTests */ = {
@@ -315,7 +302,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				11BEFEE622A6D3B9005718CE /* ASRMockURLProtocol.m in Sources */,
-				111F3FAC22A17F8A0054F550 /* App8TestingTests.m in Sources */,
 				111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */,
 				111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */,
 				B212577C4AF07F1B960E3866 /* ASRPreviewViewControllerTests.m in Sources */,
