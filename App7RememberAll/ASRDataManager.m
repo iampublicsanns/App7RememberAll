@@ -38,12 +38,6 @@
 		_tasksHash = [NSMutableDictionary new];
 
 		_session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-		//_session = nil;
-
-//		NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-//		config.timeoutIntervalForRequest = 5;
-//		NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-//		_session = session;
 	}
 
 	return self;
@@ -184,6 +178,8 @@
 
 + (JSON)tryParseJSON:(NSData *)data
 {
+	if (!data) return nil;
+	
 	NSError *parseErr;
 	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
 	if (!json)
