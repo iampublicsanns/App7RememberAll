@@ -37,27 +37,18 @@ static RequestHandler _requestHandler;
 
 - (void)startLoading
 {
-	if (!ASRMockURLProtocol.requestHandler) {
+	if (!ASRMockURLProtocol.requestHandler)
+	{
 		XCTFail(@"No request handler");
 		return;
 	}
 
-	ASRMockURLProtocol.requestHandler(self.request, ^void(NSHTTPURLResponse *response, NSData *data){
+	ASRMockURLProtocol.requestHandler(self.request, ^void(NSHTTPURLResponse *response, NSData *data) {
 		[self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 		[self.client URLProtocol:self didLoadData:data];
 		[self.client URLProtocolDidFinishLoading:self];
 		//[self.client URLProtocol:<#(nonnull NSURLProtocol *)#> didFailWithError:<#(nonnull NSError *)#>]
 	});
-	
-	
-	
-//	[self handleRequest: self.request withBlock:^(NSHTTPURLResponse *response, NSData *data) {
-//		[self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-//		[self.client URLProtocol:self didLoadData:data];
-//		[self.client URLProtocolDidFinishLoading:self];
-//		//[self.client URLProtocol:<#(nonnull NSURLProtocol *)#> didFailWithError:<#(nonnull NSError *)#>]
-//
-//	}];
 }
 
 - (void)stopLoading
@@ -65,12 +56,12 @@ static RequestHandler _requestHandler;
 //	[super stopLoading];
 }
 
-- (void)handleRequest: (NSURLRequest*)request
-						withBlock: (void(^)(NSHTTPURLResponse *response, NSData *data))responseCallback
+- (void)handleRequest:(NSURLRequest *)request
+	withBlock:(void (^)(NSHTTPURLResponse *response, NSData *data))responseCallback
 {
 	XCTAssertTrue([request.URL.host containsString:@"someurl"]);
-	
-	responseCallback([[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:@(200) HTTPVersion:@"HTTP/1.1" headerFields:nil], [NSData new]);
+
+	responseCallback([[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:nil], [NSData new]);
 }
 
 @end
