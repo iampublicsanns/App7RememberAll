@@ -12,12 +12,28 @@
 		1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F52242AF08007C4F26 /* Assets.xcassets */; };
 		1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */; };
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
-		1193511422944E5E002AA10D /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* Utils.m */; };
-		B21250298E5238D21229FB96 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* DataManager.m */; };
-		B2125A7002FAD4F575BBE26C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2125B3111A9EFBB2C89153C /* PreviewViewController.m */; };
-		B2125B0D15B24769F1813832 /* ItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21259A3B5E75E045245D060 /* ItemViewCell.m */; };
-		B2125DC97BC419030826142B /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B212513A24870D9AF46AEF1D /* GalleryViewController.m */; };
+		111F3FAC22A17F8A0054F550 /* App8TestingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3F9A22A17D0F0054F550 /* App8TestingTests.m */; };
+		111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */; };
+		111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */; };
+		1193511422944E5E002AA10D /* ASRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* ASRUtils.m */; };
+		11BEFEE322A59EE9005718CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BEFEE222A59EE9005718CE /* libOCMock.a */; };
+		11BEFEE622A6D3B9005718CE /* ASRMockURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */; };
+		B21250298E5238D21229FB96 /* ASRDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* ASRDataManager.m */; };
+		B212577C4AF07F1B960E3866 /* ASRPreviewViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2125FF727BFB888A0872F6A /* ASRPreviewViewControllerTests.m */; };
+		B2125A7002FAD4F575BBE26C /* ASRPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2125B3111A9EFBB2C89153C /* ASRPreviewViewController.m */; };
+		B2125B0D15B24769F1813832 /* ASRItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21259A3B5E75E045245D060 /* ASRItemViewCell.m */; };
+		B2125DC97BC419030826142B /* ASRGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B212513A24870D9AF46AEF1D /* ASRGalleryViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		111F3FA722A17F550054F550 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1101C6DE2242AF07007C4F26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1101C6E52242AF07007C4F26;
+			remoteInfo = App7RememberAll;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1101C6E62242AF07007C4F26 /* App7RememberAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App7RememberAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,18 +44,28 @@
 		1101C6F82242AF08007C4F26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1101C6FB2242AF08007C4F26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1193510E22942C0D002AA10D /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		1193511322944E5E002AA10D /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		111F3F9A22A17D0F0054F550 /* App8TestingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = App8TestingTests.m; sourceTree = "<group>"; };
+		111F3F9B22A17D0F0054F550 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		111F3FA222A17F550054F550 /* App7RememberAllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = App7RememberAllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		111F3FA622A17F550054F550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRDataManagerTests.m; sourceTree = "<group>"; };
+		111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRGalleryViewControllerTests.m; sourceTree = "<group>"; };
+		1193510E22942C0D002AA10D /* ASRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRUtils.h; sourceTree = "<group>"; };
+		1193511322944E5E002AA10D /* ASRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRUtils.m; sourceTree = "<group>"; };
 		119351182296E23C002AA10D /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
-		B212504D254CBC60A62E233E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		B212511688BBA2D84684B4B6 /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
-		B212513A24870D9AF46AEF1D /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
-		B21253095397F59FB46406E3 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
-		B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
-		B2125949F29ACF34C3A1D204 /* ItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewCell.h; sourceTree = "<group>"; };
-		B21259A3B5E75E045245D060 /* ItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewCell.m; sourceTree = "<group>"; };
+		11BEFEE222A59EE9005718CE /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = "OCMock/iOS library/libOCMock.a"; sourceTree = "<group>"; };
+		11BEFEE422A6D3B9005718CE /* ASRMockURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRMockURLProtocol.h; sourceTree = "<group>"; };
+		11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRMockURLProtocol.m; sourceTree = "<group>"; };
+		B212504D254CBC60A62E233E /* ASRDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRDataManager.h; sourceTree = "<group>"; };
+		B212511688BBA2D84684B4B6 /* ASRGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRGalleryViewController.h; sourceTree = "<group>"; };
+		B212513A24870D9AF46AEF1D /* ASRGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRGalleryViewController.m; sourceTree = "<group>"; };
+		B21253095397F59FB46406E3 /* ASRDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRDataManager.m; sourceTree = "<group>"; };
+		B21255EE1F4D9DBEB8949785 /* ASRPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRPreviewViewController.h; sourceTree = "<group>"; };
+		B2125949F29ACF34C3A1D204 /* ASRItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRItemViewCell.h; sourceTree = "<group>"; };
+		B21259A3B5E75E045245D060 /* ASRItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRItemViewCell.m; sourceTree = "<group>"; };
 		B2125AC95DDBB29D03CD9CEB /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		B2125B3111A9EFBB2C89153C /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		B2125B3111A9EFBB2C89153C /* ASRPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRPreviewViewController.m; sourceTree = "<group>"; };
+		B2125FF727BFB888A0872F6A /* ASRPreviewViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRPreviewViewControllerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +73,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		111F3F9F22A17F550054F550 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11BEFEE322A59EE9005718CE /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +95,10 @@
 				115BC77B2276F3B000E5892E /* ViewCells */,
 				115BC7722276F37400E5892E /* ViewControllers */,
 				1101C6E82242AF07007C4F26 /* App7RememberAll */,
+				111F3F9922A17D0F0054F550 /* App7Tests */,
+				111F3FA322A17F550054F550 /* App7RememberAllTests */,
 				1101C6E72242AF07007C4F26 /* Products */,
+				111F3FB122A519A00054F550 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				1101C6E62242AF07007C4F26 /* App7RememberAll.app */,
+				111F3FA222A17F550054F550 /* App7RememberAllTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,20 +121,50 @@
 				1101C6FA2242AF08007C4F26 /* Info.plist */,
 				1101C6FB2242AF08007C4F26 /* main.m */,
 				1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */,
-				1193510E22942C0D002AA10D /* Utils.h */,
-				1193511322944E5E002AA10D /* Utils.m */,
+				1193510E22942C0D002AA10D /* ASRUtils.h */,
+				1193511322944E5E002AA10D /* ASRUtils.m */,
 				119351182296E23C002AA10D /* response.h */,
 			);
 			path = App7RememberAll;
 			sourceTree = "<group>";
 		};
+		111F3F9922A17D0F0054F550 /* App7Tests */ = {
+			isa = PBXGroup;
+			children = (
+				111F3F9A22A17D0F0054F550 /* App8TestingTests.m */,
+				111F3F9B22A17D0F0054F550 /* Info.plist */,
+			);
+			path = App7Tests;
+			sourceTree = "<group>";
+		};
+		111F3FA322A17F550054F550 /* App7RememberAllTests */ = {
+			isa = PBXGroup;
+			children = (
+				111F3FA622A17F550054F550 /* Info.plist */,
+				111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */,
+				111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */,
+				11BEFEE422A6D3B9005718CE /* ASRMockURLProtocol.h */,
+				11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */,
+				B2125FF727BFB888A0872F6A /* ASRPreviewViewControllerTests.m */,
+			);
+			path = App7RememberAllTests;
+			sourceTree = "<group>";
+		};
+		111F3FB122A519A00054F550 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11BEFEE222A59EE9005718CE /* libOCMock.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		115BC7722276F37400E5892E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B212511688BBA2D84684B4B6 /* GalleryViewController.h */,
-				B212513A24870D9AF46AEF1D /* GalleryViewController.m */,
-				B21255EE1F4D9DBEB8949785 /* PreviewViewController.h */,
-				B2125B3111A9EFBB2C89153C /* PreviewViewController.m */,
+				B212511688BBA2D84684B4B6 /* ASRGalleryViewController.h */,
+				B212513A24870D9AF46AEF1D /* ASRGalleryViewController.m */,
+				B21255EE1F4D9DBEB8949785 /* ASRPreviewViewController.h */,
+				B2125B3111A9EFBB2C89153C /* ASRPreviewViewController.m */,
 			);
 			name = ViewControllers;
 			path = App7RememberAll;
@@ -105,8 +173,8 @@
 		115BC77B2276F3B000E5892E /* ViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				B21259A3B5E75E045245D060 /* ItemViewCell.m */,
-				B2125949F29ACF34C3A1D204 /* ItemViewCell.h */,
+				B21259A3B5E75E045245D060 /* ASRItemViewCell.m */,
+				B2125949F29ACF34C3A1D204 /* ASRItemViewCell.h */,
 			);
 			name = ViewCells;
 			path = App7RememberAll;
@@ -115,8 +183,8 @@
 		115BC77F2276F41200E5892E /* ModelControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B212504D254CBC60A62E233E /* DataManager.h */,
-				B21253095397F59FB46406E3 /* DataManager.m */,
+				B212504D254CBC60A62E233E /* ASRDataManager.h */,
+				B21253095397F59FB46406E3 /* ASRDataManager.m */,
 			);
 			name = ModelControllers;
 			path = App7RememberAll;
@@ -151,17 +219,40 @@
 			productReference = 1101C6E62242AF07007C4F26 /* App7RememberAll.app */;
 			productType = "com.apple.product-type.application";
 		};
+		111F3FA122A17F550054F550 /* App7RememberAllTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 111F3FA922A17F550054F550 /* Build configuration list for PBXNativeTarget "App7RememberAllTests" */;
+			buildPhases = (
+				111F3F9E22A17F550054F550 /* Sources */,
+				111F3F9F22A17F550054F550 /* Frameworks */,
+				111F3FA022A17F550054F550 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				111F3FA822A17F550054F550 /* PBXTargetDependency */,
+			);
+			name = App7RememberAllTests;
+			productName = App7RememberAllTests;
+			productReference = 111F3FA222A17F550054F550 /* App7RememberAllTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		1101C6DE2242AF07007C4F26 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = ASR;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Alexander;
 				TargetAttributes = {
 					1101C6E52242AF07007C4F26 = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					111F3FA122A17F550054F550 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 1101C6E52242AF07007C4F26;
 					};
 				};
 			};
@@ -179,6 +270,7 @@
 			projectRoot = "";
 			targets = (
 				1101C6E52242AF07007C4F26 /* App7RememberAll */,
+				111F3FA122A17F550054F550 /* App7RememberAllTests */,
 			);
 		};
 /* End PBXProject section */
@@ -193,6 +285,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		111F3FA022A17F550054F550 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -200,18 +299,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1193511422944E5E002AA10D /* Utils.m in Sources */,
+				1193511422944E5E002AA10D /* ASRUtils.m in Sources */,
 				1101C6F42242AF07007C4F26 /* App7RememberAll.xcdatamodeld in Sources */,
 				1101C6FC2242AF08007C4F26 /* main.m in Sources */,
 				1101C6EB2242AF07007C4F26 /* AppDelegate.m in Sources */,
-				B2125B0D15B24769F1813832 /* ItemViewCell.m in Sources */,
-				B21250298E5238D21229FB96 /* DataManager.m in Sources */,
-				B2125DC97BC419030826142B /* GalleryViewController.m in Sources */,
-				B2125A7002FAD4F575BBE26C /* PreviewViewController.m in Sources */,
+				B2125B0D15B24769F1813832 /* ASRItemViewCell.m in Sources */,
+				B21250298E5238D21229FB96 /* ASRDataManager.m in Sources */,
+				B2125DC97BC419030826142B /* ASRGalleryViewController.m in Sources */,
+				B2125A7002FAD4F575BBE26C /* ASRPreviewViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		111F3F9E22A17F550054F550 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11BEFEE622A6D3B9005718CE /* ASRMockURLProtocol.m in Sources */,
+				111F3FAC22A17F8A0054F550 /* App8TestingTests.m in Sources */,
+				111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */,
+				111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */,
+				B212577C4AF07F1B960E3866 /* ASRPreviewViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		111F3FA822A17F550054F550 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1101C6E52242AF07007C4F26 /* App7RememberAll */;
+			targetProxy = 111F3FA722A17F550054F550 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */ = {
@@ -343,11 +462,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = App7RememberAll/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/Alamofire.framework",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/AlamofireImage.framework",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sanns.App7RememberAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -361,15 +489,92 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = App7RememberAll/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/Alamofire.framework",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/AlamofireImage.framework",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = sanns.App7RememberAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		111F3FAA22A17F550054F550 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/OCMock/",
+					"\"$(SRCROOT)/OCMock/iOS library/\"",
+				);
+				INFOPLIST_FILE = App7RememberAllTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OCMock/iOS\\ library",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = sanns.App7RememberAllTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App7RememberAll.app/App7RememberAll";
+			};
+			name = Debug;
+		};
+		111F3FAB22A17F550054F550 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4Y7DM4KHSY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/OCMock/",
+					"\"$(SRCROOT)/OCMock/iOS library/\"",
+				);
+				INFOPLIST_FILE = App7RememberAllTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OCMock/iOS\\ library",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = sanns.App7RememberAllTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App7RememberAll.app/App7RememberAll";
 			};
 			name = Release;
 		};
@@ -390,6 +595,15 @@
 			buildConfigurations = (
 				1101C7002242AF09007C4F26 /* Debug */,
 				1101C7012242AF09007C4F26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		111F3FA922A17F550054F550 /* Build configuration list for PBXNativeTarget "App7RememberAllTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				111F3FAA22A17F550054F550 /* Debug */,
+				111F3FAB22A17F550054F550 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
