@@ -17,6 +17,7 @@
 @property (nonatomic, nullable, strong) NSCache<NSString *, NSData *> *imagesCache;
 @property (nonatomic, nullable, strong) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
 @property (atomic, nullable, strong) dispatch_queue_t serialQueue;
+@property (nonatomic, strong) NSURLSession *session;
 
 @end
 
@@ -35,6 +36,14 @@
 		_imagesCache = cache;
 		_serialQueue = dispatch_queue_create("serialqueue", DISPATCH_QUEUE_CONCURRENT);
 		_tasksHash = [NSMutableDictionary new];
+
+		_session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+		//_session = nil;
+
+//		NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+//		config.timeoutIntervalForRequest = 5;
+//		NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+//		_session = session;
 	}
 
 	return self;
@@ -74,7 +83,7 @@
 /**
  Calls startLoadingAsync. По-окончании кидает в кеш то, что скачалось, и вызывает completion с ним же.
  */
-- (void)loadImageByUrl:(nonnull NSString *)url priority:(float)priority completion:(nonnull void (^)(NSData * _Nullable))completion
+- (void)loadImageByUrl:(nonnull NSString *)url priority:(float)priority completion:(nonnull void (^)(NSData *_Nullable))completion
 {
 	__auto_type __weak weakSelf = self;
 
@@ -102,7 +111,7 @@
 	task.priority = priority;
 }
 
-- (void)loadCatalogueWithCompletion:(nonnull void (^)(NSArray<NSDictionary *> * _Nullable))completion
+- (void)loadCatalogueWithCompletion:(nonnull void (^)(NSArray<NSDictionary *> *_Nullable))completion
 {
 
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
@@ -110,17 +119,7 @@
 	__auto_type __weak weakSelf = self;
 
 	[self startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
-		if (!weakSelf)
-		{
-			return;
-		}
-
-		NSError *parseErr;
-		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
-		if (!json)
-		{
-			return;
-		}
+		JSON json = [DataManager tryParseJSON:data];
 
 		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
 
@@ -131,16 +130,14 @@
 	}];
 }
 
-- (void)loadImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData * _Nullable))completion
+- (void)loadImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData *_Nullable))completion
 {
 	[self loadImageByUrl:url priority:NSURLSessionTaskPriorityDefault completion:completion];
 }
 
-- (void)loadBigImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData * _Nullable))completion
+- (void)loadBigImageByUrl:(nonnull NSString *)url completion:(nonnull void (^)(NSData *_Nullable))completion
 {
-	NSURLSession *session = [NSURLSession sharedSession];
-
-	[session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> *_Nonnull tasks) {
+	[self.session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> *_Nonnull tasks) {
 
 		[tasks enumerateObjectsUsingBlock:^(__kindof NSURLSessionTask *_Nonnull task, NSUInteger idx, BOOL *_Nonnull stop) {
 			[task suspend];
@@ -155,14 +152,10 @@
 
 		}];
 	}];
-
-	//[self loadImageByUrl:url  priority:NSURLSessionTaskPriorityHigh completion:^(UIImage *bigImage) {
-	//	completion(bigImage);
-	//}];
 }
 
 //todo check docs on json
-+ (nullable NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(nonnull id)pkg
++ (nullable NSArray<NSDictionary *> *)handleGetPublicPhotosJSON:(nonnull JSON)pkg
 {
 	NSArray<NSDictionary *> *images = pkg[@"photos"][@"photo"];
 
@@ -186,32 +179,43 @@
 	return [self makeUrlStringFromJSON:json suffix:ConfigThumbnailSuffix];
 }
 
-+ (_Nullable id)validateData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
+
+#pragma mark - Private
+
++ (JSON)tryParseJSON:(NSData *)data
 {
-	if (error)
-	{
-		NSLog(@"\n  %@", error);
-		return nil;
-	}
-
-	NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *) response;
-	if (httpResp.statusCode < 200 || httpResp.statusCode > 300)
-	{
-		return nil;
-	}
-
 	NSError *parseErr;
 	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
 	if (!json)
 	{
-		return nil;
+		NSLog(@"error no json %@");
 	}
 
 	return json;
 }
 
++ (BOOL)validateData:(NSData *_Nullable)data response:(NSURLResponse *_Nullable)response error:(NSError *_Nullable)error
+{
+	if (error)
+	{
+		NSLog(@"\n  error loading %@ \n  @", error);
 
-#pragma mark - Private
+		return YES;
+	}
+
+	NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *) response;
+	if (httpResp.statusCode < 200 || httpResp.statusCode > 300)
+	{
+		NSLog(@"\n  2error loading \n @");
+
+		return YES;
+	}
+
+	NSLog(@"\n  finished loading \n @");
+	//[NSThread sleepForTimeInterval: 1.0 ];
+
+	return NO;
+}
 
 /**
  Creates and starts a task.
@@ -234,27 +238,20 @@
 	{
 		return nil;
 	}
-	NSURLSession *session = [NSURLSession sharedSession];
+	NSURLSession *session = self.session;
 
 	NSLog(@"\n  start loading %@", urlString);
 
 	NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+		NSLog(@"\n  response %@ \n", urlString);
 
 		dispatch_async(self.serialQueue, ^{
-			if (error)
+			BOOL isError = [DataManager validateData:data response:response error:error];
+
+			if (isError)
 			{
-				NSLog(@"\n  error loading %@ \n  %@", urlString, error);
-
-				failure(data);
-				return;
-			}
-
-			NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *) response;
-			if (httpResp.statusCode < 200 || httpResp.statusCode > 300)
-			{
-				NSLog(@"\n  2error loading %@ \n @", urlString);
-
-				return;
+				//failure(data);
+				completion([NSData dataWithContentsOfFile:@"/Users/alexander/sberproj/ios-start/App7-9gitlab/App7RememberAll/response.h"]);
 			}
 
 			NSLog(@"\n  finished loading %@", urlString);

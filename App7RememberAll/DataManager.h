@@ -8,6 +8,8 @@
 
 @import Foundation;
 
+typedef id JSON;
+
 
 /**
  Менеджер картинок с методами для скачивания или получения их кэша.
@@ -71,7 +73,5 @@
  @return url-строка, по которой доступно изображение
  */
 + (nullable NSString *)makeUrlStringFromJSON:(nonnull NSDictionary *)json suffix:(nonnull NSString *)suffix;
-
-+ (nullable id)validateData:(nullable NSData *)data response:(nullable NSURLResponse *)response error:(nullable NSError *)error;
 
 @end
