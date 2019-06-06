@@ -1,35 +1,35 @@
 //
-//  GalleryViewController.m
+//  ASRGalleryViewController.m
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "DataManager.h"
-#import "GalleryViewController.h"
-#import "ItemViewCell.h"
-#import "PreviewViewController.h"
+#import "ASRDataManager.h"
+#import "ASRGalleryViewController.h"
+#import "ASRItemViewCell.h"
+#import "ASRPreviewViewController.h"
+#import "ASRUtils.h"
 #import "Config.h"
-#import "Utils.h"
 
 
-@interface GalleryViewController ()
+@interface ASRGalleryViewController ()
 
 @property (nonatomic, nullable, copy) NSArray<NSDictionary *> *imagesCatalogue;
-@property (nonatomic, nullable, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 
 @end
 
 
-@implementation GalleryViewController
+@implementation ASRGalleryViewController
 
 static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithDataManager:(DataManager *)dataManager
+- (instancetype)initWithDataManager:(ASRDataManager *)dataManager
 {
 	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
 	flowLayout.itemSize = CGSizeMake(100, 100);
@@ -48,7 +48,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 {
 	[super viewDidLoad];
 
-	[self.collectionView registerClass:[ItemViewCell class] forCellWithReuseIdentifier:GalleryVCReuseIdentifier];
+	[self.collectionView registerClass:[ASRItemViewCell class] forCellWithReuseIdentifier:GalleryVCReuseIdentifier];
 	[self startLoadingCatalogue];
 }
 
@@ -85,7 +85,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 	__auto_type __weak weakSelf = self;
 
-	[Utils performOnMainThread:^{
+	[ASRUtils performOnMainThread:^{
 		[weakSelf reload];
 	}];
 
@@ -99,7 +99,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
  */
 - (void)presentImageByUrl:(NSString *)url
 {
-	PreviewViewController *previewViewController = [[PreviewViewController alloc] initWithDataManager:self.dataManager];
+	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithDataManager:self.dataManager];
 	[previewViewController showImageWithUrlString:url];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];
@@ -120,14 +120,14 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-	ItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:GalleryVCReuseIdentifier forIndexPath:indexPath];
+	ASRItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:GalleryVCReuseIdentifier forIndexPath:indexPath];
 
 	__auto_type __weak weakSelf = self;
 
 	NSNumber *position = @(indexPath.item + 1);
 	NSString *positionString = [NSString stringWithFormat:@"%@", position];
 	NSDictionary *json = self.imagesCatalogue[indexPath.item];
-	NSString *url = [DataManager makeUrlStringFromJSON:json];
+	NSString *url = [ASRDataManager makeUrlStringFromJSON:json];
 	NSData *data = [self.dataManager tryGetCachedImage:url];
 
 	cell.imageUrl = url;
@@ -148,14 +148,14 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			// currently visible or not, we should notify the collection of newly income data
 			if (url != cell.imageUrl)
 			{
-				[Utils performOnMainThread:^{
+				[ASRUtils performOnMainThread:^{
 					[weakSelf reloadItemAt:indexPath];
 				}];
 
 				return;
 			}
 
-			[Utils performOnMainThread:^{
+			[ASRUtils performOnMainThread:^{
 				if (!loadedImage)
 				{
 					cell.contentView.backgroundColor = UIColor.brownColor;
@@ -170,7 +170,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 		}];
 	}
 
-	url = [DataManager makeUrlStringFromJSON:json suffix:ConfigBigImageSuffix];
+	url = [ASRDataManager makeUrlStringFromJSON:json suffix:ConfigBigImageSuffix];
 
 	cell.clickHandler = ^{
 		[weakSelf presentImageByUrl:url];

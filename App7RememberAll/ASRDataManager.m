@@ -1,5 +1,5 @@
 //
-//  DataManager.m
+//  ASRDataManager.m
 //  App7RememberAll
 //
 //  Created by Alexander on 22/04/2019.
@@ -9,10 +9,10 @@
 @import Foundation;
 
 #import "Config.h"
-#import "DataManager.h"
+#import "ASRDataManager.h"
 
 
-@interface DataManager ()
+@interface ASRDataManager ()
 
 @property (nonatomic, nullable, strong) NSCache<NSString *, NSData *> *imagesCache;
 @property (nonatomic, nullable, strong) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
@@ -22,7 +22,7 @@
 @end
 
 
-@implementation DataManager
+@implementation ASRDataManager
 
 
 #pragma mark - Init
@@ -119,9 +119,9 @@
 	__auto_type __weak weakSelf = self;
 
 	[self startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
-		JSON json = [DataManager tryParseJSON:data];
+		JSON json = [ASRDataManager tryParseJSON:data];
 
-		NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
+		NSArray<NSDictionary *> *images = [ASRDataManager handleGetPublicPhotosJSON:json];
 
 		completion(images);
 
@@ -246,7 +246,7 @@
 		NSLog(@"\n  response %@ \n", urlString);
 
 		dispatch_async(self.serialQueue, ^{
-			BOOL isError = [DataManager validateData:data response:response error:error];
+			BOOL isError = [ASRDataManager validateData:data response:response error:error];
 
 			if (isError)
 			{

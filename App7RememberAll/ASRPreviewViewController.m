@@ -1,30 +1,30 @@
 //
-//  PreviewViewController.m
+//  ASRPreviewViewController.m
 //  App7RememberAll
 //
 //  Created by Alexander on 11/04/2019.
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "DataManager.h"
-#import "PreviewViewController.h"
-#import "Utils.h"
+#import "ASRDataManager.h"
+#import "ASRPreviewViewController.h"
+#import "ASRUtils.h"
 
 
-@interface PreviewViewController () <UIScrollViewDelegate>
+@interface ASRPreviewViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, nullable, strong) UIImage *image;
 @property (nonatomic, nullable, strong) UIImageView *imageView;
 @property (nonatomic, nullable, strong) UIScrollView *scrollView;
-@property (nonatomic, nullable, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 
 @end
 
 
-@implementation PreviewViewController
+@implementation ASRPreviewViewController
 
 
-- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager
+- (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager
 {
 	self = [super initWithNibName:nil bundle:nil];
 	if (self)
@@ -64,7 +64,7 @@
 
 	self.image = image;
 
-	[Utils performOnMainThread: ^{
+	[ASRUtils performOnMainThread: ^{
 		[self updateImageIfNeeded];
 	}];
 }

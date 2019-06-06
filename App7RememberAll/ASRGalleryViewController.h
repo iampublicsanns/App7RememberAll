@@ -1,5 +1,5 @@
 //
-//  GalleryViewController.h
+//  ASRGalleryViewController.h
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@class DataManager;
+@class ASRDataManager;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,14 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Вью-контроллер, отрисовывающий данные, полученные из DataManager.
  */
-@interface GalleryViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
+@interface ASRGalleryViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
 
 /**
  Инициализатор
  @param dataManager менеджер данных для этого вью-контроллера
  @return Новый инстанс
  */
-- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

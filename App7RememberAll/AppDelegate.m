@@ -6,9 +6,9 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "GalleryViewController.h"
+#import "ASRGalleryViewController.h"
 #import "AppDelegate.h"
-#import "DataManager.h"
+#import "ASRDataManager.h"
 
 @interface AppDelegate ()
 
@@ -22,9 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	NSCache *cache = [NSCache new];
-	DataManager *dataManager = [[DataManager alloc] initWithCache:cache];
+	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:cache];
 
-	GalleryViewController *collectionViewController = [[GalleryViewController alloc] initWithDataManager:dataManager];
+	ASRGalleryViewController *collectionViewController = [[ASRGalleryViewController alloc] initWithDataManager:dataManager];
 
 	UINavigationController *navigationViewController = [[UINavigationController alloc] initWithRootViewController:collectionViewController];
 

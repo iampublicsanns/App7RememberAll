@@ -1,5 +1,5 @@
 //
-//  ItemViewCell.h
+//  ASRItemViewCell.h
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
@@ -11,7 +11,7 @@
 /**
  Ячейка для CollectionView, отображающая миниатюру изображения
  */
-@interface ItemViewCell : UICollectionViewCell
+@interface ASRItemViewCell : UICollectionViewCell
 
 @property (nonatomic, nullable, strong) UIImage *image; /**< Изображение для отображения в этой ячейке */
 @property (nonatomic, nullable, copy) NSString *imageUrl; /**< Служит идентификатором ячейки */

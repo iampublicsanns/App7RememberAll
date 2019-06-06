@@ -1,5 +1,5 @@
 //
-//  PreviewViewController.h
+//  ASRPreviewViewController.h
 //  App7RememberAll
 //
 //  Created by Alexander on 11/04/2019.
@@ -8,14 +8,14 @@
 
 @import UIKit;
 
-@class DataManager;
+@class ASRDataManager;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  Вью-контроллер, управляющий отображением превью с возможностью зума
  */
-@interface PreviewViewController : UIViewController
+@interface ASRPreviewViewController : UIViewController
 
 
 /**
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param dataManager менеджер данных для этого вью-контроллера
  @return Новый инстанс
  */
-- (nullable instancetype)initWithDataManager:(nonnull DataManager *)dataManager NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

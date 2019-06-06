@@ -1,5 +1,5 @@
 //
-//  Utils.h
+//  ASRUtils.h
 //  App7RememberAll
 //
 //  Created by Alexander on 21/05/2019.
@@ -12,7 +12,7 @@
 /**
  Класс со вспомогательными методами общего назначения
  * */
-@interface Utils : NSObject
+@interface ASRUtils : NSObject
 
 /**
  Если вызван с главного потока, выполнит блок сразу. Иначе - запустит асинхронно на главном.

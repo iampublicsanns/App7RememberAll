@@ -1,5 +1,5 @@
 //
-//  DataManager.h
+//  ASRDataManager.h
 //  App7RememberAll
 //
 //  Created by Alexander on 22/04/2019.
@@ -14,7 +14,7 @@ typedef id JSON;
 /**
  Менеджер картинок с методами для скачивания или получения их кэша.
  */
-@interface DataManager : NSObject
+@interface ASRDataManager : NSObject
 
 /**
  Инициализатор
