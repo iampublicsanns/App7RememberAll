@@ -8,12 +8,12 @@
 
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
-#import "DataManager.h"
-#import "PreviewViewController.h"
+#import "ASRDataManager.h"
+#import "ASRPreviewViewController.h"
 
-@interface PreviewViewController (Tests)
+@interface ASRPreviewViewController (Tests)
 
-@property (nonatomic, nullable, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 
 @end
 
@@ -38,10 +38,10 @@
 - (void)testInit
 {
 	// arrange
-	id dataManagerMock = OCMClassMock([DataManager class]);
+	id dataManagerMock = OCMClassMock([ASRDataManager class]);
 
 	// act
-	PreviewViewController *previewViewController = [[PreviewViewController alloc] initWithDataManager:dataManagerMock];
+	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithDataManager:dataManagerMock];
 
 	// verify
 	XCTAssertEqual(previewViewController.dataManager, dataManagerMock);
@@ -50,11 +50,11 @@
 - (void)testShowImageWithUrlString
 {
 	// arrange
-	id dataManagerMock = OCMClassMock([DataManager class]);
+	id dataManagerMock = OCMClassMock([ASRDataManager class]);
 	OCMExpect([dataManagerMock tryGetCachedImage:[OCMArg isNotNil]]);
 	OCMExpect([dataManagerMock loadBigImageByUrl:[OCMArg any] completion:[OCMArg any]]);
 	
-	PreviewViewController *previewViewController = [[PreviewViewController alloc] initWithDataManager:dataManagerMock];
+	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithDataManager:dataManagerMock];
 
 	// act
 	[previewViewController showImageWithUrlString:@"http://someurl.com"];

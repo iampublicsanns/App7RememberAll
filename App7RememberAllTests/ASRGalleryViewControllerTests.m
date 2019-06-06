@@ -8,14 +8,14 @@
 
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
-#import "DataManager.h"
-#import "GalleryViewController.h"
+#import "ASRDataManager.h"
+#import "ASRGalleryViewController.h"
 
 
-@interface GalleryViewController (Tests)
+@interface ASRGalleryViewController (Tests)
 
 @property (nonatomic, nullable, copy) NSArray<NSDictionary *> *imagesCatalogue;
-@property (nonatomic, nullable, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 
 @end
 
@@ -40,10 +40,10 @@
 - (void)testInit
 {
 	// arrange
-	id dataManagerMock = OCMClassMock([DataManager class]);
+	id dataManagerMock = OCMClassMock([ASRDataManager class]);
 
 	// act
-	GalleryViewController *galleryViewController = [[GalleryViewController alloc] initWithDataManager:dataManagerMock];
+	ASRGalleryViewController *galleryViewController = [[ASRGalleryViewController alloc] initWithDataManager:dataManagerMock];
 
 	// verify
 	XCTAssertEqual(galleryViewController.dataManager, dataManagerMock);

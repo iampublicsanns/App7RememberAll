@@ -10,11 +10,11 @@
 //#import "OCMock.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
-#import "DataManager.h"
+#import "ASRDataManager.h"
 #import "ASRMockURLProtocol.h"
 
 
-@interface DataManager (Tests)
+@interface ASRDataManager (Tests)
 
 @property (nonatomic, nullable, strong) NSCache<NSString *, NSData *> *imagesCache;
 @property (nonatomic, strong) NSURLSession *session;
@@ -44,7 +44,7 @@
 	NSCache *imagesCache = OCMPartialMock([NSCache new]);
 	
 	// act
-	DataManager *dataManager = [[DataManager alloc] initWithCache:imagesCache];
+	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:imagesCache];
 	
 	// verify
 	//expect(dataManager.cache).to.equal(cache);
@@ -52,7 +52,7 @@
 
 	
 	
-//	id mockClassB = OCMClassMock([DataManager class]);
+//	id mockClassB = OCMClassMock([ASRDataManager class]);
 //	NSString *notificationName = @"notification name";
 //	NSNotification *notification = [NSNotification notificationWithName:notificationName
 //																															 object:mockClassB];
@@ -74,7 +74,7 @@
 {
 	// arrange
 	NSCache *imagesCache = OCMPartialMock([NSCache new]);
-	DataManager *dataManager = [[DataManager alloc] initWithCache:imagesCache];
+	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:imagesCache];
 	
 	NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
 	config.timeoutIntervalForRequest = 1;
@@ -110,7 +110,7 @@
 	OCMExpect([sessionMock dataTaskWithURL:[OCMArg any] completionHandler:[OCMArg any]]).andForwardToRealObject();
 
 	NSCache *imagesCache = OCMPartialMock([NSCache new]);
-	DataManager *dataManager = [[DataManager alloc] initWithCache:imagesCache];
+	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:imagesCache];
 	dataManager.session = session;
 
 	NSString *imageUrl = @"http://someurl.com";
@@ -169,7 +169,7 @@
 	OCMExpect([sessionMock dataTaskWithURL:[OCMArg any] completionHandler:[OCMArg any]]).andForwardToRealObject();
 	
 	NSCache *imagesCache = OCMPartialMock([NSCache new]);
-	DataManager *dataManager = [[DataManager alloc] initWithCache:imagesCache];
+	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:imagesCache];
 	dataManager.session = session;
 	
 	NSString *imageUrl = @"http://someurl.com";
@@ -234,7 +234,7 @@
 	id json = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parseErr];
 
 	// act
-	NSArray<NSDictionary *> *images = [DataManager handleGetPublicPhotosJSON:json];
+	NSArray<NSDictionary *> *images = [ASRDataManager handleGetPublicPhotosJSON:json];
 
 	// verify
 	
@@ -266,7 +266,7 @@
 	id json = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parseErr];
 
 	// act
-	NSString *url = [DataManager makeUrlStringFromJSON:json suffix:suffix];
+	NSString *url = [ASRDataManager makeUrlStringFromJSON:json suffix:suffix];
 	
 	// verify
 	NSString *expectedString = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_%@.jpg", farm, server, imageId, secret, suffix];
