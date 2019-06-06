@@ -179,4 +179,15 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	return cell;
 }
 
+
+#pragma mark - Flow delegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	CGFloat cellSide = ((CGRectGetWidth(collectionView.bounds) - 10.0) / 2.0);
+	CGSize cellSize = CGSizeMake(cellSide, cellSide);
+
+	return cellSize;
+}
+
 @end
