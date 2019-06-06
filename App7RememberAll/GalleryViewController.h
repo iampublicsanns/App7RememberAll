@@ -13,8 +13,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface GalleryViewController : UICollectionViewController
-
+/**
+ Вью-контроллер, отрисовывающий данные, полученные из DataManager.
+ */
+@interface GalleryViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
 
 /**
  Инициализатор
