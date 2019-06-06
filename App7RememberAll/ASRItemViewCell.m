@@ -1,15 +1,15 @@
 //
-//  ItemViewCell.m
+//  ASRItemViewCell.m
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "ItemViewCell.h"
+#import "ASRItemViewCell.h"
 
 
-@interface ItemViewCell ()
+@interface ASRItemViewCell ()
 
 @property (nonatomic, nullable, strong) UIImageView *imageView;
 @property (nonatomic, nullable, strong) UILabel *label;
@@ -18,7 +18,7 @@
 @end
 
 
-@implementation ItemViewCell
+@implementation ASRItemViewCell
 
 #pragma mark - Public
 
