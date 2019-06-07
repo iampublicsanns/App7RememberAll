@@ -36,7 +36,6 @@
 
 	// verify
 	XCTAssertEqual(galleryViewController.dataManager, dataManagerMock);
-
 }
 
 @end

@@ -13,15 +13,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ResponseCallback)(NSHTTPURLResponse *_Nullable response, NSData *_Nullable data);
 
+/**
+ * @param request запрос, на который нужно получить ответ
+ * @param responseCallback блок, в который передадутся заголовки и данные ответа
+ * */
 typedef void (^RequestHandler)(NSURLRequest *_Nullable request, ResponseCallback _Nullable responseCallback);
 
 
 @interface ASRMockURLProtocol : NSURLProtocol
 
-@property (class, nonatomic, nullable, strong) RequestHandler requestHandler;
-
-- (void)handleRequest:(NSURLRequest *)request
-	withBlock:(void (^)(NSHTTPURLResponse *response, NSData *data))responseCallback;
+@property (class, nonatomic, nullable, strong) RequestHandler requestHandler; /**< Блок, который будет формировать фейковый ответ сервера */
 
 @end
 

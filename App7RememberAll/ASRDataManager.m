@@ -16,7 +16,7 @@
 
 @property (nonatomic, nullable, strong) NSCache<NSString *, NSData *> *imagesCache;
 @property (nonatomic, nullable, strong) NSMutableDictionary<NSString *, NSURLSessionDataTask *> *tasksHash; /** All tasks mapped by url */
-@property (atomic, nullable, strong) dispatch_queue_t serialQueue;
+@property (atomic, nullable, strong) dispatch_queue_t serialQueue; /**< Может быть вызвана с потока NSURLSessionTask completionHandler */
 @property (nonatomic, strong) NSURLSession *session;
 
 @end
@@ -208,7 +208,6 @@
 	}
 
 	NSLog(@"\n  finished loading \n @");
-	//[NSThread sleepForTimeInterval: 1.0 ];
 
 	return NO;
 }
@@ -246,12 +245,10 @@
 
 			if (isError)
 			{
-				//failure(data);
-				completion([NSData dataWithContentsOfFile:@"/Users/alexander/sberproj/ios-start/App7-9gitlab/App7RememberAll/response.h"]);
+				failure(data);
 			}
 
 			NSLog(@"\n  finished loading %@", urlString);
-			//[NSThread sleepForTimeInterval: 1.0 ];
 
 			if (completion)
 			{

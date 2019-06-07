@@ -143,7 +143,6 @@
 	dataManager.session = session;
 
 	NSString *imageUrl = @"http://someurl.com";
-	//id imageOnServer = OCMClassMock([NSData class]); // равен [NSData new]
 	id imageOnServer = [@"asdf" dataUsingEncoding:NSUTF8StringEncoding];
 
 	XCTestExpectation *expectationMock = [[XCTestExpectation alloc] initWithDescription:@"mock protocol responded"];

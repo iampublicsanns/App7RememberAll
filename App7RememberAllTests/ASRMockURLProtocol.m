@@ -7,7 +7,6 @@
 //
 
 #import "ASRMockURLProtocol.h"
-#import <XCTest/XCTest.h>
 
 
 @implementation ASRMockURLProtocol
@@ -39,7 +38,6 @@ static RequestHandler _requestHandler;
 {
 	if (!ASRMockURLProtocol.requestHandler)
 	{
-		XCTFail(@"No request handler");
 		return;
 	}
 
@@ -54,14 +52,6 @@ static RequestHandler _requestHandler;
 - (void)stopLoading
 {
 //	[super stopLoading];
-}
-
-- (void)handleRequest:(NSURLRequest *)request
-	withBlock:(void (^)(NSHTTPURLResponse *response, NSData *data))responseCallback
-{
-	XCTAssertTrue([request.URL.host containsString:@"someurl"]);
-
-	responseCallback([[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:nil], [NSData new]);
 }
 
 @end
