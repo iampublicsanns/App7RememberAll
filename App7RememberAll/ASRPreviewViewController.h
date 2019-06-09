@@ -16,7 +16,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- Вью-контроллер, управляющий отображением превью с возможностью зума
+ Вью-контроллер, управляющий отображением изображения с возможностью зума и сохранения в бд. Изображение скачивается с сервера.
  */
 @interface ASRPreviewViewController : ASRDatabasePreviewViewController
 
@@ -27,10 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return Новый инстанс
  */
 - (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager NS_DESIGNATED_INITIALIZER;
-//for not separated:
-//- (nullable instancetype)initWithImage:(nonnull UIImage*)image NS_DESIGNATED_INITIALIZER;
-//- (nullable instancetype)initWithImageId:(NSManagedObjectID*)imageId NS_DESIGNATED_INITIALIZER;
-
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

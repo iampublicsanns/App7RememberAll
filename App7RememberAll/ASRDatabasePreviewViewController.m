@@ -99,11 +99,6 @@
 	[self deleteImageFromDatabase];
 	self.actionButtonEnabled = NO;
 }
-//- (void)onSave
-//{
-//	[self saveImage];
-//	self.actionButtonEnabled = NO;
-//}
 
 - (void)setupViews
 {
@@ -150,14 +145,6 @@
 	
 	[self.imageDAO saveContext];
 }
-//business only
-//- (void)saveImage
-//{
-//	ASRMOImage *imageMO = [self.imageDAO createASRMOImage];
-//	imageMO.blob = UIImageJPEGRepresentation(self.image, 1.0);
-//
-//	[self.imageDAO saveContext];
-//}
 
 #pragma mark - Image from database
 

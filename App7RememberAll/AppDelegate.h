@@ -16,8 +16,6 @@
 
 @property (readonly, nullable, strong) NSPersistentContainer *persistentContainer;
 
-- (NSPersistentContainer *)persistentContainerWithCompletion:(void (^)(NSPersistentContainer *_Nullable))completion;
-
 - (void)saveContext;
 
 @end

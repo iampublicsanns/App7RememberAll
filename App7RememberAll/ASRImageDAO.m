@@ -7,10 +7,9 @@
 //
 
 @import CoreData;
-//#import <CoreData/CoreData.h>
-#import <Foundation/Foundation.h>
-
 #import "ASRImageDAO.h"
+
+
 #define IMAGE @"ASRMOImage"
 
 
@@ -22,7 +21,7 @@
 {
 	//is in example?
 	self = [super init];
-	if(self)
+	if (self)
 	{
 		_persistentContainer = container;
 	}
@@ -30,10 +29,8 @@
 	return self;
 }
 
-- (nonnull ASRMOImage *)createASRMOImage
+- (ASRMOImage *)createASRMOImage
 {
-	//  NSManagedObjectContext *moc = [self managedObjectContext];
-	//from auto-generated saveContext :
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
 
 	ASRMOImage *image = [NSEntityDescription insertNewObjectForEntityForName:IMAGE
@@ -42,56 +39,53 @@
 	return image;
 }
 
-- (ASRMOImage*)getASRMOImageByMOID:(NSManagedObjectID*)moid
+- (ASRMOImage *)getASRMOImageByMOID:(NSManagedObjectID *)moid
 {
-	//  NSManagedObjectContext *moc = [self managedObjectContext];
-	//from auto-generated saveContext :
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
-	
+
 	return [moc objectWithID:moid];
 }
 
-- (NSArray<ASRMOImage*> *)getASRMOImages
+- (NSArray<ASRMOImage *> *)getASRMOImages
 {
-	//  NSManagedObjectContext *moc = [self managedObjectContext];
-	//from auto-generated saveContext :
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
-	
+
 	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:IMAGE];
-	
+
 	NSError *error = nil;
 	NSArray *results = [moc executeFetchRequest:request error:&error];
 	if (!results)
 	{
 		NSLog(@"Error sanz");
 	}
-	
+
 	return results;
 }
 
 - (NSInteger)getASRMOImagesCount
 {
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
-	
+
 	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:IMAGE];
-	
+
 	NSError *error = nil;
-	NSInteger *results = [moc countForFetchRequest:request error:&error];
+	NSInteger results = [moc countForFetchRequest:request error:&error];
 	if (!results)
 	{
 		NSLog(@"Error sanz");
 	}
-	
+
 	return results;
 }
 
-- (void)deleteASRMOImageByMOID:(NSManagedObjectID*)moid
+- (void)deleteASRMOImageByMOID:(NSManagedObjectID *)moid
 {
 	ASRMOImage *imageMO = [self getASRMOImageByMOID:moid];
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
-	
+
 	[moc deleteObject:imageMO];
 }
+
 - (void)deleteASRMOImages
 {
 	NSArray *results = [self getASRMOImages];
@@ -102,7 +96,6 @@
 		return;
 	}
 
-	//from auto-generated saveContext :
 	NSManagedObjectContext *moc = self.persistentContainer.viewContext;
 
 	for (ASRMOImage *p in results)
@@ -111,11 +104,12 @@
 	}
 }
 
-//core data generated
-- (void)saveContext {
+- (void)saveContext
+{
 	NSManagedObjectContext *context = self.persistentContainer.viewContext;
 	NSError *error = nil;
-	if ([context hasChanges] && ![context save:&error]) {
+	if ([context hasChanges] && ![context save:&error])
+	{
 		// Replace this implementation with code to handle the error appropriately.
 		// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 		NSLog(@"Unresolved error %@, %@", error, error.userInfo);

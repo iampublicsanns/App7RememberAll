@@ -27,7 +27,7 @@
 	[self setupViews];
 
 	self.imageView.image = nil;
-	self.label.text = @"reset";
+	self.label.text = @"";
 }
 
 - (void)setImage:(UIImage *)image

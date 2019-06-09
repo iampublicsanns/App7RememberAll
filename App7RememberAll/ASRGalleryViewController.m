@@ -49,6 +49,9 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	if (self)
 	{
 		_dataManager = dataManager;
+
+		_delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+		_imageDAO = [[ASRImageDAO alloc] initWithContainer:_delegate.persistentContainer];
 	}
 
 	return self;
@@ -121,21 +124,8 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	[self.navigationController pushViewController:previewViewController animated:YES];
 }
 
-- (void)presentSavedImageById:(NSInteger)imageId
-{
-//	ASRMOImage *imageMO = self.savedImages[imageId];
-//	NSData *loadedImageData = imageMO.blob;
-//	UIImage *loadedImage = [UIImage imageWithData:loadedImageData];
-//
-//	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithImage:loadedImage];
-//
-//	[self.navigationController pushViewController:previewViewController animated:YES];
-}
-
 - (void)presentSavedImageByMOID:(NSManagedObjectID *)imageId
 {
-//	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithImageId:imageId];
-//	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] initWithImageId:imageId];
 	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] init];
 	[previewViewController showImageByMOID:imageId];
 
@@ -254,14 +244,13 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 			cell.contentView.backgroundColor = UIColor.brownColor;
 		}
 
+		[cell resetViews];
 		[cell setImage:loadedImage];
-		[cell setLabelText:@"saved"];
 	}];
 
 	__auto_type __weak weakSelf = self;
 
 	cell.clickHandler = ^{
-//		NSInteger imageId = indexPath.item;
 		NSManagedObjectID *imageId = imageMO.objectID;
 		[weakSelf presentSavedImageByMOID:imageId];
 	};

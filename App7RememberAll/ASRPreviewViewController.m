@@ -18,12 +18,9 @@
 
 @property (nonatomic) BOOL actionButtonEnabled;
 @property (nonatomic, nullable, strong) UIImage *image;
-//@property (nonatomic, nullable, strong) UIImageView *imageView;
-//@property (nonatomic, nullable, strong) UIScrollView *scrollView;
 @property (nonatomic, nullable, strong) AppDelegate *delegate;
 @property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 @property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
-//@property (nonatomic, nullable, strong) NSManagedObjectID *imageMOID;
 
 - (instancetype)init;
 
@@ -75,8 +72,7 @@
 	NSData *cached = [self.dataManager tryGetCachedImage:urlString];
 	if (cached)
 	{
-		self.image = [UIImage imageWithData:cached];
-		[super updateImageIfNeeded];
+		[self didLoadImageData:cached];
 		return;
 	}
 
@@ -97,7 +93,7 @@
 	self.image = image;
 	__auto_type __weak weakSelf = self;
 
-	[ASRUtils performOnMainThread: ^{
+	[ASRUtils performOnMainThread:^{
 		[weakSelf updateImageIfNeeded];
 
 		if (image)

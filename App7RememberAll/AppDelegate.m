@@ -50,13 +50,6 @@
 
 - (NSPersistentContainer *)persistentContainer
 {
-	return [self persistentContainerWithCompletion:^(NSPersistentContainer *_Nullable na) {
-
-	}];
-}
-
-- (NSPersistentContainer *)persistentContainerWithCompletion:(void (^)(NSPersistentContainer *_Nullable))completion
-{
 	// The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
 	@synchronized (self)
 	{
@@ -81,8 +74,6 @@
 					NSLog(@"Unresolved error %@, %@", error, error.userInfo);
 					abort();
 				}
-
-				completion(_persistentContainer);
 			}];
 		}
 	}

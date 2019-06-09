@@ -1,5 +1,5 @@
 //
-//  ASRPreviewViewController.h
+//  ASRDatabasePreviewViewController.h
 //  App7RememberAll
 //
 //  Created by Alexander on 11/04/2019.
@@ -14,20 +14,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- Вью-контроллер, управляющий отображением превью с возможностью зума
+ Вью-контроллер, управляющий отображением картинки с возможностью зума. Изображение берется из базы данных.
  */
 @interface ASRDatabasePreviewViewController : UIViewController
 
 
 /**
  Инициализатор
- @param dataManager менеджер данных для этого вью-контроллера
  @return Новый инстанс
  */
-- (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithImage:(nonnull UIImage*)image NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithImageId:(NSManagedObjectID*)imageId NS_DESIGNATED_INITIALIZER;
-
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -37,13 +32,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Отобразить изображение по урлу
- @param urlString url-адрес, по которому располагается изображение
+ @param moid id изображения в базе
  */
 - (void)showImageByMOID:(nonnull NSManagedObjectID *)moid;
 
-
 /**
- Для классов-наследников
+ Для классов-наследников. Апдейтит imageView картинкой, которая в данный момент в этом контроллере.
  */
 - (void)updateImageIfNeeded;
 
