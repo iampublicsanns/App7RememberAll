@@ -84,7 +84,10 @@
 	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *image) {
 		__auto_type __strong strongSelf = weakSelf;
 
-		[strongSelf addCachedImage:image byUrl:url];
+		if (image)
+		{
+			[strongSelf addCachedImage:image byUrl:url];
+		}
 
 		if (completion)
 		{

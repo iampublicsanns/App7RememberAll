@@ -7,11 +7,18 @@
 //
 
 @import UIKit;
+#import <CoreData/CoreData.h>
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+
+@property (readonly, nullable, strong) NSPersistentContainer *persistentContainer;
+
+- (NSPersistentContainer *)persistentContainerWithCompletion:(void (^)(NSPersistentContainer *_Nullable))completion;
+
+- (void)saveContext;
 
 @end
 

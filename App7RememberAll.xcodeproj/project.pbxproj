@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1101C6EB2242AF07007C4F26 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6EA2242AF07007C4F26 /* AppDelegate.m */; };
-		1101C6F42242AF07007C4F26 /* App7RememberAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */; };
 		1101C6F62242AF08007C4F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F52242AF08007C4F26 /* Assets.xcassets */; };
 		1101C6F92242AF08007C4F26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */; };
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
 		111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */; };
 		111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */; };
 		1193511422944E5E002AA10D /* ASRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* ASRUtils.m */; };
+		11BE405F22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11BE405D22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld */; };
+		11BE406422ABC7BB00DE826C /* ASRImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BE406322ABC7BB00DE826C /* ASRImageDAO.m */; };
+		11BE406F22AD17A600DE826C /* ASRDatabasePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BE406E22AD17A600DE826C /* ASRDatabasePreviewViewController.m */; };
 		11BEFEE322A59EE9005718CE /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BEFEE222A59EE9005718CE /* libOCMock.a */; };
 		11BEFEE622A6D3B9005718CE /* ASRMockURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */; };
 		B21250298E5238D21229FB96 /* ASRDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* ASRDataManager.m */; };
@@ -38,7 +40,6 @@
 		1101C6E62242AF07007C4F26 /* App7RememberAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App7RememberAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1101C6E92242AF07007C4F26 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1101C6EA2242AF07007C4F26 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1101C6F32242AF07007C4F26 /* App7RememberAll.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = App7RememberAll.xcdatamodel; sourceTree = "<group>"; };
 		1101C6F52242AF08007C4F26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1101C6F82242AF08007C4F26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1101C6FA2242AF08007C4F26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +51,11 @@
 		1193510E22942C0D002AA10D /* ASRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRUtils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* ASRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRUtils.m; sourceTree = "<group>"; };
 		119351182296E23C002AA10D /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
+		11BE405E22AA8DBA00DE826C /* ASRDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ASRDatabase.xcdatamodel; sourceTree = "<group>"; };
+		11BE406322ABC7BB00DE826C /* ASRImageDAO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRImageDAO.m; sourceTree = "<group>"; };
+		11BE406522ABC84A00DE826C /* ASRImageDAO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRImageDAO.h; sourceTree = "<group>"; };
+		11BE406D22AD17A600DE826C /* ASRDatabasePreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRDatabasePreviewViewController.h; sourceTree = "<group>"; };
+		11BE406E22AD17A600DE826C /* ASRDatabasePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRDatabasePreviewViewController.m; sourceTree = "<group>"; };
 		11BEFEE222A59EE9005718CE /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = "OCMock/iOS library/libOCMock.a"; sourceTree = "<group>"; };
 		11BEFEE422A6D3B9005718CE /* ASRMockURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRMockURLProtocol.h; sourceTree = "<group>"; };
 		11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRMockURLProtocol.m; sourceTree = "<group>"; };
@@ -87,6 +93,7 @@
 		1101C6DD2242AF07007C4F26 = {
 			isa = PBXGroup;
 			children = (
+				11BE406C22ABD66800DE826C /* Database */,
 				115BC786227717FB00E5892E /* Config */,
 				115BC77F2276F41200E5892E /* ModelControllers */,
 				115BC77B2276F3B000E5892E /* ViewCells */,
@@ -116,7 +123,6 @@
 				1101C6F72242AF08007C4F26 /* LaunchScreen.storyboard */,
 				1101C6FA2242AF08007C4F26 /* Info.plist */,
 				1101C6FB2242AF08007C4F26 /* main.m */,
-				1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */,
 				1193510E22942C0D002AA10D /* ASRUtils.h */,
 				1193511322944E5E002AA10D /* ASRUtils.m */,
 				119351182296E23C002AA10D /* response.h */,
@@ -152,6 +158,8 @@
 				B212513A24870D9AF46AEF1D /* ASRGalleryViewController.m */,
 				B21255EE1F4D9DBEB8949785 /* ASRPreviewViewController.h */,
 				B2125B3111A9EFBB2C89153C /* ASRPreviewViewController.m */,
+				11BE406D22AD17A600DE826C /* ASRDatabasePreviewViewController.h */,
+				11BE406E22AD17A600DE826C /* ASRDatabasePreviewViewController.m */,
 			);
 			name = ViewControllers;
 			path = App7RememberAll;
@@ -172,6 +180,8 @@
 			children = (
 				B212504D254CBC60A62E233E /* ASRDataManager.h */,
 				B21253095397F59FB46406E3 /* ASRDataManager.m */,
+				11BE406522ABC84A00DE826C /* ASRImageDAO.h */,
+				11BE406322ABC7BB00DE826C /* ASRImageDAO.m */,
 			);
 			name = ModelControllers;
 			path = App7RememberAll;
@@ -184,6 +194,14 @@
 			);
 			name = Config;
 			path = App7RememberAll;
+			sourceTree = "<group>";
+		};
+		11BE406C22ABD66800DE826C /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				11BE405D22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld */,
+			);
+			name = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,8 +305,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1193511422944E5E002AA10D /* ASRUtils.m in Sources */,
-				1101C6F42242AF07007C4F26 /* App7RememberAll.xcdatamodeld in Sources */,
 				1101C6FC2242AF08007C4F26 /* main.m in Sources */,
+				11BE406F22AD17A600DE826C /* ASRDatabasePreviewViewController.m in Sources */,
+				11BE406422ABC7BB00DE826C /* ASRImageDAO.m in Sources */,
+				11BE405F22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld in Sources */,
 				1101C6EB2242AF07007C4F26 /* AppDelegate.m in Sources */,
 				B2125B0D15B24769F1813832 /* ASRItemViewCell.m in Sources */,
 				B21250298E5238D21229FB96 /* ASRDataManager.m in Sources */,
@@ -597,13 +617,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		1101C6F22242AF07007C4F26 /* App7RememberAll.xcdatamodeld */ = {
+		11BE405D22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				1101C6F32242AF07007C4F26 /* App7RememberAll.xcdatamodel */,
+				11BE405E22AA8DBA00DE826C /* ASRDatabase.xcdatamodel */,
 			);
-			currentVersion = 1101C6F32242AF07007C4F26 /* App7RememberAll.xcdatamodel */;
-			path = App7RememberAll.xcdatamodeld;
+			currentVersion = 11BE405E22AA8DBA00DE826C /* ASRDatabase.xcdatamodel */;
+			path = ASRDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
