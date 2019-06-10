@@ -9,6 +9,7 @@
 @import UIKit;
 
 @class ASRDataManager;
+@class ASRImageDAO;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
  Вью-контроллер, отрисовывающий данные, полученные из DataManager.
  */
 @interface ASRGalleryViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
+
 
 /**
  Инициализатор

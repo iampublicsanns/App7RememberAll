@@ -18,8 +18,6 @@
  * */
 @interface ASRImageDAO : NSObject
 
-@property (nonatomic, nonnull, readonly) NSPersistentContainer *persistentContainer;
-
 /**
  * Инициализатор
  * @return инстанс

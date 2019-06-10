@@ -23,9 +23,7 @@
 @property (nonatomic, nullable, strong) UILabel *errorLabel;
 @property (nonatomic, nullable, copy) NSArray<NSDictionary *> *imagesCatalogue;
 @property (nonatomic, nullable, copy) NSArray<ASRMOImage *> *savedImages;
-@property (nonatomic, nullable, strong) AppDelegate *delegate;
 @property (nonatomic, nullable, strong) ASRDataManager *dataManager;
-@property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
 
 @end
 
@@ -50,8 +48,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 	{
 		_dataManager = dataManager;
 
-		_delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-		_imageDAO = [[ASRImageDAO alloc] initWithContainer:_delegate.persistentContainer];
 	}
 
 	return self;

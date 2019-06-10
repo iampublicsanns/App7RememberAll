@@ -9,6 +9,7 @@
 #import "ASRGalleryViewController.h"
 #import "AppDelegate.h"
 #import "ASRDataManager.h"
+#import "ASRImageDAO.h"
 
 
 #define DATABASE_FILE @"ASRDatabase"
@@ -28,6 +29,7 @@
 	ASRDataManager *dataManager = [[ASRDataManager alloc] initWithCache:cache];
 
 	ASRGalleryViewController *collectionViewController = [[ASRGalleryViewController alloc] initWithDataManager:dataManager];
+	collectionViewController.imageDAO = [[ASRImageDAO alloc] initWithContainer:self.persistentContainer];
 
 	UINavigationController *navigationViewController = [[UINavigationController alloc] initWithRootViewController:collectionViewController];
 

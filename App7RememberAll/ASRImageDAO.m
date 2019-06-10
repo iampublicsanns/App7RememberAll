@@ -12,6 +12,11 @@
 
 #define IMAGE @"ASRMOImage"
 
+@interface ASRImageDAO ()
+
+@property (nonatomic, nonnull, readonly) NSPersistentContainer *persistentContainer;
+
+@end
 
 @implementation ASRImageDAO
 
