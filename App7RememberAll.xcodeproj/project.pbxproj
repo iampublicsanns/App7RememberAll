@@ -13,6 +13,9 @@
 		1101C6FC2242AF08007C4F26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1101C6FB2242AF08007C4F26 /* main.m */; };
 		111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */; };
 		111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */; };
+		112D5A1422ADB3C300668488 /* ASRDatabasePreviewViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 112D5A1322ADB3C300668488 /* ASRDatabasePreviewViewControllerTests.m */; };
+		112D5A1522AE4DE600668488 /* ASRDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11BE405D22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld */; };
+		112D5A1722AE4F7C00668488 /* ASRDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B21253095397F59FB46406E3 /* ASRDataManager.m */; };
 		1193511422944E5E002AA10D /* ASRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1193511322944E5E002AA10D /* ASRUtils.m */; };
 		11BE405F22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11BE405D22AA8DBA00DE826C /* ASRDatabase.xcdatamodeld */; };
 		11BE406422ABC7BB00DE826C /* ASRImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BE406322ABC7BB00DE826C /* ASRImageDAO.m */; };
@@ -48,6 +51,7 @@
 		111F3FA622A17F550054F550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		111F3FAD22A183BD0054F550 /* ASRDataManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRDataManagerTests.m; sourceTree = "<group>"; };
 		111F3FAF22A184370054F550 /* ASRGalleryViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRGalleryViewControllerTests.m; sourceTree = "<group>"; };
+		112D5A1322ADB3C300668488 /* ASRDatabasePreviewViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRDatabasePreviewViewControllerTests.m; sourceTree = "<group>"; };
 		1193510E22942C0D002AA10D /* ASRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRUtils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* ASRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRUtils.m; sourceTree = "<group>"; };
 		119351182296E23C002AA10D /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				11BEFEE422A6D3B9005718CE /* ASRMockURLProtocol.h */,
 				11BEFEE522A6D3B9005718CE /* ASRMockURLProtocol.m */,
 				B2125FF727BFB888A0872F6A /* ASRPreviewViewControllerTests.m */,
+				112D5A1322ADB3C300668488 /* ASRDatabasePreviewViewControllerTests.m */,
 			);
 			path = App7RememberAllTests;
 			sourceTree = "<group>";
@@ -321,10 +326,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				112D5A1522AE4DE600668488 /* ASRDatabase.xcdatamodeld in Sources */,
 				11BEFEE622A6D3B9005718CE /* ASRMockURLProtocol.m in Sources */,
+				112D5A1722AE4F7C00668488 /* ASRDataManager.m in Sources */,
 				111F3FB022A184380054F550 /* ASRGalleryViewControllerTests.m in Sources */,
 				111F3FAE22A183BD0054F550 /* ASRDataManagerTests.m in Sources */,
 				B212577C4AF07F1B960E3866 /* ASRPreviewViewControllerTests.m in Sources */,
+				112D5A1422ADB3C300668488 /* ASRDatabasePreviewViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
