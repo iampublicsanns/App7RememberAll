@@ -15,13 +15,9 @@
 
 @interface ASRSimplePreviewViewController() <UIScrollViewDelegate>
 
-@property (nonatomic) BOOL actionButtonEnabled;
 @property (nonatomic, nullable, strong) UIImage *image;
 @property (nonatomic, nullable, strong) UIImageView *imageView;
 @property (nonatomic, nullable, strong) UIScrollView *scrollView;
-@property (nonatomic, nullable, strong) AppDelegate *delegate;
-@property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
-@property (nonatomic, nullable, strong) NSManagedObjectID *imageMOID;
 
 @end
 
