@@ -28,14 +28,13 @@
 
 @implementation ASRDatabasePreviewViewController
 
-- (instancetype)init
+- (instancetype)initWithImageDAO:(ASRImageDAO *)imageDAO
 {
 	self = [super initWithNibName:nil bundle:nil];
-	if(self)
+	if (self)
 	{
-		_delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-		_imageDAO = [[ASRImageDAO alloc] initWithContainer: _delegate.persistentContainer];
-		
+		_imageDAO = imageDAO;
+
 		//show delete button
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(onDelete)];
 		self.navigationItem.rightBarButtonItem.enabled = NO;

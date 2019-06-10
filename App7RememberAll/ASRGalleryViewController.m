@@ -119,6 +119,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 - (void)presentImageByUrl:(NSString *)url
 {
 	ASRPreviewViewController *previewViewController = [[ASRPreviewViewController alloc] initWithDataManager:self.dataManager];
+	previewViewController.imageDAO = self.imageDAO;
 	[previewViewController showImageWithUrlString:url];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];
@@ -126,7 +127,7 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)presentSavedImageByMOID:(NSManagedObjectID *)imageId
 {
-	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] init];
+	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] initWithImageDAO:self.imageDAO];
 	[previewViewController showImageByMOID:imageId];
 
 	[self.navigationController pushViewController:previewViewController animated:YES];

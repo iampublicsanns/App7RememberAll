@@ -9,7 +9,7 @@
 @import UIKit;
 @import CoreData;
 
-@class ASRDataManager;
+@class ASRImageDAO;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,12 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface ASRDatabasePreviewViewController : UIViewController
 
-
 /**
  Инициализатор
  @return Новый инстанс
  */
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithImageDAO:(ASRImageDAO *)imageDAO NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil

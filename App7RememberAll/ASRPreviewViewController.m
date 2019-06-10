@@ -20,7 +20,6 @@
 @property (nonatomic, nullable, strong) UIImage *image;
 @property (nonatomic, nullable, strong) AppDelegate *delegate;
 @property (nonatomic, nullable, strong) ASRDataManager *dataManager;
-@property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
 
 - (instancetype)init;
 
@@ -35,10 +34,7 @@
 	if (self)
 	{
 		_dataManager = dataManager;
-		
-		_delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-		_imageDAO = [[ASRImageDAO alloc] initWithContainer: _delegate.persistentContainer];
-		
+
 		//show save button
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave)];
 		self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -96,7 +92,7 @@
 	[ASRUtils performOnMainThread:^{
 		[weakSelf updateImageIfNeeded];
 
-		if (image)
+		if (image && self.imageDAO)
 		{
 			weakSelf.actionButtonEnabled = YES;
 		}
@@ -113,6 +109,10 @@
 //business only
 - (void)saveImage
 {
+	if (!self.imageDAO)
+	{
+		return;
+	}
 	ASRMOImage *imageMO = [self.imageDAO createASRMOImage];
 	imageMO.blob = UIImageJPEGRepresentation(self.image, 1.0);
 

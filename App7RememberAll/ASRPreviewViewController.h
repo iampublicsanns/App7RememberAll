@@ -12,6 +12,7 @@
 #import "ASRDatabasePreviewViewController.h"
 
 @class ASRDataManager;
+@class ASRImageDAO;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface ASRPreviewViewController : ASRDatabasePreviewViewController
 
+@property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
 
 /**
  Инициализатор
