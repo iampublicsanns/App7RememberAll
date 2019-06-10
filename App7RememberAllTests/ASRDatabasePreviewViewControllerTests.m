@@ -15,6 +15,7 @@
 @interface ASRDatabasePreviewViewController (Tests)
 
 @property (nonatomic, nullable, strong) ASRImageDAO *imageDAO;
+@property (nonatomic, nullable, strong) NSManagedObjectID *imageMOID;
 
 @end
 
@@ -37,29 +38,21 @@
 	XCTAssertEqual(previewViewController.imageDAO, imageDAOMock);
 }
 
-//- (void)testShowImageWithUrlString
-//{
-//	// arrange
-//	id dataManagerMock = OCMClassMock([ASRDataManager class]);
-//	OCMExpect([dataManagerMock tryGetCachedImage:[OCMArg isNotNil]]);
-//	OCMExpect([dataManagerMock loadBigImageByUrl:[OCMArg any] completion:[OCMArg any]]);
-//
-//	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] initWithDataManager:dataManagerMock];
-//
-//	// act
-//	[previewViewController showImageWithUrlString:@"http://someurl.com"];
-//
-//	// verify
-//	OCMVerifyAll(dataManagerMock);
-//
-//	OCMExpect([dataManagerMock tryGetCachedImage:[OCMArg isNotNil]]);
-//	OCMReject([dataManagerMock loadBigImageByUrl:[OCMArg any] completion:[OCMArg any]]);
-//
-//	// act2
-//	[previewViewController showImageWithUrlString:@"http://someurl.com"];
-//
-//	// verify
-//	OCMVerifyAll(dataManagerMock);
-//}
+- (void)testShowImageByMOID
+{
+	// arrange
+	id moidMock = OCMClassMock([NSManagedObjectID class]);
+	id imageDAOMock = OCMClassMock([ASRImageDAO class]);
+	OCMExpect([imageDAOMock getASRMOImageByMOID:moidMock]);
+
+	ASRDatabasePreviewViewController *previewViewController = [[ASRDatabasePreviewViewController alloc] initWithImageDAO:imageDAOMock];
+
+	// act
+	[previewViewController showImageByMOID:moidMock];
+
+	// verify
+	XCTAssertEqual(moidMock, previewViewController.imageMOID);
+	OCMVerifyAll(imageDAOMock);
+}
 
 @end
