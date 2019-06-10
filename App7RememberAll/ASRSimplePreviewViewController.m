@@ -1,74 +1,47 @@
 //
-//  PreviewViewController.m
+//  ASRSimplePreviewViewController.m
 //  App7RememberAll
 //
-//  Created by Alexander on 11/04/2019.
+//  Created by Alexander on 10/06/2019.
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "DataManager.h"
-#import "PreviewViewController.h"
-#import "Utils.h"
+#import "AppDelegate.h"
+#import "ASRMOImage+CoreDataClass.h"
+#import "ASRImageDAO.h"
+#import "ASRDatabasePreviewViewController.h"
+#import "ASRUtils.h"
+#import "ASRSimplePreviewViewController.h"
 
+@interface ASRSimplePreviewViewController() <UIScrollViewDelegate>
 
-@interface PreviewViewController () <UIScrollViewDelegate>
-
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, nullable, strong) UIImage *image;
+@property (nonatomic, nullable, strong) UIImageView *imageView;
+@property (nonatomic, nullable, strong) UIScrollView *scrollView;
 
 @end
 
 
-@implementation PreviewViewController
+@implementation ASRSimplePreviewViewController
 
-
-- (instancetype)initWithDataManager:(DataManager *)dataManager
+- (instancetype)init
 {
 	self = [super initWithNibName:nil bundle:nil];
-	if (self)
-	{
-		_dataManager = dataManager;
-	}
 	return self;
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
+	
 	[self setupViews];
 	[self updateImageIfNeeded];
 }
 
-- (void)showImageWithUrlString:(NSString *)urlString
-{
-	NSData *cached = [self.dataManager tryGetCachedImage:urlString];
-	if (cached)
-	{
-		self.image = [UIImage imageWithData:cached];
-		[self updateImageIfNeeded];
-	}
 
-	__auto_type __weak weakSelf = self;
-	
-	[self.dataManager loadBigImageByUrl:urlString completion:^(NSData *image) {
-		[weakSelf didLoadImageData:image];
-	}];
-}
+# pragma mark - Private
 
-- (void)didLoadImageData:(NSData *)data
-{
-	UIImage *image = [UIImage imageWithData:data];
-
-	self.image = image;
-
-	[Utils performOnMainThread: ^{
-		[self updateImageIfNeeded];
-	}];
-}
-
+//ui
 - (void)setupViews
 {
 	self.scrollView = [[UIScrollView alloc] init];
@@ -79,13 +52,13 @@
 	self.scrollView.maximumZoomScale = 10.0;
 	self.scrollView.minimumZoomScale = 0.1;
 	self.scrollView.delegate = self;
-
+	
 	[self.view addSubview:self.scrollView];
-
+	
 	self.imageView = [UIImageView new];
 	self.imageView.userInteractionEnabled = YES;
 	self.imageView.multipleTouchEnabled = YES;
-
+	
 	[self.scrollView addSubview:self.imageView];
 }
 
@@ -107,12 +80,12 @@
 	}];
 }
 
-
 #pragma mark <UIScrollViewDelegate>
 
-- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+- (nullable UIView *)viewForZoomingInScrollView:(nonnull UIScrollView *)scrollView
 {
 	return self.imageView;
 }
 
 @end
+

@@ -1,24 +1,24 @@
 //
-//  ItemViewCell.m
+//  ASRItemViewCell.m
 //  App7RememberAll
 //
 //  Created by Alexander on 08/04/2019.
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#import "ItemViewCell.h"
+#import "ASRItemViewCell.h"
 
 
-@interface ItemViewCell ()
+@interface ASRItemViewCell ()
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, nullable, strong) UIImageView *imageView;
+@property (nonatomic, nullable, strong) UILabel *label;
+@property (nonatomic, nullable, strong) UIButton *button;
 
 @end
 
 
-@implementation ItemViewCell
+@implementation ASRItemViewCell
 
 #pragma mark - Public
 
@@ -27,7 +27,7 @@
 	[self setupViews];
 
 	self.imageView.image = nil;
-	self.label.text = @"reset";
+	self.label.text = @"";
 }
 
 - (void)setImage:(UIImage *)image
@@ -43,7 +43,7 @@
 	]];
 }
 
-- (void)setLabelText:(nullable NSString *)string
+- (void)setLabelText:(nonnull NSString *)string
 {
 	[self setupViews];
 
@@ -65,6 +65,7 @@
 	self.imageView.layer.borderWidth = 1;
 	self.imageView.layer.borderColor = [UIColor colorWithRed:1 green:0.6 blue:0 alpha:1].CGColor;
 
+	self.imageView.contentMode = UIViewContentModeScaleAspectFill;
 	self.imageView.userInteractionEnabled = YES;
 
 	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick)];

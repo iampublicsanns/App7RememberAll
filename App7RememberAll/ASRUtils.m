@@ -1,5 +1,5 @@
 //
-//  Utils.m
+//  ASRUtils.m
 //  App7RememberAll
 //
 //  Created by Alexander on 21/05/2019.
@@ -8,12 +8,12 @@
 
 @import Foundation;
 
-#import "Utils.h"
+#import "ASRUtils.h"
 
 
-@implementation Utils
+@implementation ASRUtils
 
-+ (void)performOnMainThread:(void (^)(void))block
++ (void)performOnMainThread:(nullable void (^)(void))block
 {
 	if (NULL == block)
 	{
