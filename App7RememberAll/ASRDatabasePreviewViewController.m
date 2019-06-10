@@ -30,7 +30,7 @@
 
 - (instancetype)initWithImageDAO:(ASRImageDAO *)imageDAO
 {
-	self = [super initWithNibName:nil bundle:nil];
+	self = [super init];
 	if (self)
 	{
 		_imageDAO = imageDAO;
@@ -45,9 +45,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
-	[self setupViews];
-	[self updateImageIfNeeded];
 }
 
 
@@ -75,23 +72,6 @@
 
 # pragma mark - Private
 
-- (void)didLoadImageData:(nonnull NSData *)data
-{
-	UIImage *image = [UIImage imageWithData:data];
-	
-	self.image = image;
-	__auto_type __weak weakSelf = self;
-	
-	[ASRUtils performOnMainThread: ^{
-		[weakSelf updateImageIfNeeded];
-		
-		if (image)
-		{
-			weakSelf.actionButtonEnabled = YES;
-		}
-	}];
-}
-
 //ui
 - (void)onDelete
 {
@@ -99,43 +79,8 @@
 	self.actionButtonEnabled = NO;
 }
 
-- (void)setupViews
-{
-	self.scrollView = [[UIScrollView alloc] init];
-	self.scrollView.frame = self.view.bounds;
-	self.scrollView.layer.borderWidth = 2;
-	self.scrollView.layer.borderColor = [UIColor colorWithRed:0.7 green:0.4 blue:1 alpha:0.8].CGColor;
-	self.scrollView.backgroundColor = UIColor.blackColor;
-	self.scrollView.maximumZoomScale = 10.0;
-	self.scrollView.minimumZoomScale = 0.1;
-	self.scrollView.delegate = self;
-	
-	[self.view addSubview:self.scrollView];
-	
-	self.imageView = [UIImageView new];
-	self.imageView.userInteractionEnabled = YES;
-	self.imageView.multipleTouchEnabled = YES;
-	
-	[self.scrollView addSubview:self.imageView];
-}
 
-- (void)updateImageIfNeeded
-{
-	if (!self.imageView)
-	{
-		return;
-	}
-	
-	self.imageView.image = self.image;
-	self.imageView.alpha = 0.0;
-	
-	[self.imageView sizeToFit];
-	self.scrollView.contentSize = self.imageView.frame.size;
-	
-	[UIView animateWithDuration:.25 animations:^{
-		self.imageView.alpha = 1.0;
-	}];
-}
+#pragma mark - Image from database
 
 //business only
 - (void)deleteImageFromDatabase
@@ -144,8 +89,6 @@
 	
 	[self.imageDAO saveContext];
 }
-
-#pragma mark - Image from database
 
 - (void)loadSavedImage
 {
@@ -157,12 +100,5 @@
 	self.actionButtonEnabled = true;
 }
 
-
-#pragma mark <UIScrollViewDelegate>
-
-- (nullable UIView *)viewForZoomingInScrollView:(nonnull UIScrollView *)scrollView
-{
-	return self.imageView;
-}
 
 @end
