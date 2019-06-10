@@ -12,7 +12,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, nullable, strong) UIWindow *window;
 
 @property (readonly, nullable, strong) NSPersistentContainer *persistentContainer;
 
