@@ -57,7 +57,6 @@
 		112D5A1922AE640500668488 /* ASRSimplePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRSimplePreviewViewController.m; sourceTree = "<group>"; };
 		1193510E22942C0D002AA10D /* ASRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRUtils.h; sourceTree = "<group>"; };
 		1193511322944E5E002AA10D /* ASRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRUtils.m; sourceTree = "<group>"; };
-		119351182296E23C002AA10D /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
 		11BE405E22AA8DBA00DE826C /* ASRDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ASRDatabase.xcdatamodel; sourceTree = "<group>"; };
 		11BE406322ABC7BB00DE826C /* ASRImageDAO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASRImageDAO.m; sourceTree = "<group>"; };
 		11BE406522ABC84A00DE826C /* ASRImageDAO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASRImageDAO.h; sourceTree = "<group>"; };
@@ -132,7 +131,6 @@
 				1101C6FB2242AF08007C4F26 /* main.m */,
 				1193510E22942C0D002AA10D /* ASRUtils.h */,
 				1193511322944E5E002AA10D /* ASRUtils.m */,
-				119351182296E23C002AA10D /* response.h */,
 			);
 			path = App7RememberAll;
 			sourceTree = "<group>";
