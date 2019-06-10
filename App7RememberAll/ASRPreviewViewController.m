@@ -21,8 +21,6 @@
 @property (nonatomic, nullable, strong) AppDelegate *delegate;
 @property (nonatomic, nullable, strong) ASRDataManager *dataManager;
 
-- (instancetype)init;
-
 @end
 
 

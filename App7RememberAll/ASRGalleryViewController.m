@@ -37,8 +37,6 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (instancetype)initWithDataManager:(ASRDataManager *)dataManager
 {
-	UILabel *label = [UILabel new];
-
 	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
 	flowLayout.sectionInset = UIEdgeInsetsMake(10, 0, 0, 0);
 
@@ -89,8 +87,10 @@ static NSString *const GalleryVCReuseIdentifier = @"SimpleCell";
 
 - (void)startLoadingCatalogue
 {
+	__auto_type __weak weakSelf = self;
+
 	[self.dataManager loadCatalogueWithCompletion:^(NSArray<NSDictionary *> *images) {
-		[self updateCatalogueWithImages:images];
+		[weakSelf updateCatalogueWithImages:images];
 	}];
 }
 

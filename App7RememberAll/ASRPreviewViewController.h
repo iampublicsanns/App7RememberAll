@@ -29,13 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return Новый инстанс
  */
 - (nullable instancetype)initWithDataManager:(nonnull ASRDataManager *)dataManager NS_DESIGNATED_INITIALIZER;
-//- (instancetype)initWithImageDAO:(ASRImageDAO *)imageDAO NS_UNAVAILABLE;
-
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
-												 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
  Отобразить изображение по урлу

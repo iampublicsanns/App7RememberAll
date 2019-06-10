@@ -82,11 +82,9 @@
 	__auto_type __weak weakSelf = self;
 
 	NSURLSessionDataTask *task = [self startLoadingAsync:url completion:^(NSData *image) {
-		__auto_type __strong strongSelf = weakSelf;
-
 		if (image)
 		{
-			[strongSelf addCachedImage:image byUrl:url];
+			[weakSelf addCachedImage:image byUrl:url];
 		}
 
 		if (completion)
@@ -112,8 +110,6 @@
 {
 
 	NSString *urlString = [NSString stringWithFormat:ConfigPhotosUrl, ConfigApiKey, ConfigUserId];
-
-	__auto_type __weak weakSelf = self;
 
 	[self startLoadingAsync:urlString completion:^(NSData *_Nullable data) {
 		JSON json = [ASRDataManager tryParseJSON:data];
@@ -187,7 +183,7 @@
 	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseErr];
 	if (!json)
 	{
-		NSLog(@"error no json %@");
+		NSLog(@"error no json");
 	}
 
 	return json;

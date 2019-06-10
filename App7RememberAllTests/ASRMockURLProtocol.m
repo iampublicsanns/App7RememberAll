@@ -45,7 +45,6 @@ static RequestHandler _requestHandler;
 		[self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 		[self.client URLProtocol:self didLoadData:data];
 		[self.client URLProtocolDidFinishLoading:self];
-		//[self.client URLProtocol:<#(nonnull NSURLProtocol *)#> didFailWithError:<#(nonnull NSError *)#>]
 	});
 }
 

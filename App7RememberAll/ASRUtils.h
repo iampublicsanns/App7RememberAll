@@ -6,9 +6,6 @@
 //  Copyright © 2019 Alexander. All rights reserved.
 //
 
-#ifndef Utils_h
-#define Utils_h
-
 /**
  Класс со вспомогательными методами общего назначения
  * */
@@ -21,5 +18,3 @@
 + (void)performOnMainThread:(nullable void (^)(void))block;
 
 @end
-
-#endif /* Utils_h */
